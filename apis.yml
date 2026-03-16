@@ -1,0 +1,55 @@
+aid: kubevirt
+name: KubeVirt
+description: >-
+  KubeVirt is a CNCF incubating project that extends Kubernetes to run
+  traditional virtual machines alongside containers. It allows users to
+  create, manage, and run VMs using the same Kubernetes APIs and tools
+  used for containers. KubeVirt is ideal for migrating legacy workloads
+  to Kubernetes without requiring application rewriting.
+url: https://kubevirt.io
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+- Virtual Machines
+- Kubernetes
+- Virtualization
+- Migration
+- Cloud Native
+- Incubating
+created: '2026-03-16'
+modified: '2026-03-16'
+specificationVersion: '0.19'
+type: Index
+apis:
+- aid: kubevirt:kubevirt-api
+  name: KubeVirt VM Management API
+  description: >-
+    KubeVirt extends the Kubernetes API with custom resources for virtual
+    machine management. VirtualMachine resources define VM specifications
+    including CPU, memory, disks, and network interfaces.
+    VirtualMachineInstance tracks running VMs, and VirtualMachineInstanceMigration
+    handles live migrations. The API supports start, stop, pause, migrate,
+    and snapshot operations through standard kubectl commands.
+  humanURL: https://kubevirt.io/user-guide/
+  properties:
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/
+  tags:
+  - Virtual Machines
+  - Kubernetes API
+  - Live Migration
+common:
+- type: Documentation
+  name: KubeVirt User Guide
+  description: Official KubeVirt user documentation.
+  url: https://kubevirt.io/user-guide/
+- type: GitHubOrg
+  name: KubeVirt GitHub
+  description: Source code repository.
+  url: https://github.com/kubevirt/kubevirt
+- type: Blog
+  name: KubeVirt Blog
+  description: Project blog and community updates.
+  url: https://kubevirt.io/blogs/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
