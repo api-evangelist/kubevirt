@@ -1,0 +1,765 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubevirt.io/schemas/virtualmachine.json",
+  "title": "KubeVirt VirtualMachine",
+  "description": "Schema for the KubeVirt VirtualMachine custom resource. A VirtualMachine defines the desired configuration and lifecycle management for a virtual machine running on Kubernetes, including CPU, memory, disks, networking, and run strategy.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "description": "API version of the VirtualMachine resource.",
+      "const": "kubevirt.io/v1"
+    },
+    "kind": {
+      "type": "string",
+      "description": "Resource kind.",
+      "const": "VirtualMachine"
+    },
+    "metadata": {
+      "$ref": "#/$defs/ObjectMeta"
+    },
+    "spec": {
+      "$ref": "#/$defs/VirtualMachineSpec"
+    },
+    "status": {
+      "$ref": "#/$defs/VirtualMachineStatus"
+    }
+  },
+  "$defs": {
+    "VirtualMachineSpec": {
+      "type": "object",
+      "description": "Specification of a VirtualMachine defining its configuration and lifecycle policy.",
+      "properties": {
+        "runStrategy": {
+          "type": "string",
+          "description": "Controls when the VM is running. 'Always' restarts automatically after crash. 'RerunOnFailure' restarts only on non-zero exit. 'Manual' requires explicit start/stop commands. 'Halted' keeps the VM stopped. 'Once' runs the VM once and stops it after completion.",
+          "enum": ["Always", "RerunOnFailure", "Manual", "Halted", "Once"]
+        },
+        "running": {
+          "type": "boolean",
+          "description": "Deprecated in favor of runStrategy. If true, the VM should be running."
+        },
+        "template": {
+          "$ref": "#/$defs/VirtualMachineInstanceTemplateSpec"
+        },
+        "dataVolumeTemplates": {
+          "type": "array",
+          "description": "DataVolume templates managed as part of this VM's lifecycle.",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "VirtualMachineInstanceTemplateSpec": {
+      "type": "object",
+      "description": "Template for the VirtualMachineInstance created by this VM.",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "description": "Labels and annotations to apply to the VMI."
+        },
+        "spec": {
+          "$ref": "#/$defs/VirtualMachineInstanceSpec"
+        }
+      }
+    },
+    "VirtualMachineInstanceSpec": {
+      "type": "object",
+      "description": "Specification of the virtual machine hardware and guest OS configuration.",
+      "properties": {
+        "domain": {
+          "$ref": "#/$defs/DomainSpec"
+        },
+        "networks": {
+          "type": "array",
+          "description": "Networks to attach VM interfaces to.",
+          "items": {
+            "$ref": "#/$defs/Network"
+          }
+        },
+        "volumes": {
+          "type": "array",
+          "description": "Storage volumes to attach as VM disks.",
+          "items": {
+            "$ref": "#/$defs/Volume"
+          }
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname to configure inside the guest OS.",
+          "maxLength": 63,
+          "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?$"
+        },
+        "terminationGracePeriodSeconds": {
+          "type": "integer",
+          "description": "Seconds to wait for clean shutdown before forcing VM termination.",
+          "minimum": 0
+        },
+        "evictionStrategy": {
+          "type": "string",
+          "description": "Behavior when the node is evicted. 'LiveMigrate' migrates the VM instead of stopping it.",
+          "enum": ["LiveMigrate", "None"]
+        },
+        "nodeSelector": {
+          "type": "object",
+          "description": "Node label selector for VM placement.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "priorityClassName": {
+          "type": "string",
+          "description": "PriorityClass name controlling scheduling priority."
+        }
+      }
+    },
+    "DomainSpec": {
+      "type": "object",
+      "description": "Virtual hardware configuration for the VM guest domain.",
+      "properties": {
+        "cpu": {
+          "type": "object",
+          "description": "CPU configuration for the VM.",
+          "properties": {
+            "cores": {
+              "type": "integer",
+              "description": "Number of CPU cores per socket.",
+              "minimum": 1
+            },
+            "sockets": {
+              "type": "integer",
+              "description": "Number of CPU sockets.",
+              "minimum": 1
+            },
+            "threads": {
+              "type": "integer",
+              "description": "Number of hardware threads per core.",
+              "minimum": 1
+            },
+            "model": {
+              "type": "string",
+              "description": "CPU model to emulate. Use 'host-model' or 'host-passthrough' to expose host CPU features."
+            },
+            "dedicatedCpuPlacement": {
+              "type": "boolean",
+              "description": "Request dedicated CPU pinning via Kubernetes CPU Manager for real-time workloads."
+            },
+            "isolateEmulatorThread": {
+              "type": "boolean",
+              "description": "If true, allocates an extra CPU for the QEMU emulator thread."
+            }
+          }
+        },
+        "memory": {
+          "type": "object",
+          "description": "Memory configuration for the VM.",
+          "properties": {
+            "guest": {
+              "type": "string",
+              "description": "Memory allocated to the guest OS in Kubernetes resource format.",
+              "examples": ["2Gi", "512Mi", "4G"]
+            },
+            "hugepages": {
+              "type": "object",
+              "description": "Huge pages configuration for low-latency memory access.",
+              "properties": {
+                "pageSize": {
+                  "type": "string",
+                  "description": "Huge page size.",
+                  "enum": ["2Mi", "1Gi"]
+                }
+              }
+            }
+          }
+        },
+        "devices": {
+          "type": "object",
+          "description": "Virtual device configuration for the guest.",
+          "properties": {
+            "disks": {
+              "type": "array",
+              "description": "Disk devices attached to the VM.",
+              "items": {
+                "$ref": "#/$defs/Disk"
+              }
+            },
+            "interfaces": {
+              "type": "array",
+              "description": "Network interface devices.",
+              "items": {
+                "$ref": "#/$defs/Interface"
+              }
+            },
+            "autoattachPodInterface": {
+              "type": "boolean",
+              "description": "If false, the default pod network interface is not attached."
+            },
+            "autoattachSerialConsole": {
+              "type": "boolean",
+              "description": "If false, the serial console is not attached."
+            },
+            "autoattachGraphicsDevice": {
+              "type": "boolean",
+              "description": "If false, the default VGA graphics device is not attached."
+            },
+            "rng": {
+              "type": "object",
+              "description": "VirtIO random number generator device."
+            },
+            "blockMultiQueue": {
+              "type": "boolean",
+              "description": "If true, enables multi-queue for block devices."
+            },
+            "networkInterfaceMultiQueue": {
+              "type": "boolean",
+              "description": "If true, enables multi-queue for network interfaces."
+            }
+          }
+        },
+        "firmware": {
+          "type": "object",
+          "description": "Firmware configuration for the guest.",
+          "properties": {
+            "bootloader": {
+              "type": "object",
+              "description": "Bootloader configuration.",
+              "properties": {
+                "bios": {
+                  "type": "object",
+                  "description": "Legacy BIOS bootloader."
+                },
+                "efi": {
+                  "type": "object",
+                  "description": "EFI/UEFI bootloader.",
+                  "properties": {
+                    "secureBoot": {
+                      "type": "boolean",
+                      "description": "Enable UEFI Secure Boot."
+                    }
+                  }
+                }
+              }
+            },
+            "uuid": {
+              "type": "string",
+              "format": "uuid",
+              "description": "SMBIOS UUID for the VM."
+            },
+            "serial": {
+              "type": "string",
+              "description": "SMBIOS serial number exposed to the guest."
+            }
+          }
+        },
+        "machine": {
+          "type": "object",
+          "description": "Machine type configuration.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "QEMU machine type.",
+              "examples": ["q35", "pc-q35-rhel9.2.0"]
+            }
+          }
+        },
+        "features": {
+          "type": "object",
+          "description": "Emulated hardware feature flags.",
+          "properties": {
+            "acpi": {
+              "type": "object",
+              "description": "ACPI support."
+            },
+            "smm": {
+              "type": "object",
+              "description": "System Management Mode."
+            },
+            "hyperv": {
+              "type": "object",
+              "description": "Hyper-V enlightenments for improved Windows VM performance."
+            }
+          }
+        }
+      }
+    },
+    "Disk": {
+      "type": "object",
+      "description": "A virtual disk device attached to the VM.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the disk, must match a volume name in the spec.volumes list."
+        },
+        "bootOrder": {
+          "type": "integer",
+          "description": "Boot priority for this disk (1 is highest priority).",
+          "minimum": 1
+        },
+        "disk": {
+          "type": "object",
+          "description": "VirtIO or emulated disk device.",
+          "properties": {
+            "bus": {
+              "type": "string",
+              "description": "Disk bus type.",
+              "enum": ["virtio", "sata", "scsi", "ide"]
+            },
+            "pciAddress": {
+              "type": "string",
+              "description": "PCI address for the disk device."
+            }
+          }
+        },
+        "cdrom": {
+          "type": "object",
+          "description": "CD-ROM device.",
+          "properties": {
+            "bus": {
+              "type": "string",
+              "enum": ["virtio", "sata", "scsi"]
+            },
+            "readonly": {
+              "type": "boolean",
+              "description": "If true, the CD-ROM is read-only."
+            }
+          }
+        },
+        "lun": {
+          "type": "object",
+          "description": "LUN device for passthrough storage.",
+          "properties": {
+            "bus": {
+              "type": "string",
+              "enum": ["scsi"]
+            }
+          }
+        },
+        "io": {
+          "type": "string",
+          "description": "I/O mode for this disk.",
+          "enum": ["native", "threads", "io_uring"]
+        },
+        "cache": {
+          "type": "string",
+          "description": "Disk cache mode.",
+          "enum": ["writethrough", "writeback", "none"]
+        },
+        "dedicatedIOThread": {
+          "type": "boolean",
+          "description": "If true, uses a dedicated I/O thread for this disk."
+        }
+      }
+    },
+    "Interface": {
+      "type": "object",
+      "description": "A virtual network interface device.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the interface, must match a network name in spec.networks."
+        },
+        "model": {
+          "type": "string",
+          "description": "NIC model type. virtio is recommended for performance.",
+          "enum": ["virtio", "e1000", "e1000e", "rtl8139"]
+        },
+        "macAddress": {
+          "type": "string",
+          "description": "Fixed MAC address for this interface.",
+          "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+        },
+        "masquerade": {
+          "type": "object",
+          "description": "NAT masquerade networking. Default mode for pod network."
+        },
+        "bridge": {
+          "type": "object",
+          "description": "Bridge networking connecting to a host bridge interface."
+        },
+        "sriov": {
+          "type": "object",
+          "description": "SR-IOV network passthrough for high-performance networking."
+        },
+        "binding": {
+          "type": "object",
+          "description": "Custom network binding plugin reference.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the binding plugin."
+            }
+          }
+        },
+        "ports": {
+          "type": "array",
+          "description": "Port forwarding rules (masquerade mode only).",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the port forwarding rule."
+              },
+              "port": {
+                "type": "integer",
+                "description": "Port number to forward.",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "protocol": {
+                "type": "string",
+                "description": "Protocol to forward.",
+                "enum": ["TCP", "UDP"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "Network": {
+      "type": "object",
+      "description": "A network to attach a VM interface to.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the network, referenced by the interface name."
+        },
+        "pod": {
+          "type": "object",
+          "description": "Default pod network (cluster-internal).",
+          "properties": {
+            "vmNetworkCIDR": {
+              "type": "string",
+              "description": "CIDR for the VM's internal network in masquerade mode."
+            }
+          }
+        },
+        "multus": {
+          "type": "object",
+          "description": "Secondary network via Multus CNI.",
+          "required": ["networkName"],
+          "properties": {
+            "networkName": {
+              "type": "string",
+              "description": "Name of the NetworkAttachmentDefinition resource."
+            },
+            "default": {
+              "type": "boolean",
+              "description": "If true, this Multus network is the default network."
+            }
+          }
+        }
+      }
+    },
+    "Volume": {
+      "type": "object",
+      "description": "A storage volume providing disk data for a VM disk device.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the volume, referenced by the disk name."
+        },
+        "containerDisk": {
+          "type": "object",
+          "description": "OCI container image used as an ephemeral disk.",
+          "required": ["image"],
+          "properties": {
+            "image": {
+              "type": "string",
+              "description": "OCI image reference containing the disk image.",
+              "examples": ["quay.io/containerdisks/fedora:latest"]
+            },
+            "imagePullPolicy": {
+              "type": "string",
+              "enum": ["Always", "Never", "IfNotPresent"]
+            }
+          }
+        },
+        "dataVolume": {
+          "type": "object",
+          "description": "CDI DataVolume providing the disk data.",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the DataVolume resource."
+            }
+          }
+        },
+        "persistentVolumeClaim": {
+          "type": "object",
+          "description": "Kubernetes PVC used directly as a disk.",
+          "required": ["claimName"],
+          "properties": {
+            "claimName": {
+              "type": "string",
+              "description": "Name of the PersistentVolumeClaim."
+            },
+            "readOnly": {
+              "type": "boolean",
+              "description": "If true, mounts the PVC read-only."
+            }
+          }
+        },
+        "cloudInitNoCloud": {
+          "type": "object",
+          "description": "Cloud-init NoCloud configuration disk.",
+          "properties": {
+            "userData": {
+              "type": "string",
+              "description": "Cloud-init user-data script or config."
+            },
+            "networkData": {
+              "type": "string",
+              "description": "Cloud-init network-config data."
+            },
+            "userDataSecretRef": {
+              "type": "object",
+              "description": "Secret reference for user-data.",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "cloudInitConfigDrive": {
+          "type": "object",
+          "description": "Cloud-init Config Drive configuration disk.",
+          "properties": {
+            "userData": {
+              "type": "string"
+            },
+            "networkData": {
+              "type": "string"
+            }
+          }
+        },
+        "emptyDisk": {
+          "type": "object",
+          "description": "Ephemeral empty disk created for the VM lifetime.",
+          "required": ["capacity"],
+          "properties": {
+            "capacity": {
+              "type": "string",
+              "description": "Disk capacity in Kubernetes resource quantity format.",
+              "examples": ["20Gi", "100Gi"]
+            }
+          }
+        },
+        "sysprep": {
+          "type": "object",
+          "description": "Windows Sysprep answer file disk.",
+          "properties": {
+            "configMap": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the ConfigMap with Sysprep data."
+                }
+              }
+            },
+            "secret": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "VirtualMachineStatus": {
+      "type": "object",
+      "description": "Observed status of a VirtualMachine.",
+      "properties": {
+        "printableStatus": {
+          "type": "string",
+          "description": "Human-readable VM status string.",
+          "enum": [
+            "Stopped",
+            "Provisioning",
+            "Starting",
+            "Running",
+            "Paused",
+            "Migrating",
+            "Stopping",
+            "Terminating",
+            "CrashLoopBackOff",
+            "Unknown",
+            "WaitingForVolumeBinding"
+          ]
+        },
+        "ready": {
+          "type": "boolean",
+          "description": "Whether the VM is ready and accepting connections."
+        },
+        "created": {
+          "type": "boolean",
+          "description": "Whether a VirtualMachineInstance has been created."
+        },
+        "conditions": {
+          "type": "array",
+          "description": "Status conditions for the VM.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["True", "False", "Unknown"]
+              },
+              "reason": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "lastTransitionTime": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ObjectMeta": {
+      "type": "object",
+      "description": "Standard Kubernetes object metadata.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the VirtualMachine resource.",
+          "maxLength": 253
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace the VirtualMachine belongs to."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Labels for organizing and selecting the VM.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Non-identifying metadata for the VM.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "apiVersion": "kubevirt.io/v1",
+      "kind": "VirtualMachine",
+      "metadata": {
+        "name": "fedora-vm",
+        "namespace": "default",
+        "labels": {
+          "app": "fedora-vm"
+        }
+      },
+      "spec": {
+        "runStrategy": "Always",
+        "template": {
+          "spec": {
+            "domain": {
+              "cpu": {
+                "cores": 2,
+                "sockets": 1,
+                "threads": 1
+              },
+              "memory": {
+                "guest": "4Gi"
+              },
+              "devices": {
+                "disks": [
+                  {
+                    "name": "rootdisk",
+                    "disk": {
+                      "bus": "virtio"
+                    },
+                    "bootOrder": 1
+                  },
+                  {
+                    "name": "cloudinitdisk",
+                    "disk": {
+                      "bus": "virtio"
+                    }
+                  }
+                ],
+                "interfaces": [
+                  {
+                    "name": "default",
+                    "model": "virtio",
+                    "masquerade": {}
+                  }
+                ]
+              }
+            },
+            "networks": [
+              {
+                "name": "default",
+                "pod": {}
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "dataVolume": {
+                  "name": "fedora-dv"
+                }
+              },
+              {
+                "name": "cloudinitdisk",
+                "cloudInitNoCloud": {
+                  "userData": "#cloud-config\npassword: fedora\nchpasswd: { expire: False }"
+                }
+              }
+            ]
+          }
+        },
+        "dataVolumeTemplates": [
+          {
+            "metadata": {
+              "name": "fedora-dv"
+            },
+            "spec": {
+              "source": {
+                "registry": {
+                  "url": "docker://quay.io/containerdisks/fedora:38"
+                }
+              },
+              "storage": {
+                "resources": {
+                  "requests": {
+                    "storage": "20Gi"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

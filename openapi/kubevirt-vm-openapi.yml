@@ -1,0 +1,1341 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt VM Management API
+  description: >-
+    The KubeVirt VM Management API extends the Kubernetes API with custom
+    resources for running and managing virtual machines alongside containers.
+    It provides CRD endpoints for VirtualMachine, VirtualMachineInstance, and
+    VirtualMachineInstanceMigration resources, plus subresource REST endpoints
+    for VM lifecycle operations including start, stop, pause, unpause, restart,
+    migrate, and console/VNC access.
+  version: '1.3.0'
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+externalDocs:
+  description: KubeVirt User Guide
+  url: https://kubevirt.io/user-guide/
+servers:
+  - url: https://{kubernetes-api-server}
+    description: Kubernetes API server
+    variables:
+      kubernetes-api-server:
+        default: localhost:6443
+        description: Address of the Kubernetes API server
+tags:
+  - name: VirtualMachines
+    description: >-
+      Operations for managing VirtualMachine (VM) resources. A VirtualMachine
+      defines the desired state and configuration of a virtual machine, providing
+      lifecycle management and persistence across restarts.
+  - name: VirtualMachineInstances
+    description: >-
+      Operations for managing VirtualMachineInstance (VMI) resources. A
+      VirtualMachineInstance represents a running virtual machine and tracks its
+      actual state.
+  - name: VirtualMachineInstanceMigrations
+    description: >-
+      Operations for managing live migration of VirtualMachineInstances from one
+      node to another without downtime.
+  - name: VMLifecycle
+    description: >-
+      Subresource operations for VM lifecycle management including start, stop,
+      pause, unpause, restart, migrate, and adding/removing volumes.
+  - name: VMConsole
+    description: >-
+      Subresource endpoints for accessing VM consoles via VNC, serial console,
+      and USB redirection.
+paths:
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines:
+    get:
+      operationId: listNamespacedVirtualMachine
+      summary: List VirtualMachines in a namespace
+      description: >-
+        Returns all VirtualMachine resources in the specified namespace. Each
+        VirtualMachine defines a desired VM configuration and controls whether
+        the VM is running or stopped.
+      tags:
+        - VirtualMachines
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/fieldSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: List of VirtualMachines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      operationId: createNamespacedVirtualMachine
+      summary: Create a VirtualMachine
+      description: >-
+        Creates a new VirtualMachine resource defining the VM's CPU, memory,
+        disk, network configuration, and run strategy. KubeVirt will create a
+        VirtualMachineInstance when the VM is started.
+      tags:
+        - VirtualMachines
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachine'
+      responses:
+        '201':
+          description: VirtualMachine created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '400':
+          description: Invalid VirtualMachine specification
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: VirtualMachine already exists
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}:
+    get:
+      operationId: readNamespacedVirtualMachine
+      summary: Get a VirtualMachine
+      description: >-
+        Returns the specified VirtualMachine resource including its current
+        status, run strategy, and associated VirtualMachineInstance reference.
+      tags:
+        - VirtualMachines
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: VirtualMachine details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: VirtualMachine not found
+    put:
+      operationId: replaceNamespacedVirtualMachine
+      summary: Replace a VirtualMachine
+      description: >-
+        Replaces the entire VirtualMachine resource. Changes to the template
+        take effect on the next VM start or restart.
+      tags:
+        - VirtualMachines
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachine'
+      responses:
+        '200':
+          description: VirtualMachine updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '400':
+          description: Invalid specification
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+    patch:
+      operationId: patchNamespacedVirtualMachine
+      summary: Partially update a VirtualMachine
+      description: >-
+        Applies a partial update to the VirtualMachine using JSON Merge Patch or
+        Strategic Merge Patch.
+      tags:
+        - VirtualMachines
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: VirtualMachine patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '400':
+          description: Invalid patch
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+    delete:
+      operationId: deleteNamespacedVirtualMachine
+      summary: Delete a VirtualMachine
+      description: >-
+        Deletes the VirtualMachine resource. If the VM is running, it will be
+        stopped first.
+      tags:
+        - VirtualMachines
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: VirtualMachine deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/start:
+    put:
+      operationId: startVirtualMachine
+      summary: Start a VirtualMachine
+      description: >-
+        Starts a stopped VirtualMachine by creating a VirtualMachineInstance.
+        The VM must be in the Stopped state. Optionally accepts a start options
+        body to control start behavior such as pausing immediately after start.
+      tags:
+        - VMLifecycle
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartOptions'
+      responses:
+        '202':
+          description: Start request accepted
+        '400':
+          description: VM is not in a startable state
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/stop:
+    put:
+      operationId: stopVirtualMachine
+      summary: Stop a VirtualMachine
+      description: >-
+        Stops a running VirtualMachine by deleting its VirtualMachineInstance.
+        Optionally accepts stop options including a grace period for shutdown.
+      tags:
+        - VMLifecycle
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopOptions'
+      responses:
+        '202':
+          description: Stop request accepted
+        '400':
+          description: VM is not running
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/restart:
+    put:
+      operationId: restartVirtualMachine
+      summary: Restart a VirtualMachine
+      description: >-
+        Restarts a running VirtualMachine by stopping and starting it. The VM
+        must currently be running.
+      tags:
+        - VMLifecycle
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestartOptions'
+      responses:
+        '202':
+          description: Restart request accepted
+        '400':
+          description: VM is not running
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/migrate:
+    put:
+      operationId: migrateVirtualMachine
+      summary: Migrate a VirtualMachine
+      description: >-
+        Initiates a live migration of the running VirtualMachine to another node.
+        Creates a VirtualMachineInstanceMigration resource to track the migration.
+      tags:
+        - VMLifecycle
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '202':
+          description: Migration request accepted
+        '400':
+          description: VM is not running or not migratable
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances:
+    get:
+      operationId: listNamespacedVirtualMachineInstance
+      summary: List VirtualMachineInstances
+      description: >-
+        Returns all running VirtualMachineInstance resources in the specified
+        namespace. Each VMI represents an active virtual machine process.
+      tags:
+        - VirtualMachineInstances
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/fieldSelector'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of VirtualMachineInstances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}:
+    get:
+      operationId: readNamespacedVirtualMachineInstance
+      summary: Get a VirtualMachineInstance
+      description: >-
+        Returns the specified VirtualMachineInstance including its phase,
+        network interfaces, volumes, node assignment, and guest OS information.
+      tags:
+        - VirtualMachineInstances
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: VirtualMachineInstance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstance'
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/pause:
+    put:
+      operationId: pauseVirtualMachineInstance
+      summary: Pause a VirtualMachineInstance
+      description: >-
+        Pauses the CPU execution of a running VirtualMachineInstance. The VMI
+        remains in memory but no CPU cycles are consumed.
+      tags:
+        - VMLifecycle
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '202':
+          description: Pause request accepted
+        '400':
+          description: VMI is not in a pausable state
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/unpause:
+    put:
+      operationId: unpauseVirtualMachineInstance
+      summary: Unpause a VirtualMachineInstance
+      description: >-
+        Resumes CPU execution of a paused VirtualMachineInstance.
+      tags:
+        - VMLifecycle
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '202':
+          description: Unpause request accepted
+        '400':
+          description: VMI is not paused
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/vnc:
+    get:
+      operationId: getVirtualMachineInstanceVNC
+      summary: Access VM VNC console
+      description: >-
+        Opens a WebSocket connection to the VNC console of the specified
+        VirtualMachineInstance for graphical console access.
+      tags:
+        - VMConsole
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '101':
+          description: WebSocket connection established for VNC access
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/console:
+    get:
+      operationId: getVirtualMachineInstanceConsole
+      summary: Access VM serial console
+      description: >-
+        Opens a WebSocket connection to the serial console of the specified
+        VirtualMachineInstance for text-based console access.
+      tags:
+        - VMConsole
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '101':
+          description: WebSocket connection established for serial console access
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations:
+    get:
+      operationId: listNamespacedVMIMigration
+      summary: List VirtualMachineInstanceMigrations
+      description: >-
+        Returns all VirtualMachineInstanceMigration resources in the specified
+        namespace. Each migration resource tracks the state of a live migration.
+      tags:
+        - VirtualMachineInstanceMigrations
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of migrations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceMigrationList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      operationId: createNamespacedVMIMigration
+      summary: Create a VirtualMachineInstanceMigration
+      description: >-
+        Initiates a live migration by creating a VirtualMachineInstanceMigration
+        resource. The migration moves the VMI to another node while it continues
+        running.
+      tags:
+        - VirtualMachineInstanceMigrations
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+      responses:
+        '201':
+          description: Migration created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+        '400':
+          description: Invalid migration specification
+        '401':
+          description: Unauthorized
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}:
+    get:
+      operationId: readNamespacedVMIMigration
+      summary: Get a VirtualMachineInstanceMigration
+      description: >-
+        Returns the specified migration resource including its current phase,
+        source and target node information, and completion status.
+      tags:
+        - VirtualMachineInstanceMigrations
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Migration details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Migration not found
+    delete:
+      operationId: deleteNamespacedVMIMigration
+      summary: Cancel a VirtualMachineInstanceMigration
+      description: >-
+        Cancels an in-progress migration by deleting the
+        VirtualMachineInstanceMigration resource.
+      tags:
+        - VirtualMachineInstanceMigrations
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Migration cancelled
+        '401':
+          description: Unauthorized
+        '404':
+          description: Migration not found
+components:
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: Field selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination continuation token.
+      schema:
+        type: string
+  schemas:
+    VirtualMachine:
+      type: object
+      description: >-
+        A KubeVirt VirtualMachine resource defining the desired configuration and
+        lifecycle of a virtual machine. Provides persistent VM definition with
+        start/stop control.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+            - kubevirt.io/v1
+        kind:
+          type: string
+          enum:
+            - VirtualMachine
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/VirtualMachineSpec'
+        status:
+          $ref: '#/components/schemas/VirtualMachineStatus'
+    VirtualMachineSpec:
+      type: object
+      description: Specification of a VirtualMachine.
+      properties:
+        running:
+          type: boolean
+          description: >-
+            Mutually exclusive with runStrategy. If true, the VM should be
+            running. Deprecated in favor of runStrategy.
+        runStrategy:
+          type: string
+          description: >-
+            Controls when the VM is running. 'Always' restarts after crash,
+            'RerunOnFailure' only restarts on failure, 'Manual' requires
+            explicit start/stop, 'Halted' keeps the VM stopped.
+          enum:
+            - Always
+            - RerunOnFailure
+            - Manual
+            - Halted
+            - Once
+        template:
+          $ref: '#/components/schemas/VirtualMachineInstanceTemplateSpec'
+        dataVolumeTemplates:
+          type: array
+          description: >-
+            DataVolume templates to create alongside the VM. These are
+            automatically managed by KubeVirt as part of the VM lifecycle.
+          items:
+            type: object
+    VirtualMachineInstanceTemplateSpec:
+      type: object
+      description: Template for creating a VirtualMachineInstance.
+      properties:
+        metadata:
+          type: object
+          description: Labels and annotations for the VMI.
+        spec:
+          $ref: '#/components/schemas/VirtualMachineInstanceSpec'
+    VirtualMachineInstanceSpec:
+      type: object
+      description: Specification of the virtual machine hardware and guest configuration.
+      properties:
+        domain:
+          $ref: '#/components/schemas/DomainSpec'
+        networks:
+          type: array
+          description: Network interfaces to attach to the VM.
+          items:
+            $ref: '#/components/schemas/Network'
+        volumes:
+          type: array
+          description: Volumes to attach to the VM.
+          items:
+            $ref: '#/components/schemas/Volume'
+        affinity:
+          type: object
+          description: Kubernetes affinity rules for pod scheduling.
+        tolerations:
+          type: array
+          description: Kubernetes tolerations for node scheduling.
+          items:
+            type: object
+        nodeSelector:
+          type: object
+          additionalProperties:
+            type: string
+          description: Node selector constraints for VM placement.
+        hostname:
+          type: string
+          description: Hostname to set in the guest OS.
+        subdomain:
+          type: string
+          description: Subdomain for the VM's DNS entry.
+        terminationGracePeriodSeconds:
+          type: integer
+          description: Grace period in seconds before forceful VM termination.
+          minimum: 0
+        evictionStrategy:
+          type: string
+          description: >-
+            Controls how the VM behaves during node eviction. 'LiveMigrate'
+            migrates instead of stopping.
+          enum:
+            - LiveMigrate
+            - None
+    DomainSpec:
+      type: object
+      description: Virtual hardware configuration for the VM guest.
+      properties:
+        cpu:
+          type: object
+          description: CPU configuration for the VM.
+          properties:
+            cores:
+              type: integer
+              description: Number of CPU cores.
+              minimum: 1
+            sockets:
+              type: integer
+              description: Number of CPU sockets.
+              minimum: 1
+            threads:
+              type: integer
+              description: Number of CPU threads per core.
+              minimum: 1
+            model:
+              type: string
+              description: CPU model to emulate, e.g. 'host-model' or 'Westmere'.
+            dedicatedCpuPlacement:
+              type: boolean
+              description: If true, requests dedicated CPU pinning via CPU Manager.
+            features:
+              type: array
+              description: CPU feature flags to enable or disable.
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  policy:
+                    type: string
+                    enum:
+                      - force
+                      - require
+                      - optional
+                      - disable
+                      - forbid
+        memory:
+          type: object
+          description: Memory configuration for the VM.
+          properties:
+            guest:
+              type: string
+              description: >-
+                Amount of memory for the guest OS in Kubernetes resource quantity
+                format, e.g. '2Gi', '512Mi'.
+            hugepages:
+              type: object
+              description: Huge pages configuration.
+              properties:
+                pageSize:
+                  type: string
+                  description: Size of huge pages, e.g. '2Mi' or '1Gi'.
+        devices:
+          type: object
+          description: Virtual device configuration.
+          properties:
+            disks:
+              type: array
+              description: Disk devices attached to the VM.
+              items:
+                $ref: '#/components/schemas/Disk'
+            interfaces:
+              type: array
+              description: Network interface devices.
+              items:
+                $ref: '#/components/schemas/Interface'
+            rng:
+              type: object
+              description: Random number generator device configuration.
+            watchdog:
+              type: object
+              description: Hardware watchdog device configuration.
+        features:
+          type: object
+          description: Hardware feature flags for the VM.
+          properties:
+            acpi:
+              type: object
+              description: ACPI configuration.
+            smm:
+              type: object
+              description: System Management Mode configuration.
+            hyperv:
+              type: object
+              description: Hyper-V enlightenments for Windows VMs.
+        firmware:
+          type: object
+          description: Firmware configuration for the VM.
+          properties:
+            bootloader:
+              type: object
+              description: Bootloader configuration (BIOS or UEFI).
+              properties:
+                bios:
+                  type: object
+                  description: BIOS bootloader.
+                efi:
+                  type: object
+                  description: EFI/UEFI bootloader.
+                  properties:
+                    secureBoot:
+                      type: boolean
+                      description: If true, enables Secure Boot.
+            serial:
+              type: string
+              description: Serial number to expose to the guest.
+            uuid:
+              type: string
+              format: uuid
+              description: SMBIOS UUID for the VM.
+        machine:
+          type: object
+          description: Machine type configuration.
+          properties:
+            type:
+              type: string
+              description: Machine type, e.g. 'q35' or 'pc-q35-rhel8.4.0'.
+    Disk:
+      type: object
+      description: A virtual disk device attached to the VM.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the disk, must match a volume name.
+        bootOrder:
+          type: integer
+          description: Boot order for this disk (lower numbers boot first).
+          minimum: 1
+        disk:
+          type: object
+          description: Virtio disk configuration.
+          properties:
+            bus:
+              type: string
+              enum:
+                - virtio
+                - sata
+                - scsi
+                - ide
+        cdrom:
+          type: object
+          description: CD-ROM device configuration.
+          properties:
+            bus:
+              type: string
+              enum:
+                - virtio
+                - sata
+                - scsi
+            readonly:
+              type: boolean
+        lun:
+          type: object
+          description: LUN device configuration.
+          properties:
+            bus:
+              type: string
+    Interface:
+      type: object
+      description: A virtual network interface device.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the interface, must match a network name.
+        model:
+          type: string
+          description: >-
+            Network interface model type. 'virtio' is recommended for best
+            performance.
+          enum:
+            - virtio
+            - e1000
+            - e1000e
+            - rtl8139
+        masquerade:
+          type: object
+          description: NAT masquerade networking mode.
+        bridge:
+          type: object
+          description: Bridge networking mode, connected to a host bridge.
+        sriov:
+          type: object
+          description: SR-IOV passthrough networking mode.
+        macAddress:
+          type: string
+          description: Fixed MAC address for the interface.
+          pattern: '^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$'
+        ports:
+          type: array
+          description: Port forwarding rules for masquerade interfaces.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              port:
+                type: integer
+                minimum: 1
+                maximum: 65535
+              protocol:
+                type: string
+                enum:
+                  - TCP
+                  - UDP
+    Network:
+      type: object
+      description: A network to attach a VM interface to.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the network, referenced by interface name.
+        pod:
+          type: object
+          description: Default pod network configuration.
+          properties:
+            vmNetworkCIDR:
+              type: string
+              description: CIDR for the VM network in masquerade mode.
+        multus:
+          type: object
+          description: Multus CNI network attachment.
+          properties:
+            networkName:
+              type: string
+              description: Name of the NetworkAttachmentDefinition.
+            default:
+              type: boolean
+              description: If true, this is the default network.
+    Volume:
+      type: object
+      description: A storage volume to attach to a disk device.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the volume, referenced by disk name.
+        containerDisk:
+          type: object
+          description: OCI container image used as a disk.
+          properties:
+            image:
+              type: string
+              description: OCI image reference containing the disk image.
+            imagePullPolicy:
+              type: string
+              enum:
+                - Always
+                - Never
+                - IfNotPresent
+        dataVolume:
+          type: object
+          description: DataVolume (CDI) as a disk source.
+          properties:
+            name:
+              type: string
+              description: Name of the DataVolume resource.
+        persistentVolumeClaim:
+          type: object
+          description: Kubernetes PersistentVolumeClaim as a disk source.
+          properties:
+            claimName:
+              type: string
+              description: Name of the PVC.
+            readOnly:
+              type: boolean
+        cloudInitNoCloud:
+          type: object
+          description: Cloud-init NoCloud data source for guest initialization.
+          properties:
+            userData:
+              type: string
+              description: Cloud-init user-data as a string.
+            networkData:
+              type: string
+              description: Cloud-init network-config as a string.
+        cloudInitConfigDrive:
+          type: object
+          description: Cloud-init Config Drive data source.
+          properties:
+            userData:
+              type: string
+            networkData:
+              type: string
+        sysprep:
+          type: object
+          description: Windows Sysprep answer file source.
+          properties:
+            configMap:
+              type: object
+              properties:
+                name:
+                  type: string
+        emptyDisk:
+          type: object
+          description: Ephemeral empty disk created for the VM.
+          properties:
+            capacity:
+              type: string
+              description: Disk capacity in Kubernetes resource quantity format.
+        hostDisk:
+          type: object
+          description: Host filesystem path as a disk.
+          properties:
+            path:
+              type: string
+              description: Absolute path on the host.
+            type:
+              type: string
+              enum:
+                - DiskOrCreate
+                - Disk
+    VirtualMachineStatus:
+      type: object
+      description: Observed status of a VirtualMachine.
+      properties:
+        ready:
+          type: boolean
+          description: Whether the VM is ready to accept connections.
+        created:
+          type: boolean
+          description: Whether the VMI has been created.
+        printableStatus:
+          type: string
+          description: Human-readable status string.
+          enum:
+            - Stopped
+            - Provisioning
+            - Starting
+            - Running
+            - Paused
+            - Migrating
+            - Stopping
+            - Terminating
+            - CrashLoopBackOff
+            - Unknown
+            - WaitingForVolumeBinding
+        conditions:
+          type: array
+          description: Conditions describing the VM's current state.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              status:
+                type: string
+              reason:
+                type: string
+              message:
+                type: string
+              lastTransitionTime:
+                type: string
+                format: date-time
+        volumeSnapshotStatuses:
+          type: array
+          description: Snapshot status of attached volumes.
+          items:
+            type: object
+    VirtualMachineList:
+      type: object
+      description: List of VirtualMachine resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachine'
+    VirtualMachineInstance:
+      type: object
+      description: >-
+        A running VirtualMachineInstance representing the actual state of an
+        active virtual machine process in KubeVirt.
+      properties:
+        apiVersion:
+          type: string
+          enum:
+            - kubevirt.io/v1
+        kind:
+          type: string
+          enum:
+            - VirtualMachineInstance
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/VirtualMachineInstanceSpec'
+        status:
+          $ref: '#/components/schemas/VirtualMachineInstanceStatus'
+    VirtualMachineInstanceStatus:
+      type: object
+      description: Observed runtime status of a VirtualMachineInstance.
+      properties:
+        nodeName:
+          type: string
+          description: Node where the VMI is running.
+        guestOSInfo:
+          type: object
+          description: Information about the guest operating system.
+          properties:
+            name:
+              type: string
+              description: OS name reported by the guest agent.
+            version:
+              type: string
+              description: OS version.
+            id:
+              type: string
+              description: OS ID (e.g. 'rhel', 'ubuntu').
+            prettyName:
+              type: string
+              description: Human-readable OS name.
+        interfaces:
+          type: array
+          description: Network interfaces as reported by the guest agent.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              mac:
+                type: string
+              ipAddress:
+                type: string
+              ipAddresses:
+                type: array
+                items:
+                  type: string
+        phase:
+          type: string
+          description: Current lifecycle phase of the VMI.
+          enum:
+            - Pending
+            - Scheduling
+            - Scheduled
+            - Running
+            - Succeeded
+            - Failed
+            - Unknown
+        phaseTransitionTimestamps:
+          type: array
+          description: History of phase transitions with timestamps.
+          items:
+            type: object
+            properties:
+              phase:
+                type: string
+              phaseTransitionTimestamp:
+                type: string
+                format: date-time
+        migrationState:
+          type: object
+          description: Current migration state if the VMI is being migrated.
+          properties:
+            startTimestamp:
+              type: string
+              format: date-time
+            endTimestamp:
+              type: string
+              format: date-time
+            targetNode:
+              type: string
+            sourceNode:
+              type: string
+            completed:
+              type: boolean
+            failed:
+              type: boolean
+        conditions:
+          type: array
+          items:
+            type: object
+    VirtualMachineInstanceList:
+      type: object
+      description: List of VirtualMachineInstance resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineInstance'
+    VirtualMachineInstanceMigration:
+      type: object
+      description: >-
+        A VirtualMachineInstanceMigration resource tracking the live migration of
+        a VirtualMachineInstance from one node to another.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+            - kubevirt.io/v1
+        kind:
+          type: string
+          enum:
+            - VirtualMachineInstanceMigration
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Migration specification.
+          required:
+            - vmiName
+          properties:
+            vmiName:
+              type: string
+              description: Name of the VirtualMachineInstance to migrate.
+        status:
+          type: object
+          description: Observed migration status.
+          properties:
+            phase:
+              type: string
+              description: Current phase of the migration.
+              enum:
+                - Pending
+                - Scheduling
+                - Scheduled
+                - PreparingTarget
+                - TargetReady
+                - Running
+                - Succeeded
+                - Failed
+            migrationState:
+              type: object
+              description: Detailed migration state.
+              properties:
+                startTimestamp:
+                  type: string
+                  format: date-time
+                endTimestamp:
+                  type: string
+                  format: date-time
+                targetNode:
+                  type: string
+                sourceNode:
+                  type: string
+                completed:
+                  type: boolean
+                failed:
+                  type: boolean
+                failureReason:
+                  type: string
+    VirtualMachineInstanceMigrationList:
+      type: object
+      description: List of VirtualMachineInstanceMigration resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+    StartOptions:
+      type: object
+      description: Options for the VM start operation.
+      properties:
+        paused:
+          type: boolean
+          description: If true, starts the VM in a paused state.
+        dryRun:
+          type: array
+          description: Dry run options.
+          items:
+            type: string
+    StopOptions:
+      type: object
+      description: Options for the VM stop operation.
+      properties:
+        gracePeriod:
+          type: integer
+          format: int64
+          description: >-
+            Grace period in seconds for shutdown. A value of 0 forces immediate
+            shutdown.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
+    RestartOptions:
+      type: object
+      description: Options for the VM restart operation.
+      properties:
+        gracePeriodSeconds:
+          type: integer
+          format: int64
+          description: Grace period in seconds before forced restart.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: Labels for organizing and selecting resources.
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: Non-identifying metadata.
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time

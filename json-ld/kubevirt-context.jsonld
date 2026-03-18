@@ -1,0 +1,151 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "kubevirt": "https://kubevirt.io/vocabulary#",
+    "k8s": "https://kubernetes.io/vocabulary#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+
+    "VirtualMachine": {
+      "@id": "kubevirt:VirtualMachine",
+      "@context": {
+        "name": "schema:name",
+        "namespace": "k8s:namespace",
+        "runStrategy": "kubevirt:runStrategy",
+        "status": "kubevirt:vmStatus",
+        "labels": "k8s:labels",
+        "creationTimestamp": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "VirtualMachineInstance": {
+      "@id": "kubevirt:VirtualMachineInstance",
+      "@context": {
+        "name": "schema:name",
+        "namespace": "k8s:namespace",
+        "nodeName": {
+          "@id": "kubevirt:scheduledNode",
+          "@type": "@id"
+        },
+        "phase": "kubevirt:vmiPhase",
+        "creationTimestamp": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "VirtualMachineInstanceMigration": {
+      "@id": "kubevirt:Migration",
+      "@context": {
+        "name": "schema:name",
+        "namespace": "k8s:namespace",
+        "vmiName": {
+          "@id": "kubevirt:migratedInstance",
+          "@type": "@id"
+        },
+        "phase": "kubevirt:migrationPhase",
+        "targetNode": {
+          "@id": "kubevirt:targetNode",
+          "@type": "@id"
+        },
+        "sourceNode": {
+          "@id": "kubevirt:sourceNode",
+          "@type": "@id"
+        },
+        "startTimestamp": {
+          "@id": "prov:startedAtTime",
+          "@type": "xsd:dateTime"
+        },
+        "endTimestamp": {
+          "@id": "prov:endedAtTime",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "DomainSpec": {
+      "@id": "kubevirt:VirtualHardware",
+      "@context": {
+        "cpu": "kubevirt:cpuConfig",
+        "memory": "kubevirt:memoryConfig",
+        "devices": "kubevirt:deviceConfig",
+        "firmware": "kubevirt:firmwareConfig",
+        "machine": "kubevirt:machineType"
+      }
+    },
+
+    "Disk": {
+      "@id": "kubevirt:VirtualDisk",
+      "@context": {
+        "name": "schema:name",
+        "bootOrder": "kubevirt:bootOrder",
+        "cache": "kubevirt:diskCache"
+      }
+    },
+
+    "Interface": {
+      "@id": "kubevirt:VirtualInterface",
+      "@context": {
+        "name": "schema:name",
+        "model": "kubevirt:nicModel",
+        "macAddress": "schema:identifier"
+      }
+    },
+
+    "Volume": {
+      "@id": "kubevirt:StorageVolume",
+      "@context": {
+        "name": "schema:name"
+      }
+    },
+
+    "DataVolume": {
+      "@id": "kubevirt:DataVolume",
+      "@context": {
+        "name": "schema:name",
+        "namespace": "k8s:namespace",
+        "phase": "kubevirt:dvPhase",
+        "progress": "kubevirt:importProgress",
+        "claimName": {
+          "@id": "kubevirt:managedPVC",
+          "@type": "@id"
+        },
+        "creationTimestamp": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "DataSource": {
+      "@id": "kubevirt:DataSource",
+      "@context": {
+        "name": "schema:name",
+        "namespace": "k8s:namespace",
+        "source": {
+          "@id": "kubevirt:cloneSource",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "StorageProfile": {
+      "@id": "kubevirt:StorageProfile",
+      "@context": {
+        "name": "schema:name",
+        "storageClass": {
+          "@id": "kubevirt:storageClass",
+          "@type": "@id"
+        },
+        "provisioner": "kubevirt:csiProvisioner",
+        "cloneStrategy": "kubevirt:cloneStrategy"
+      }
+    }
+  }
+}

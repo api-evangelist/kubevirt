@@ -1,0 +1,846 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer API
+  description: >-
+    The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD
+    endpoints for managing virtual machine disk image import and cloning
+    pipelines. CDI introduces DataVolume, DataSource, and StorageProfile
+    resources that automate importing VM disk images from HTTP, S3, OCI
+    registries, and other sources into PersistentVolumeClaims ready for
+    use as KubeVirt VM disks.
+  version: '1.59.0'
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
+servers:
+  - url: https://{kubernetes-api-server}
+    description: Kubernetes API server
+    variables:
+      kubernetes-api-server:
+        default: localhost:6443
+        description: Address of the Kubernetes API server
+tags:
+  - name: DataVolumes
+    description: >-
+      Operations for managing DataVolume resources. A DataVolume is a managed
+      PersistentVolumeClaim with an integrated import/clone pipeline that
+      automatically populates the volume from a specified source.
+  - name: DataSources
+    description: >-
+      Operations for managing DataSource resources. A DataSource references an
+      existing DataVolume or VolumeSnapshot as a source for cloning into new
+      DataVolumes.
+  - name: StorageProfiles
+    description: >-
+      Operations for managing StorageProfile resources. StorageProfiles describe
+      the capabilities of a StorageClass and provide default clone and access
+      mode strategies.
+  - name: CDIConfig
+    description: >-
+      Operations for reading and managing global CDI configuration.
+paths:
+  /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes:
+    get:
+      operationId: listNamespacedDataVolume
+      summary: List DataVolumes in a namespace
+      description: >-
+        Returns all DataVolume resources in the specified namespace. Each
+        DataVolume tracks the progress of importing or cloning a VM disk image
+        into a PersistentVolumeClaim.
+      tags:
+        - DataVolumes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/fieldSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: List of DataVolumes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataVolumeList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      operationId: createNamespacedDataVolume
+      summary: Create a DataVolume
+      description: >-
+        Creates a new DataVolume that will automatically import or clone disk
+        image data from the specified source into a managed PVC. Supports
+        importing from HTTP(S) endpoints, S3 buckets, OCI container registries,
+        existing PVCs, and VolumeSnapshots.
+      tags:
+        - DataVolumes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataVolume'
+      responses:
+        '201':
+          description: DataVolume created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataVolume'
+        '400':
+          description: Invalid DataVolume specification
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: DataVolume already exists
+  /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}:
+    get:
+      operationId: readNamespacedDataVolume
+      summary: Get a DataVolume
+      description: >-
+        Returns the specified DataVolume including its import progress, phase,
+        and associated PVC status.
+      tags:
+        - DataVolumes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DataVolume details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataVolume'
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataVolume not found
+    put:
+      operationId: replaceNamespacedDataVolume
+      summary: Replace a DataVolume
+      description: >-
+        Replaces the entire DataVolume resource specification.
+      tags:
+        - DataVolumes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataVolume'
+      responses:
+        '200':
+          description: DataVolume updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataVolume'
+        '400':
+          description: Invalid specification
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataVolume not found
+    delete:
+      operationId: deleteNamespacedDataVolume
+      summary: Delete a DataVolume
+      description: >-
+        Deletes the DataVolume and its managed PersistentVolumeClaim.
+      tags:
+        - DataVolumes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DataVolume deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataVolume not found
+  /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources:
+    get:
+      operationId: listNamespacedDataSource
+      summary: List DataSources in a namespace
+      description: >-
+        Returns all DataSource resources in the specified namespace. DataSources
+        reference DataVolumes or VolumeSnapshots that can be used as clone sources.
+      tags:
+        - DataSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of DataSources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceList'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createNamespacedDataSource
+      summary: Create a DataSource
+      description: >-
+        Creates a DataSource that points to a DataVolume or VolumeSnapshot as a
+        reusable clone source for new DataVolumes.
+      tags:
+        - DataSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSource'
+      responses:
+        '201':
+          description: DataSource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+        '400':
+          description: Invalid DataSource specification
+        '401':
+          description: Unauthorized
+  /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}:
+    get:
+      operationId: readNamespacedDataSource
+      summary: Get a DataSource
+      description: >-
+        Returns the specified DataSource including its source reference and ready status.
+      tags:
+        - DataSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DataSource details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataSource not found
+    delete:
+      operationId: deleteNamespacedDataSource
+      summary: Delete a DataSource
+      description: Deletes the specified DataSource resource.
+      tags:
+        - DataSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DataSource deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataSource not found
+  /apis/cdi.kubevirt.io/v1beta1/storageprofiles:
+    get:
+      operationId: listStorageProfiles
+      summary: List StorageProfiles
+      description: >-
+        Returns all StorageProfile resources in the cluster. StorageProfiles are
+        automatically created by CDI for each StorageClass and describe its
+        supported access modes and recommended clone strategies.
+      tags:
+        - StorageProfiles
+      parameters:
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of StorageProfiles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfileList'
+        '401':
+          description: Unauthorized
+  /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}:
+    get:
+      operationId: readStorageProfile
+      summary: Get a StorageProfile
+      description: >-
+        Returns the specified StorageProfile including its claimed PVC properties,
+        data import cron source format, and clone strategy.
+      tags:
+        - StorageProfiles
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: StorageProfile details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfile'
+        '401':
+          description: Unauthorized
+        '404':
+          description: StorageProfile not found
+    patch:
+      operationId: patchStorageProfile
+      summary: Update a StorageProfile
+      description: >-
+        Partially updates a StorageProfile to configure custom clone strategies
+        or override default access modes for this StorageClass.
+      tags:
+        - StorageProfiles
+      parameters:
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: StorageProfile updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfile'
+        '401':
+          description: Unauthorized
+        '404':
+          description: StorageProfile not found
+components:
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: Field selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination continuation token.
+      schema:
+        type: string
+  schemas:
+    DataVolume:
+      type: object
+      description: >-
+        A CDI DataVolume providing a managed PVC with automated import or clone
+        pipeline. Integrates with KubeVirt to provision VM disk images from
+        various sources.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+            - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+            - DataVolume
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/DataVolumeSpec'
+        status:
+          $ref: '#/components/schemas/DataVolumeStatus'
+    DataVolumeSpec:
+      type: object
+      description: Specification of a DataVolume.
+      properties:
+        source:
+          $ref: '#/components/schemas/DataVolumeSource'
+        sourceRef:
+          type: object
+          description: Reference to a DataSource providing the import source.
+          properties:
+            kind:
+              type: string
+              enum:
+                - DataSource
+            namespace:
+              type: string
+            name:
+              type: string
+        pvc:
+          type: object
+          description: PVC spec for the managed PersistentVolumeClaim.
+          properties:
+            accessModes:
+              type: array
+              items:
+                type: string
+                enum:
+                  - ReadWriteOnce
+                  - ReadWriteMany
+                  - ReadOnlyMany
+            resources:
+              type: object
+              properties:
+                requests:
+                  type: object
+                  additionalProperties:
+                    type: string
+            storageClassName:
+              type: string
+            volumeMode:
+              type: string
+              enum:
+                - Block
+                - Filesystem
+        storage:
+          type: object
+          description: >-
+            Simplified storage spec. CDI automatically selects access modes
+            and volume mode based on the StorageProfile.
+          properties:
+            resources:
+              type: object
+              properties:
+                requests:
+                  type: object
+                  additionalProperties:
+                    type: string
+            storageClassName:
+              type: string
+            accessModes:
+              type: array
+              items:
+                type: string
+            volumeMode:
+              type: string
+        priorityClassName:
+          type: string
+          description: PriorityClass for the import pod.
+        contentType:
+          type: string
+          description: Type of content being imported.
+          enum:
+            - kubevirt
+            - archive
+        preallocation:
+          type: boolean
+          description: If true, preallocates disk space on creation.
+        checkpoints:
+          type: array
+          description: Checkpoints for multi-stage import.
+          items:
+            type: object
+        finalCheckpoint:
+          type: boolean
+          description: Whether this is the final checkpoint in a multi-stage import.
+    DataVolumeSource:
+      type: object
+      description: >-
+        Source configuration for the DataVolume import. Exactly one source type
+        should be specified.
+      properties:
+        http:
+          type: object
+          description: Import from an HTTP(S) URL.
+          required:
+            - url
+          properties:
+            url:
+              type: string
+              format: uri
+              description: HTTP(S) URL of the disk image to import.
+            secretRef:
+              type: string
+              description: Secret containing HTTP authentication credentials.
+            certConfigMap:
+              type: string
+              description: ConfigMap containing CA certificates for HTTPS.
+            extraHeaders:
+              type: array
+              description: Extra HTTP headers for the import request.
+              items:
+                type: string
+            secretExtraHeaders:
+              type: array
+              description: Secret references for sensitive HTTP headers.
+              items:
+                type: string
+        s3:
+          type: object
+          description: Import from an S3-compatible object store.
+          required:
+            - url
+          properties:
+            url:
+              type: string
+              format: uri
+              description: S3 URL (s3://) of the disk image.
+            secretRef:
+              type: string
+              description: Secret with AWS credentials.
+            certConfigMap:
+              type: string
+              description: ConfigMap with CA certificates.
+        registry:
+          type: object
+          description: Import from an OCI container registry.
+          properties:
+            url:
+              type: string
+              description: OCI registry URL of the container disk image.
+            secretRef:
+              type: string
+              description: Secret with registry authentication.
+            certConfigMap:
+              type: string
+            pullMethod:
+              type: string
+              enum:
+                - pod
+                - node
+        pvc:
+          type: object
+          description: Clone from an existing PersistentVolumeClaim.
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: Name of the source PVC.
+            namespace:
+              type: string
+              description: Namespace of the source PVC.
+        snapshot:
+          type: object
+          description: Clone from a VolumeSnapshot.
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: Name of the VolumeSnapshot.
+            namespace:
+              type: string
+              description: Namespace of the VolumeSnapshot.
+        upload:
+          type: object
+          description: >-
+            Receive an upload via the CDI upload proxy. Used with
+            virtctl image-upload to push disk images directly.
+        blank:
+          type: object
+          description: Create an empty disk volume with no pre-populated data.
+        imageio:
+          type: object
+          description: Import from an oVirt ImageIO endpoint.
+          properties:
+            url:
+              type: string
+            secretRef:
+              type: string
+            certConfigMap:
+              type: string
+            diskId:
+              type: string
+        vddk:
+          type: object
+          description: Import from VMware using VDDK for VM migration.
+          properties:
+            url:
+              type: string
+            secretRef:
+              type: string
+            uuid:
+              type: string
+            thumbprint:
+              type: string
+            backingFile:
+              type: string
+            initImageURL:
+              type: string
+    DataVolumeStatus:
+      type: object
+      description: Observed status of a DataVolume import pipeline.
+      properties:
+        phase:
+          type: string
+          description: Current phase of the DataVolume import.
+          enum:
+            - Pending
+            - PVCBound
+            - ImportScheduled
+            - ImportInProgress
+            - CloneScheduled
+            - CloneInProgress
+            - SnapshotForSmartCloneInProgress
+            - SmartClonePVCInProgress
+            - CSICloneInProgress
+            - UploadScheduled
+            - UploadReady
+            - WaitForFirstConsumer
+            - Paused
+            - Succeeded
+            - Failed
+            - Unknown
+        progress:
+          type: string
+          description: Import progress percentage (e.g. '42.00%').
+        restartCount:
+          type: integer
+          format: int32
+          description: Number of times the import pod has been restarted.
+        claimName:
+          type: string
+          description: Name of the managed PersistentVolumeClaim.
+        conditions:
+          type: array
+          description: Conditions describing the DataVolume state.
+          items:
+            type: object
+    DataVolumeList:
+      type: object
+      description: List of DataVolume resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataVolume'
+    DataSource:
+      type: object
+      description: >-
+        A CDI DataSource referencing a DataVolume or VolumeSnapshot as a
+        reusable source for cloning into new DataVolumes.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+            - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+            - DataSource
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: DataSource specification.
+          properties:
+            source:
+              type: object
+              description: Reference to the clone source.
+              properties:
+                pvc:
+                  type: object
+                  description: PVC clone source reference.
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                snapshot:
+                  type: object
+                  description: VolumeSnapshot clone source reference.
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+        status:
+          type: object
+          description: DataSource readiness status.
+          properties:
+            conditions:
+              type: array
+              items:
+                type: object
+            source:
+              type: object
+              description: Resolved source reference.
+    DataSourceList:
+      type: object
+      description: List of DataSource resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+    StorageProfile:
+      type: object
+      description: >-
+        A CDI StorageProfile describing the capabilities and recommended
+        configuration for a specific Kubernetes StorageClass.
+      properties:
+        apiVersion:
+          type: string
+          enum:
+            - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+            - StorageProfile
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: StorageProfile specification with user-overridable settings.
+          properties:
+            claimPropertySets:
+              type: array
+              description: >-
+                Access mode and volume mode combinations to use when creating
+                PVCs from this StorageClass.
+              items:
+                type: object
+                properties:
+                  accessModes:
+                    type: array
+                    items:
+                      type: string
+                  volumeMode:
+                    type: string
+                    enum:
+                      - Block
+                      - Filesystem
+            cloneStrategy:
+              type: string
+              description: >-
+                Preferred clone strategy for this StorageClass. 'copy' uses pod-based
+                copy, 'snapshot' uses VolumeSnapshot, 'csi-clone' uses CSI clone.
+              enum:
+                - copy
+                - snapshot
+                - csi-clone
+            dataImportCronSourceFormat:
+              type: string
+              description: Source format used by DataImportCron.
+              enum:
+                - pvc
+                - snapshot
+        status:
+          type: object
+          description: Observed StorageProfile status.
+          properties:
+            storageClass:
+              type: string
+              description: Name of the associated StorageClass.
+            provisioner:
+              type: string
+              description: CSI provisioner name.
+            claimPropertySets:
+              type: array
+              description: Detected PVC property sets.
+              items:
+                type: object
+            cloneStrategy:
+              type: string
+              description: Detected clone strategy.
+            dataImportCronSourceFormat:
+              type: string
+    StorageProfileList:
+      type: object
+      description: List of StorageProfile resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageProfile'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
