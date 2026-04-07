@@ -52,7 +52,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines:
     get:
       operationId: listNamespacedVirtualMachine
-      summary: List VirtualMachines in a namespace
+      summary: KubeVirt List VirtualMachines in a namespace
       description: >-
         Returns all VirtualMachine resources in the specified namespace. Each
         VirtualMachine defines a desired VM configuration and controls whether
@@ -78,7 +78,7 @@ paths:
           description: Forbidden
     post:
       operationId: createNamespacedVirtualMachine
-      summary: Create a VirtualMachine
+      summary: KubeVirt Create a VirtualMachine
       description: >-
         Creates a new VirtualMachine resource defining the VM's CPU, memory,
         disk, network configuration, and run strategy. KubeVirt will create a
@@ -111,7 +111,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}:
     get:
       operationId: readNamespacedVirtualMachine
-      summary: Get a VirtualMachine
+      summary: KubeVirt Get a VirtualMachine
       description: >-
         Returns the specified VirtualMachine resource including its current
         status, run strategy, and associated VirtualMachineInstance reference.
@@ -135,7 +135,7 @@ paths:
           description: VirtualMachine not found
     put:
       operationId: replaceNamespacedVirtualMachine
-      summary: Replace a VirtualMachine
+      summary: KubeVirt Replace a VirtualMachine
       description: >-
         Replaces the entire VirtualMachine resource. Changes to the template
         take effect on the next VM start or restart.
@@ -165,7 +165,7 @@ paths:
           description: VirtualMachine not found
     patch:
       operationId: patchNamespacedVirtualMachine
-      summary: Partially update a VirtualMachine
+      summary: KubeVirt Partially update a VirtualMachine
       description: >-
         Applies a partial update to the VirtualMachine using JSON Merge Patch or
         Strategic Merge Patch.
@@ -195,7 +195,7 @@ paths:
           description: VirtualMachine not found
     delete:
       operationId: deleteNamespacedVirtualMachine
-      summary: Delete a VirtualMachine
+      summary: KubeVirt Delete a VirtualMachine
       description: >-
         Deletes the VirtualMachine resource. If the VM is running, it will be
         stopped first.
@@ -216,7 +216,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/start:
     put:
       operationId: startVirtualMachine
-      summary: Start a VirtualMachine
+      summary: KubeVirt Start a VirtualMachine
       description: >-
         Starts a stopped VirtualMachine by creating a VirtualMachineInstance.
         The VM must be in the Stopped state. Optionally accepts a start options
@@ -244,7 +244,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/stop:
     put:
       operationId: stopVirtualMachine
-      summary: Stop a VirtualMachine
+      summary: KubeVirt Stop a VirtualMachine
       description: >-
         Stops a running VirtualMachine by deleting its VirtualMachineInstance.
         Optionally accepts stop options including a grace period for shutdown.
@@ -271,7 +271,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/restart:
     put:
       operationId: restartVirtualMachine
-      summary: Restart a VirtualMachine
+      summary: KubeVirt Restart a VirtualMachine
       description: >-
         Restarts a running VirtualMachine by stopping and starting it. The VM
         must currently be running.
@@ -298,7 +298,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/migrate:
     put:
       operationId: migrateVirtualMachine
-      summary: Migrate a VirtualMachine
+      summary: KubeVirt Migrate a VirtualMachine
       description: >-
         Initiates a live migration of the running VirtualMachine to another node.
         Creates a VirtualMachineInstanceMigration resource to track the migration.
@@ -319,7 +319,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances:
     get:
       operationId: listNamespacedVirtualMachineInstance
-      summary: List VirtualMachineInstances
+      summary: KubeVirt List VirtualMachineInstances
       description: >-
         Returns all running VirtualMachineInstance resources in the specified
         namespace. Each VMI represents an active virtual machine process.
@@ -344,7 +344,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}:
     get:
       operationId: readNamespacedVirtualMachineInstance
-      summary: Get a VirtualMachineInstance
+      summary: KubeVirt Get a VirtualMachineInstance
       description: >-
         Returns the specified VirtualMachineInstance including its phase,
         network interfaces, volumes, node assignment, and guest OS information.
@@ -367,7 +367,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/pause:
     put:
       operationId: pauseVirtualMachineInstance
-      summary: Pause a VirtualMachineInstance
+      summary: KubeVirt Pause a VirtualMachineInstance
       description: >-
         Pauses the CPU execution of a running VirtualMachineInstance. The VMI
         remains in memory but no CPU cycles are consumed.
@@ -388,7 +388,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/unpause:
     put:
       operationId: unpauseVirtualMachineInstance
-      summary: Unpause a VirtualMachineInstance
+      summary: KubeVirt Unpause a VirtualMachineInstance
       description: >-
         Resumes CPU execution of a paused VirtualMachineInstance.
       tags:
@@ -408,7 +408,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/vnc:
     get:
       operationId: getVirtualMachineInstanceVNC
-      summary: Access VM VNC console
+      summary: KubeVirt Access VM VNC console
       description: >-
         Opens a WebSocket connection to the VNC console of the specified
         VirtualMachineInstance for graphical console access.
@@ -427,7 +427,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/console:
     get:
       operationId: getVirtualMachineInstanceConsole
-      summary: Access VM serial console
+      summary: KubeVirt Access VM serial console
       description: >-
         Opens a WebSocket connection to the serial console of the specified
         VirtualMachineInstance for text-based console access.
@@ -446,7 +446,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations:
     get:
       operationId: listNamespacedVMIMigration
-      summary: List VirtualMachineInstanceMigrations
+      summary: KubeVirt List VirtualMachineInstanceMigrations
       description: >-
         Returns all VirtualMachineInstanceMigration resources in the specified
         namespace. Each migration resource tracks the state of a live migration.
@@ -469,7 +469,7 @@ paths:
           description: Forbidden
     post:
       operationId: createNamespacedVMIMigration
-      summary: Create a VirtualMachineInstanceMigration
+      summary: KubeVirt Create a VirtualMachineInstanceMigration
       description: >-
         Initiates a live migration by creating a VirtualMachineInstanceMigration
         resource. The migration moves the VMI to another node while it continues
@@ -498,7 +498,7 @@ paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}:
     get:
       operationId: readNamespacedVMIMigration
-      summary: Get a VirtualMachineInstanceMigration
+      summary: KubeVirt Get a VirtualMachineInstanceMigration
       description: >-
         Returns the specified migration resource including its current phase,
         source and target node information, and completion status.
@@ -520,7 +520,7 @@ paths:
           description: Migration not found
     delete:
       operationId: deleteNamespacedVMIMigration
-      summary: Cancel a VirtualMachineInstanceMigration
+      summary: KubeVirt Cancel a VirtualMachineInstanceMigration
       description: >-
         Cancels an in-progress migration by deleting the
         VirtualMachineInstanceMigration resource.

@@ -48,7 +48,7 @@ paths:
   /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes:
     get:
       operationId: listNamespacedDataVolume
-      summary: List DataVolumes in a namespace
+      summary: KubeVirt List DataVolumes in a namespace
       description: >-
         Returns all DataVolume resources in the specified namespace. Each
         DataVolume tracks the progress of importing or cloning a VM disk image
@@ -74,7 +74,7 @@ paths:
           description: Forbidden
     post:
       operationId: createNamespacedDataVolume
-      summary: Create a DataVolume
+      summary: KubeVirt Create a DataVolume
       description: >-
         Creates a new DataVolume that will automatically import or clone disk
         image data from the specified source into a managed PVC. Supports
@@ -108,7 +108,7 @@ paths:
   /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}:
     get:
       operationId: readNamespacedDataVolume
-      summary: Get a DataVolume
+      summary: KubeVirt Get a DataVolume
       description: >-
         Returns the specified DataVolume including its import progress, phase,
         and associated PVC status.
@@ -130,7 +130,7 @@ paths:
           description: DataVolume not found
     put:
       operationId: replaceNamespacedDataVolume
-      summary: Replace a DataVolume
+      summary: KubeVirt Replace a DataVolume
       description: >-
         Replaces the entire DataVolume resource specification.
       tags:
@@ -159,7 +159,7 @@ paths:
           description: DataVolume not found
     delete:
       operationId: deleteNamespacedDataVolume
-      summary: Delete a DataVolume
+      summary: KubeVirt Delete a DataVolume
       description: >-
         Deletes the DataVolume and its managed PersistentVolumeClaim.
       tags:
@@ -177,7 +177,7 @@ paths:
   /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources:
     get:
       operationId: listNamespacedDataSource
-      summary: List DataSources in a namespace
+      summary: KubeVirt List DataSources in a namespace
       description: >-
         Returns all DataSource resources in the specified namespace. DataSources
         reference DataVolumes or VolumeSnapshots that can be used as clone sources.
@@ -198,7 +198,7 @@ paths:
           description: Unauthorized
     post:
       operationId: createNamespacedDataSource
-      summary: Create a DataSource
+      summary: KubeVirt Create a DataSource
       description: >-
         Creates a DataSource that points to a DataVolume or VolumeSnapshot as a
         reusable clone source for new DataVolumes.
@@ -226,7 +226,7 @@ paths:
   /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}:
     get:
       operationId: readNamespacedDataSource
-      summary: Get a DataSource
+      summary: KubeVirt Get a DataSource
       description: >-
         Returns the specified DataSource including its source reference and ready status.
       tags:
@@ -247,7 +247,7 @@ paths:
           description: DataSource not found
     delete:
       operationId: deleteNamespacedDataSource
-      summary: Delete a DataSource
+      summary: KubeVirt Delete a DataSource
       description: Deletes the specified DataSource resource.
       tags:
         - DataSources
@@ -264,7 +264,7 @@ paths:
   /apis/cdi.kubevirt.io/v1beta1/storageprofiles:
     get:
       operationId: listStorageProfiles
-      summary: List StorageProfiles
+      summary: KubeVirt List StorageProfiles
       description: >-
         Returns all StorageProfile resources in the cluster. StorageProfiles are
         automatically created by CDI for each StorageClass and describe its
@@ -286,7 +286,7 @@ paths:
   /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}:
     get:
       operationId: readStorageProfile
-      summary: Get a StorageProfile
+      summary: KubeVirt Get a StorageProfile
       description: >-
         Returns the specified StorageProfile including its claimed PVC properties,
         data import cron source format, and clone strategy.
@@ -307,7 +307,7 @@ paths:
           description: StorageProfile not found
     patch:
       operationId: patchStorageProfile
-      summary: Update a StorageProfile
+      summary: KubeVirt Update a StorageProfile
       description: >-
         Partially updates a StorageProfile to configure custom clone strategies
         or override default access modes for this StorageClass.
