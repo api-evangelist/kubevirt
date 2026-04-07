@@ -26,24 +26,21 @@ servers:
         default: localhost:6443
         description: Address of the Kubernetes API server
 tags:
-  - name: DataVolumes
-    description: >-
-      Operations for managing DataVolume resources. A DataVolume is a managed
-      PersistentVolumeClaim with an integrated import/clone pipeline that
-      automatically populates the volume from a specified source.
   - name: DataSources
     description: >-
       Operations for managing DataSource resources. A DataSource references an
       existing DataVolume or VolumeSnapshot as a source for cloning into new
       DataVolumes.
+  - name: DataVolumes
+    description: >-
+      Operations for managing DataVolume resources. A DataVolume is a managed
+      PersistentVolumeClaim with an integrated import/clone pipeline that
+      automatically populates the volume from a specified source.
   - name: StorageProfiles
     description: >-
       Operations for managing StorageProfile resources. StorageProfiles describe
       the capabilities of a StorageClass and provide default clone and access
       mode strategies.
-  - name: CDIConfig
-    description: >-
-      Operations for reading and managing global CDI configuration.
 paths:
   /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes:
     get:

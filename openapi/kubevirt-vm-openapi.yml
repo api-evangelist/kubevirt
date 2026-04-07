@@ -26,28 +26,28 @@ servers:
         default: localhost:6443
         description: Address of the Kubernetes API server
 tags:
-  - name: VirtualMachines
+  - name: VirtualMachineInstanceMigrations
     description: >-
-      Operations for managing VirtualMachine (VM) resources. A VirtualMachine
-      defines the desired state and configuration of a virtual machine, providing
-      lifecycle management and persistence across restarts.
+      Operations for managing live migration of VirtualMachineInstances from one
+      node to another without downtime.
   - name: VirtualMachineInstances
     description: >-
       Operations for managing VirtualMachineInstance (VMI) resources. A
       VirtualMachineInstance represents a running virtual machine and tracks its
       actual state.
-  - name: VirtualMachineInstanceMigrations
+  - name: VirtualMachines
     description: >-
-      Operations for managing live migration of VirtualMachineInstances from one
-      node to another without downtime.
-  - name: VMLifecycle
-    description: >-
-      Subresource operations for VM lifecycle management including start, stop,
-      pause, unpause, restart, migrate, and adding/removing volumes.
+      Operations for managing VirtualMachine (VM) resources. A VirtualMachine
+      defines the desired state and configuration of a virtual machine, providing
+      lifecycle management and persistence across restarts.
   - name: VMConsole
     description: >-
       Subresource endpoints for accessing VM consoles via VNC, serial console,
       and USB redirection.
+  - name: VMLifecycle
+    description: >-
+      Subresource operations for VM lifecycle management including start, stop,
+      pause, unpause, restart, migrate, and adding/removing volumes.
 paths:
   /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines:
     get:
