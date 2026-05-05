@@ -1,0 +1,13 @@
+{
+  "repo": "kubevirt",
+  "feeds": [
+    {
+      "source": "https://kubevirt.io/blogs/",
+      "feed_url": "https://kubevirt.io//feed.xml",
+      "saved": 10,
+      "title": "KubeVirt.io"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:30:20Z"
+}
