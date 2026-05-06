@@ -1,0 +1,385 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt Containerized Data Importer API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine
+    disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate
+    importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as
+    KubeVirt VM disks.
+  tags:
+  - Kubevirt
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: kubevirt
+    baseUri: https://localhost:6443
+    description: KubeVirt Containerized Data Importer API HTTP API.
+    resources:
+    - name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespac
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes
+      operations:
+      - name: listnamespaceddatavolume
+        method: GET
+        description: KubeVirt List DataVolumes in a namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createnamespaceddatavolume
+        method: POST
+        description: KubeVirt Create a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespac
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+      operations:
+      - name: readnamespaceddatavolume
+        method: GET
+        description: KubeVirt Get a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: replacenamespaceddatavolume
+        method: PUT
+        description: KubeVirt Replace a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletenamespaceddatavolume
+        method: DELETE
+        description: KubeVirt Delete a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespac
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources
+      operations:
+      - name: listnamespaceddatasource
+        method: GET
+        description: KubeVirt List DataSources in a namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createnamespaceddatasource
+        method: POST
+        description: KubeVirt Create a DataSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespac
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}
+      operations:
+      - name: readnamespaceddatasource
+        method: GET
+        description: KubeVirt Get a DataSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletenamespaceddatasource
+        method: DELETE
+        description: KubeVirt Delete a DataSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-cdi-kubevirt-io-v1beta1-storageprofiles
+      path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles
+      operations:
+      - name: liststorageprofiles
+        method: GET
+        description: KubeVirt List StorageProfiles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-cdi-kubevirt-io-v1beta1-storageprofiles-nam
+      path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}
+      operations:
+      - name: readstorageprofile
+        method: GET
+        description: KubeVirt Get a StorageProfile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: patchstorageprofile
+        method: PATCH
+        description: KubeVirt Update a StorageProfile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: kubevirt-rest
+    description: REST adapter for KubeVirt Containerized Data Importer API.
+    resources:
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes
+      name: listnamespaceddatavolume
+      operations:
+      - method: GET
+        name: listnamespaceddatavolume
+        description: KubeVirt List DataVolumes in a namespace
+        call: kubevirt.listnamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes
+      name: createnamespaceddatavolume
+      operations:
+      - method: POST
+        name: createnamespaceddatavolume
+        description: KubeVirt Create a DataVolume
+        call: kubevirt.createnamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+      name: readnamespaceddatavolume
+      operations:
+      - method: GET
+        name: readnamespaceddatavolume
+        description: KubeVirt Get a DataVolume
+        call: kubevirt.readnamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+      name: replacenamespaceddatavolume
+      operations:
+      - method: PUT
+        name: replacenamespaceddatavolume
+        description: KubeVirt Replace a DataVolume
+        call: kubevirt.replacenamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+      name: deletenamespaceddatavolume
+      operations:
+      - method: DELETE
+        name: deletenamespaceddatavolume
+        description: KubeVirt Delete a DataVolume
+        call: kubevirt.deletenamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources
+      name: listnamespaceddatasource
+      operations:
+      - method: GET
+        name: listnamespaceddatasource
+        description: KubeVirt List DataSources in a namespace
+        call: kubevirt.listnamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources
+      name: createnamespaceddatasource
+      operations:
+      - method: POST
+        name: createnamespaceddatasource
+        description: KubeVirt Create a DataSource
+        call: kubevirt.createnamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}
+      name: readnamespaceddatasource
+      operations:
+      - method: GET
+        name: readnamespaceddatasource
+        description: KubeVirt Get a DataSource
+        call: kubevirt.readnamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}
+      name: deletenamespaceddatasource
+      operations:
+      - method: DELETE
+        name: deletenamespaceddatasource
+        description: KubeVirt Delete a DataSource
+        call: kubevirt.deletenamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles
+      name: liststorageprofiles
+      operations:
+      - method: GET
+        name: liststorageprofiles
+        description: KubeVirt List StorageProfiles
+        call: kubevirt.liststorageprofiles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}
+      name: readstorageprofile
+      operations:
+      - method: GET
+        name: readstorageprofile
+        description: KubeVirt Get a StorageProfile
+        call: kubevirt.readstorageprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}
+      name: patchstorageprofile
+      operations:
+      - method: PATCH
+        name: patchstorageprofile
+        description: KubeVirt Update a StorageProfile
+        call: kubevirt.patchstorageprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: kubevirt-mcp
+    transport: http
+    description: MCP adapter for KubeVirt Containerized Data Importer API for AI agent use.
+    tools:
+    - name: listnamespaceddatavolume
+      description: KubeVirt List DataVolumes in a namespace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubevirt.listnamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createnamespaceddatavolume
+      description: KubeVirt Create a DataVolume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: kubevirt.createnamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: readnamespaceddatavolume
+      description: KubeVirt Get a DataVolume
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubevirt.readnamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: replacenamespaceddatavolume
+      description: KubeVirt Replace a DataVolume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: kubevirt.replacenamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletenamespaceddatavolume
+      description: KubeVirt Delete a DataVolume
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: kubevirt.deletenamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listnamespaceddatasource
+      description: KubeVirt List DataSources in a namespace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubevirt.listnamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createnamespaceddatasource
+      description: KubeVirt Create a DataSource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: kubevirt.createnamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: readnamespaceddatasource
+      description: KubeVirt Get a DataSource
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubevirt.readnamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletenamespaceddatasource
+      description: KubeVirt Delete a DataSource
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: kubevirt.deletenamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: liststorageprofiles
+      description: KubeVirt List StorageProfiles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubevirt.liststorageprofiles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: readstorageprofile
+      description: KubeVirt Get a StorageProfile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: kubevirt.readstorageprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: patchstorageprofile
+      description: KubeVirt Update a StorageProfile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: kubevirt.patchstorageprofile
+      outputParameters:
+      - type: object
+        mapping: $.
