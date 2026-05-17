@@ -69,13 +69,13 @@ apis:
 common:
   - type: Website
     url: https://kubevirt.io/
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/kubevirt-context.jsonld
   - type: JSONSchema
     url: json-schema/kubevirt-vm-schema.json
   - type: Documentation
     url: https://kubevirt.io/user-guide/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/kubevirt
   - type: GitHubRepository
     url: https://github.com/kubevirt/kubevirt
