@@ -1,0 +1,160 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt VM Management API — VirtualMachineInstanceMigrations
+  description: 'KubeVirt VM Management API — VirtualMachineInstanceMigrations. 4 operations. Lead operation: KubeVirt List
+    VirtualMachineInstanceMigrations. Self-contained Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - VirtualMachineInstanceMigrations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vm-virtualmachineinstancemigrations
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt VM Management API — VirtualMachineInstanceMigrations business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstancemigrations
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations
+      operations:
+      - name: listnamespacedvmimigration
+        method: GET
+        description: KubeVirt List VirtualMachineInstanceMigrations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createnamespacedvmimigration
+        method: POST
+        description: KubeVirt Create a VirtualMachineInstanceMigration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstancemigrations-name
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}
+      operations:
+      - name: readnamespacedvmimigration
+        method: GET
+        description: KubeVirt Get a VirtualMachineInstanceMigration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletenamespacedvmimigration
+        method: DELETE
+        description: KubeVirt Cancel a VirtualMachineInstanceMigration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: vm-virtualmachineinstancemigrations-rest
+    port: 8080
+    description: REST adapter for KubeVirt VM Management API — VirtualMachineInstanceMigrations. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachineinstancemigrations
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachineinstancemigrations
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstancemigrations.
+      operations:
+      - method: GET
+        name: listnamespacedvmimigration
+        description: KubeVirt List VirtualMachineInstanceMigrations
+        call: vm-virtualmachineinstancemigrations.listnamespacedvmimigration
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createnamespacedvmimigration
+        description: KubeVirt Create a VirtualMachineInstanceMigration
+        call: vm-virtualmachineinstancemigrations.createnamespacedvmimigration
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachineinstancemigrations-name
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstancemigrations-name.
+      operations:
+      - method: GET
+        name: readnamespacedvmimigration
+        description: KubeVirt Get a VirtualMachineInstanceMigration
+        call: vm-virtualmachineinstancemigrations.readnamespacedvmimigration
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletenamespacedvmimigration
+        description: KubeVirt Cancel a VirtualMachineInstanceMigration
+        call: vm-virtualmachineinstancemigrations.deletenamespacedvmimigration
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vm-virtualmachineinstancemigrations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt VM Management API — VirtualMachineInstanceMigrations. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: kubevirt-list-virtualmachineinstancemigrations
+      description: KubeVirt List VirtualMachineInstanceMigrations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachineinstancemigrations.listnamespacedvmimigration
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-create-virtualmachineinstancemigration
+      description: KubeVirt Create a VirtualMachineInstanceMigration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: vm-virtualmachineinstancemigrations.createnamespacedvmimigration
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-get-virtualmachineinstancemigration
+      description: KubeVirt Get a VirtualMachineInstanceMigration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachineinstancemigrations.readnamespacedvmimigration
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-cancel-virtualmachineinstancemigration
+      description: KubeVirt Cancel a VirtualMachineInstanceMigration
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: vm-virtualmachineinstancemigrations.deletenamespacedvmimigration
+      outputParameters:
+      - type: object
+        mapping: $.

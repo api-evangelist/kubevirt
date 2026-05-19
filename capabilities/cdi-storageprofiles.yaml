@@ -1,0 +1,135 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt Containerized Data Importer API — StorageProfiles
+  description: 'KubeVirt Containerized Data Importer API — StorageProfiles. 3 operations. Lead operation: KubeVirt List StorageProfiles.
+    Self-contained Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - StorageProfiles
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cdi-storageprofiles
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt Containerized Data Importer API — StorageProfiles business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: apis-cdi.kubevirt.io-v1beta1-storageprofiles
+      path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles
+      operations:
+      - name: liststorageprofiles
+        method: GET
+        description: KubeVirt List StorageProfiles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-cdi.kubevirt.io-v1beta1-storageprofiles-name
+      path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}
+      operations:
+      - name: readstorageprofile
+        method: GET
+        description: KubeVirt Get a StorageProfile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: patchstorageprofile
+        method: PATCH
+        description: KubeVirt Update a StorageProfile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: cdi-storageprofiles-rest
+    port: 8080
+    description: REST adapter for KubeVirt Containerized Data Importer API — StorageProfiles. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/cdi-kubevirt-io/v1beta1/storageprofiles
+      name: apis-cdi-kubevirt-io-v1beta1-storageprofiles
+      description: REST surface for apis-cdi.kubevirt.io-v1beta1-storageprofiles.
+      operations:
+      - method: GET
+        name: liststorageprofiles
+        description: KubeVirt List StorageProfiles
+        call: cdi-storageprofiles.liststorageprofiles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/cdi-kubevirt-io/v1beta1/storageprofiles/{name}
+      name: apis-cdi-kubevirt-io-v1beta1-storageprofiles-name
+      description: REST surface for apis-cdi.kubevirt.io-v1beta1-storageprofiles-name.
+      operations:
+      - method: GET
+        name: readstorageprofile
+        description: KubeVirt Get a StorageProfile
+        call: cdi-storageprofiles.readstorageprofile
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchstorageprofile
+        description: KubeVirt Update a StorageProfile
+        call: cdi-storageprofiles.patchstorageprofile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cdi-storageprofiles-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt Containerized Data Importer API — StorageProfiles. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: kubevirt-list-storageprofiles
+      description: KubeVirt List StorageProfiles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cdi-storageprofiles.liststorageprofiles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-get-storageprofile
+      description: KubeVirt Get a StorageProfile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cdi-storageprofiles.readstorageprofile
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-update-storageprofile
+      description: KubeVirt Update a StorageProfile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cdi-storageprofiles.patchstorageprofile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

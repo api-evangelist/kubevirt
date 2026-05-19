@@ -1,0 +1,194 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt Containerized Data Importer API — DataVolumes
+  description: 'KubeVirt Containerized Data Importer API — DataVolumes. 5 operations. Lead operation: KubeVirt List DataVolumes
+    in a namespace. Self-contained Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - DataVolumes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cdi-datavolumes
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt Containerized Data Importer API — DataVolumes business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datavolumes
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes
+      operations:
+      - name: listnamespaceddatavolume
+        method: GET
+        description: KubeVirt List DataVolumes in a namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createnamespaceddatavolume
+        method: POST
+        description: KubeVirt Create a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datavolumes-name
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+      operations:
+      - name: readnamespaceddatavolume
+        method: GET
+        description: KubeVirt Get a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: replacenamespaceddatavolume
+        method: PUT
+        description: KubeVirt Replace a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletenamespaceddatavolume
+        method: DELETE
+        description: KubeVirt Delete a DataVolume
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: cdi-datavolumes-rest
+    port: 8080
+    description: REST adapter for KubeVirt Containerized Data Importer API — DataVolumes. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/cdi-kubevirt-io/v1beta1/namespaces/{namespace}/datavolumes
+      name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespace-datavolumes
+      description: REST surface for apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datavolumes.
+      operations:
+      - method: GET
+        name: listnamespaceddatavolume
+        description: KubeVirt List DataVolumes in a namespace
+        call: cdi-datavolumes.listnamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createnamespaceddatavolume
+        description: KubeVirt Create a DataVolume
+        call: cdi-datavolumes.createnamespaceddatavolume
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/cdi-kubevirt-io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+      name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespace-datavolumes-name
+      description: REST surface for apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datavolumes-name.
+      operations:
+      - method: GET
+        name: readnamespaceddatavolume
+        description: KubeVirt Get a DataVolume
+        call: cdi-datavolumes.readnamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: replacenamespaceddatavolume
+        description: KubeVirt Replace a DataVolume
+        call: cdi-datavolumes.replacenamespaceddatavolume
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletenamespaceddatavolume
+        description: KubeVirt Delete a DataVolume
+        call: cdi-datavolumes.deletenamespaceddatavolume
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cdi-datavolumes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt Containerized Data Importer API — DataVolumes. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: kubevirt-list-datavolumes-namespace
+      description: KubeVirt List DataVolumes in a namespace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cdi-datavolumes.listnamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-create-datavolume
+      description: KubeVirt Create a DataVolume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cdi-datavolumes.createnamespaceddatavolume
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-get-datavolume
+      description: KubeVirt Get a DataVolume
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cdi-datavolumes.readnamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-replace-datavolume
+      description: KubeVirt Replace a DataVolume
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cdi-datavolumes.replacenamespaceddatavolume
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-delete-datavolume
+      description: KubeVirt Delete a DataVolume
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cdi-datavolumes.deletenamespaceddatavolume
+      outputParameters:
+      - type: object
+        mapping: $.

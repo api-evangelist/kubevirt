@@ -1,0 +1,99 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt VM Management API — VirtualMachineInstances
+  description: 'KubeVirt VM Management API — VirtualMachineInstances. 2 operations. Lead operation: KubeVirt List VirtualMachineInstances.
+    Self-contained Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - VirtualMachineInstances
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vm-virtualmachineinstances
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt VM Management API — VirtualMachineInstances business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances
+      operations:
+      - name: listnamespacedvirtualmachineinstance
+        method: GET
+        description: KubeVirt List VirtualMachineInstances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances-name
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}
+      operations:
+      - name: readnamespacedvirtualmachineinstance
+        method: GET
+        description: KubeVirt Get a VirtualMachineInstance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: vm-virtualmachineinstances-rest
+    port: 8080
+    description: REST adapter for KubeVirt VM Management API — VirtualMachineInstances. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachineinstances
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachineinstances
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances.
+      operations:
+      - method: GET
+        name: listnamespacedvirtualmachineinstance
+        description: KubeVirt List VirtualMachineInstances
+        call: vm-virtualmachineinstances.listnamespacedvirtualmachineinstance
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachineinstances/{name}
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachineinstances-name
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances-name.
+      operations:
+      - method: GET
+        name: readnamespacedvirtualmachineinstance
+        description: KubeVirt Get a VirtualMachineInstance
+        call: vm-virtualmachineinstances.readnamespacedvirtualmachineinstance
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vm-virtualmachineinstances-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt VM Management API — VirtualMachineInstances. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: kubevirt-list-virtualmachineinstances
+      description: KubeVirt List VirtualMachineInstances
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachineinstances.listnamespacedvirtualmachineinstance
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-get-virtualmachineinstance
+      description: KubeVirt Get a VirtualMachineInstance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachineinstances.readnamespacedvirtualmachineinstance
+      outputParameters:
+      - type: object
+        mapping: $.

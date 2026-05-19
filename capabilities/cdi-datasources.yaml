@@ -1,0 +1,159 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt Containerized Data Importer API — DataSources
+  description: 'KubeVirt Containerized Data Importer API — DataSources. 4 operations. Lead operation: KubeVirt List DataSources
+    in a namespace. Self-contained Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - DataSources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cdi-datasources
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt Containerized Data Importer API — DataSources business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datasources
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources
+      operations:
+      - name: listnamespaceddatasource
+        method: GET
+        description: KubeVirt List DataSources in a namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createnamespaceddatasource
+        method: POST
+        description: KubeVirt Create a DataSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datasources-name
+      path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}
+      operations:
+      - name: readnamespaceddatasource
+        method: GET
+        description: KubeVirt Get a DataSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletenamespaceddatasource
+        method: DELETE
+        description: KubeVirt Delete a DataSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: cdi-datasources-rest
+    port: 8080
+    description: REST adapter for KubeVirt Containerized Data Importer API — DataSources. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/cdi-kubevirt-io/v1beta1/namespaces/{namespace}/datasources
+      name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespace-datasources
+      description: REST surface for apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datasources.
+      operations:
+      - method: GET
+        name: listnamespaceddatasource
+        description: KubeVirt List DataSources in a namespace
+        call: cdi-datasources.listnamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createnamespaceddatasource
+        description: KubeVirt Create a DataSource
+        call: cdi-datasources.createnamespaceddatasource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/cdi-kubevirt-io/v1beta1/namespaces/{namespace}/datasources/{name}
+      name: apis-cdi-kubevirt-io-v1beta1-namespaces-namespace-datasources-name
+      description: REST surface for apis-cdi.kubevirt.io-v1beta1-namespaces-namespace-datasources-name.
+      operations:
+      - method: GET
+        name: readnamespaceddatasource
+        description: KubeVirt Get a DataSource
+        call: cdi-datasources.readnamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletenamespaceddatasource
+        description: KubeVirt Delete a DataSource
+        call: cdi-datasources.deletenamespaceddatasource
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cdi-datasources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt Containerized Data Importer API — DataSources. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: kubevirt-list-datasources-namespace
+      description: KubeVirt List DataSources in a namespace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cdi-datasources.listnamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-create-datasource
+      description: KubeVirt Create a DataSource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cdi-datasources.createnamespaceddatasource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-get-datasource
+      description: KubeVirt Get a DataSource
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cdi-datasources.readnamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-delete-datasource
+      description: KubeVirt Delete a DataSource
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cdi-datasources.deletenamespaceddatasource
+      outputParameters:
+      - type: object
+        mapping: $.

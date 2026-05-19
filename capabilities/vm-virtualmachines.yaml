@@ -1,0 +1,229 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt VM Management API — VirtualMachines
+  description: 'KubeVirt VM Management API — VirtualMachines. 6 operations. Lead operation: KubeVirt List VirtualMachines
+    in a namespace. Self-contained Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - VirtualMachines
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vm-virtualmachines
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt VM Management API — VirtualMachines business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachines
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines
+      operations:
+      - name: listnamespacedvirtualmachine
+        method: GET
+        description: KubeVirt List VirtualMachines in a namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createnamespacedvirtualmachine
+        method: POST
+        description: KubeVirt Create a VirtualMachine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachines-name
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}
+      operations:
+      - name: readnamespacedvirtualmachine
+        method: GET
+        description: KubeVirt Get a VirtualMachine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: replacenamespacedvirtualmachine
+        method: PUT
+        description: KubeVirt Replace a VirtualMachine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: patchnamespacedvirtualmachine
+        method: PATCH
+        description: KubeVirt Partially update a VirtualMachine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletenamespacedvirtualmachine
+        method: DELETE
+        description: KubeVirt Delete a VirtualMachine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: vm-virtualmachines-rest
+    port: 8080
+    description: REST adapter for KubeVirt VM Management API — VirtualMachines. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachines
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachines
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachines.
+      operations:
+      - method: GET
+        name: listnamespacedvirtualmachine
+        description: KubeVirt List VirtualMachines in a namespace
+        call: vm-virtualmachines.listnamespacedvirtualmachine
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createnamespacedvirtualmachine
+        description: KubeVirt Create a VirtualMachine
+        call: vm-virtualmachines.createnamespacedvirtualmachine
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachines/{name}
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachines-name
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachines-name.
+      operations:
+      - method: GET
+        name: readnamespacedvirtualmachine
+        description: KubeVirt Get a VirtualMachine
+        call: vm-virtualmachines.readnamespacedvirtualmachine
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: replacenamespacedvirtualmachine
+        description: KubeVirt Replace a VirtualMachine
+        call: vm-virtualmachines.replacenamespacedvirtualmachine
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchnamespacedvirtualmachine
+        description: KubeVirt Partially update a VirtualMachine
+        call: vm-virtualmachines.patchnamespacedvirtualmachine
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletenamespacedvirtualmachine
+        description: KubeVirt Delete a VirtualMachine
+        call: vm-virtualmachines.deletenamespacedvirtualmachine
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vm-virtualmachines-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt VM Management API — VirtualMachines. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: kubevirt-list-virtualmachines-namespace
+      description: KubeVirt List VirtualMachines in a namespace
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachines.listnamespacedvirtualmachine
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-create-virtualmachine
+      description: KubeVirt Create a VirtualMachine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: vm-virtualmachines.createnamespacedvirtualmachine
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-get-virtualmachine
+      description: KubeVirt Get a VirtualMachine
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachines.readnamespacedvirtualmachine
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-replace-virtualmachine
+      description: KubeVirt Replace a VirtualMachine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachines.replacenamespacedvirtualmachine
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-partially-update-virtualmachine
+      description: KubeVirt Partially update a VirtualMachine
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: vm-virtualmachines.patchnamespacedvirtualmachine
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-delete-virtualmachine
+      description: KubeVirt Delete a VirtualMachine
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: vm-virtualmachines.deletenamespacedvirtualmachine
+      outputParameters:
+      - type: object
+        mapping: $.

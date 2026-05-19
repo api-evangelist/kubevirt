@@ -1,0 +1,99 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: KubeVirt VM Management API — VMConsole
+  description: 'KubeVirt VM Management API — VMConsole. 2 operations. Lead operation: KubeVirt Access VM serial console. Self-contained
+    Naftiko capability covering one Kubevirt business surface.'
+  tags:
+  - Kubevirt
+  - VMConsole
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KUBEVIRT_API_KEY: KUBEVIRT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vm-vmconsole
+    baseUri: https://{kubernetes-api-server}
+    description: KubeVirt VM Management API — VMConsole business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances-name-console
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/console
+      operations:
+      - name: getvirtualmachineinstanceconsole
+        method: GET
+        description: KubeVirt Access VM serial console
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances-name-vnc
+      path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/vnc
+      operations:
+      - name: getvirtualmachineinstancevnc
+        method: GET
+        description: KubeVirt Access VM VNC console
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: vm-vmconsole-rest
+    port: 8080
+    description: REST adapter for KubeVirt VM Management API — VMConsole. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/console
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachineinstances-name-console
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances-name-console.
+      operations:
+      - method: GET
+        name: getvirtualmachineinstanceconsole
+        description: KubeVirt Access VM serial console
+        call: vm-vmconsole.getvirtualmachineinstanceconsole
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/kubevirt-io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/vnc
+      name: apis-kubevirt-io-v1-namespaces-namespace-virtualmachineinstances-name-vnc
+      description: REST surface for apis-kubevirt.io-v1-namespaces-namespace-virtualmachineinstances-name-vnc.
+      operations:
+      - method: GET
+        name: getvirtualmachineinstancevnc
+        description: KubeVirt Access VM VNC console
+        call: vm-vmconsole.getvirtualmachineinstancevnc
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vm-vmconsole-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for KubeVirt VM Management API — VMConsole. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: kubevirt-access-vm-serial-console
+      description: KubeVirt Access VM serial console
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-vmconsole.getvirtualmachineinstanceconsole
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: kubevirt-access-vm-vnc-console
+      description: KubeVirt Access VM VNC console
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vm-vmconsole.getvirtualmachineinstancevnc
+      outputParameters:
+      - type: object
+        mapping: $.
