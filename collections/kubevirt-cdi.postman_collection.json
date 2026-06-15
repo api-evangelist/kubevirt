@@ -1,0 +1,2978 @@
+{
+  "item": [
+    {
+      "id": "101ea5b4-c99e-45a3-a6bb-877a18748098",
+      "name": "DataSources",
+      "description": {
+        "content": "Operations for managing DataSource resources. A DataSource references an existing DataVolume or VolumeSnapshot as a source for cloning into new DataVolumes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "572c0527-cdce-4309-8888-16691ec4412d",
+          "name": "KubeVirt List DataSources in a namespace",
+          "request": {
+            "name": "KubeVirt List DataSources in a namespace",
+            "description": {
+              "content": "Returns all DataSource resources in the specified namespace. DataSources reference DataVolumes or VolumeSnapshots that can be used as clone sources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datasources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "labelSelector",
+                  "value": "<string>",
+                  "description": "Label selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4e36040-91d8-4bab-9b41-ff8d404139d6",
+              "name": "List of DataSources",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"items\": [\n    {\n      \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n      \"kind\": \"DataSource\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1977-09-01T03:50:56.328Z\"\n      },\n      \"spec\": {\n        \"source\": {\n          \"pvc\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          },\n          \"snapshot\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          }\n        }\n      },\n      \"status\": {\n        \"source\": {}\n      }\n    },\n    {\n      \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n      \"kind\": \"DataSource\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"2021-10-27T02:26:05.408Z\"\n      },\n      \"spec\": {\n        \"source\": {\n          \"pvc\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          },\n          \"snapshot\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          }\n        }\n      },\n      \"status\": {\n        \"source\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7eaa7701-99bb-4e4e-bf57-72fc4cc5abac",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a7a7114-8c90-4bed-8c33-15c81dd020b2",
+          "name": "KubeVirt Create a DataSource",
+          "request": {
+            "name": "KubeVirt Create a DataSource",
+            "description": {
+              "content": "Creates a DataSource that points to a DataVolume or VolumeSnapshot as a reusable clone source for new DataVolumes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datasources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"pvc\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"snapshot\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"source\": \"<object>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "72f6c773-c498-4f79-a76d-7c2c52ff5736",
+              "name": "DataSource created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"2015-01-20T09:35:04.317Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"pvc\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"snapshot\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"source\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"DataSource\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1960-04-06T11:58:31.024Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      }\n    }\n  },\n  \"status\": {\n    \"source\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7451da9b-e9b6-4d06-8c7f-f83d7f10f96b",
+              "name": "Invalid DataSource specification",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"2015-01-20T09:35:04.317Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"pvc\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"snapshot\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"source\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "00221164-0a9a-4465-a077-8c7d64facea0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"2015-01-20T09:35:04.317Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"pvc\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"snapshot\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"conditions\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"source\": \"<object>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34566121-7c3b-4861-8433-4ec562d57f67",
+          "name": "KubeVirt Get a DataSource",
+          "request": {
+            "name": "KubeVirt Get a DataSource",
+            "description": {
+              "content": "Returns the specified DataSource including its source reference and ready status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datasources",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a6a0e13-d19a-4a80-8378-8028f18a3e17",
+              "name": "DataSource details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"DataSource\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1960-04-06T11:58:31.024Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      }\n    }\n  },\n  \"status\": {\n    \"source\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3639508-ae3a-4420-86bd-137e23791b97",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5eb52898-f7e9-4e00-a2bc-cd5f936e2546",
+              "name": "DataSource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d657608-3a61-4f3c-a0c6-81e77f0eb1cd",
+          "name": "KubeVirt Delete a DataSource",
+          "request": {
+            "name": "KubeVirt Delete a DataSource",
+            "description": {
+              "content": "Deletes the specified DataSource resource.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datasources",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2c8faf23-88c7-44a7-ab8c-86cf3ab26ad8",
+              "name": "DataSource deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "426eb4ce-135c-42d4-9079-733118e29e06",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2260d7c5-c7e9-4d14-b5f9-62d64149728e",
+              "name": "DataSource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datasources",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3ae20dc6-690f-4f2f-981d-214211479780",
+      "name": "DataVolumes",
+      "description": {
+        "content": "Operations for managing DataVolume resources. A DataVolume is a managed PersistentVolumeClaim with an integrated import/clone pipeline that automatically populates the volume from a specified source.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "54f91613-725f-4bbc-b75f-90d393ee901e",
+          "name": "KubeVirt List DataVolumes in a namespace",
+          "request": {
+            "name": "KubeVirt List DataVolumes in a namespace",
+            "description": {
+              "content": "Returns all DataVolume resources in the specified namespace. Each DataVolume tracks the progress of importing or cloning a VM disk image into a PersistentVolumeClaim.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datavolumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "labelSelector",
+                  "value": "<string>",
+                  "description": "Label selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "fieldSelector",
+                  "value": "<string>",
+                  "description": "Field selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "continue",
+                  "value": "<string>",
+                  "description": "Pagination continuation token."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "309227a3-26bd-472c-8dca-0604563d03aa",
+              "name": "List of DataVolumes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"items\": [\n    {\n      \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n      \"kind\": \"DataVolume\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"2010-03-27T11:59:04.991Z\"\n      },\n      \"spec\": {\n        \"source\": {\n          \"http\": {\n            \"url\": \"http://TeqtbRlMARZMeDymgktvpOocpXkVK.pta6GWvHV5uKdBUZozdPCWXy3FsZ0HfaiDNftkODqpN\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\",\n            \"extraHeaders\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"secretExtraHeaders\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"s3\": {\n            \"url\": \"http://Jf.eaatOBwPW.mBghxR1gQA4NuJrSNVQDsZAO+MSBm5lTWP.k,dFsn\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\"\n          },\n          \"registry\": {\n            \"url\": \"string\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\",\n            \"pullMethod\": \"pod\"\n          },\n          \"pvc\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          },\n          \"snapshot\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          },\n          \"upload\": {},\n          \"blank\": {},\n          \"imageio\": {\n            \"url\": \"string\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\",\n            \"diskId\": \"string\"\n          },\n          \"vddk\": {\n            \"url\": \"string\",\n            \"secretRef\": \"string\",\n            \"uuid\": \"string\",\n            \"thumbprint\": \"string\",\n            \"backingFile\": \"string\",\n            \"initImageURL\": \"string\"\n          }\n        },\n        \"sourceRef\": {\n          \"kind\": \"DataSource\",\n          \"namespace\": \"string\",\n          \"name\": \"string\"\n        },\n        \"pvc\": {\n          \"accessModes\": [\n            \"ReadWriteOnce\",\n            \"ReadWriteOnce\"\n          ],\n          \"resources\": {\n            \"requests\": {\n              \"key_0\": \"string\"\n            }\n          },\n          \"storageClassName\": \"string\",\n          \"volumeMode\": \"Filesystem\"\n        },\n        \"storage\": {\n          \"resources\": {\n            \"requests\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\",\n              \"key_2\": \"string\"\n            }\n          },\n          \"storageClassName\": \"string\",\n          \"accessModes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"volumeMode\": \"string\"\n        },\n        \"priorityClassName\": \"string\",\n        \"contentType\": \"archive\",\n        \"preallocation\": true,\n        \"finalCheckpoint\": true\n      },\n      \"status\": {\n        \"phase\": \"WaitForFirstConsumer\",\n        \"progress\": \"string\",\n        \"restartCount\": 1385,\n        \"claimName\": \"string\"\n      }\n    },\n    {\n      \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n      \"kind\": \"DataVolume\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1973-04-05T14:14:01.104Z\"\n      },\n      \"spec\": {\n        \"source\": {\n          \"http\": {\n            \"url\": \"https://rhWuSBNoQxr.vuohOlA-m0ex1pVpa0VLU9GbChLZWKWi2pOfGRwuB\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\",\n            \"extraHeaders\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"secretExtraHeaders\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"s3\": {\n            \"url\": \"http://BrEJjMKlfVHCpnK.ucCn,f9.g,GlJ\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\"\n          },\n          \"registry\": {\n            \"url\": \"string\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\",\n            \"pullMethod\": \"node\"\n          },\n          \"pvc\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          },\n          \"snapshot\": {\n            \"name\": \"string\",\n            \"namespace\": \"string\"\n          },\n          \"upload\": {},\n          \"blank\": {},\n          \"imageio\": {\n            \"url\": \"string\",\n            \"secretRef\": \"string\",\n            \"certConfigMap\": \"string\",\n            \"diskId\": \"string\"\n          },\n          \"vddk\": {\n            \"url\": \"string\",\n            \"secretRef\": \"string\",\n            \"uuid\": \"string\",\n            \"thumbprint\": \"string\",\n            \"backingFile\": \"string\",\n            \"initImageURL\": \"string\"\n          }\n        },\n        \"sourceRef\": {\n          \"kind\": \"DataSource\",\n          \"namespace\": \"string\",\n          \"name\": \"string\"\n        },\n        \"pvc\": {\n          \"accessModes\": [\n            \"ReadWriteMany\",\n            \"ReadOnlyMany\"\n          ],\n          \"resources\": {\n            \"requests\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\"\n            }\n          },\n          \"storageClassName\": \"string\",\n          \"volumeMode\": \"Block\"\n        },\n        \"storage\": {\n          \"resources\": {\n            \"requests\": {\n              \"key_0\": \"string\"\n            }\n          },\n          \"storageClassName\": \"string\",\n          \"accessModes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"volumeMode\": \"string\"\n        },\n        \"priorityClassName\": \"string\",\n        \"contentType\": \"kubevirt\",\n        \"preallocation\": false,\n        \"finalCheckpoint\": true\n      },\n      \"status\": {\n        \"phase\": \"PVCBound\",\n        \"progress\": \"string\",\n        \"restartCount\": 1941,\n        \"claimName\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59de5c9f-c7fd-43e8-b400-82f94ebf5a3f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f6ed271a-5d56-4ae5-a9bc-1797c6b0e1a0",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95dfc188-c2fc-47fa-af6f-305f41e63b6c",
+          "name": "KubeVirt Create a DataVolume",
+          "request": {
+            "name": "KubeVirt Create a DataVolume",
+            "description": {
+              "content": "Creates a new DataVolume that will automatically import or clone disk image data from the specified source into a managed PVC. Supports importing from HTTP(S) endpoints, S3 buckets, OCI container registries, existing PVCs, and VolumeSnapshots.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datavolumes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"<uri>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\",\n        \"extraHeaders\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"secretExtraHeaders\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"<uri>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\"\n      },\n      \"registry\": {\n        \"url\": \"<string>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\",\n        \"pullMethod\": \"<string>\"\n      },\n      \"pvc\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"snapshot\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"upload\": \"<object>\",\n      \"blank\": \"<object>\",\n      \"imageio\": {\n        \"url\": \"<string>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\",\n        \"diskId\": \"<string>\"\n      },\n      \"vddk\": {\n        \"url\": \"<string>\",\n        \"secretRef\": \"<string>\",\n        \"uuid\": \"<string>\",\n        \"thumbprint\": \"<string>\",\n        \"backingFile\": \"<string>\",\n        \"initImageURL\": \"<string>\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        }\n      },\n      \"storageClassName\": \"<string>\",\n      \"volumeMode\": \"<string>\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        }\n      },\n      \"storageClassName\": \"<string>\",\n      \"accessModes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"volumeMode\": \"<string>\"\n    },\n    \"priorityClassName\": \"<string>\",\n    \"contentType\": \"<string>\",\n    \"preallocation\": \"<boolean>\",\n    \"checkpoints\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"finalCheckpoint\": \"<boolean>\"\n  },\n  \"status\": {\n    \"phase\": \"<string>\",\n    \"progress\": \"<string>\",\n    \"restartCount\": \"<integer>\",\n    \"claimName\": \"<string>\",\n    \"conditions\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dfc43a08-2d52-4d84-8b2c-600d5d47baea",
+              "name": "DataVolume created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"DataVolume\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1986-03-03T00:27:57.260Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"https://BEnLCZlZEcfiNkujWHQVz.leyUo7nxY4VGEVKLgrg1rlpGvLCkQMjlxPEeGDD3rKO,IRI-CHV1t7J,jHcQzw\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"https://APuuzbztyOPZHCJLCALtoIxMaxTtAraM.ekgXffM.C\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"node\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadOnlyMany\",\n        \"ReadWriteOnce\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": true,\n    \"finalCheckpoint\": false\n  },\n  \"status\": {\n    \"phase\": \"Pending\",\n    \"progress\": \"string\",\n    \"restartCount\": 5542,\n    \"claimName\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc05a3c1-dbf3-431b-a23b-6e0430afbbeb",
+              "name": "Invalid DataVolume specification",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "66e8bb65-e4fb-473d-a5d9-63d41eaae8b5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62a68469-b0ca-4d6d-8016-ceecca8a8f86",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b3737eed-dfda-4960-9b27-a18c03a717fd",
+              "name": "DataVolume already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f38b6d8c-c731-4a07-93ea-e2433db7387a",
+          "name": "KubeVirt Get a DataVolume",
+          "request": {
+            "name": "KubeVirt Get a DataVolume",
+            "description": {
+              "content": "Returns the specified DataVolume including its import progress, phase, and associated PVC status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datavolumes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66bdbf69-62f7-4886-bb08-24da73d66be0",
+              "name": "DataVolume details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"DataVolume\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1986-03-03T00:27:57.260Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"https://BEnLCZlZEcfiNkujWHQVz.leyUo7nxY4VGEVKLgrg1rlpGvLCkQMjlxPEeGDD3rKO,IRI-CHV1t7J,jHcQzw\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"https://APuuzbztyOPZHCJLCALtoIxMaxTtAraM.ekgXffM.C\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"node\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadOnlyMany\",\n        \"ReadWriteOnce\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": true,\n    \"finalCheckpoint\": false\n  },\n  \"status\": {\n    \"phase\": \"Pending\",\n    \"progress\": \"string\",\n    \"restartCount\": 5542,\n    \"claimName\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6013e5c6-c8ed-4ef6-8527-a1511d336059",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f534fd4d-d3a6-44ab-8c1a-cf3a5cf8f41e",
+              "name": "DataVolume not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dee5eafd-5329-4bb9-b437-30c32806585f",
+          "name": "KubeVirt Replace a DataVolume",
+          "request": {
+            "name": "KubeVirt Replace a DataVolume",
+            "description": {
+              "content": "Replaces the entire DataVolume resource specification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datavolumes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"<uri>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\",\n        \"extraHeaders\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"secretExtraHeaders\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"<uri>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\"\n      },\n      \"registry\": {\n        \"url\": \"<string>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\",\n        \"pullMethod\": \"<string>\"\n      },\n      \"pvc\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"snapshot\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"upload\": \"<object>\",\n      \"blank\": \"<object>\",\n      \"imageio\": {\n        \"url\": \"<string>\",\n        \"secretRef\": \"<string>\",\n        \"certConfigMap\": \"<string>\",\n        \"diskId\": \"<string>\"\n      },\n      \"vddk\": {\n        \"url\": \"<string>\",\n        \"secretRef\": \"<string>\",\n        \"uuid\": \"<string>\",\n        \"thumbprint\": \"<string>\",\n        \"backingFile\": \"<string>\",\n        \"initImageURL\": \"<string>\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        }\n      },\n      \"storageClassName\": \"<string>\",\n      \"volumeMode\": \"<string>\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        }\n      },\n      \"storageClassName\": \"<string>\",\n      \"accessModes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"volumeMode\": \"<string>\"\n    },\n    \"priorityClassName\": \"<string>\",\n    \"contentType\": \"<string>\",\n    \"preallocation\": \"<boolean>\",\n    \"checkpoints\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"finalCheckpoint\": \"<boolean>\"\n  },\n  \"status\": {\n    \"phase\": \"<string>\",\n    \"progress\": \"<string>\",\n    \"restartCount\": \"<integer>\",\n    \"claimName\": \"<string>\",\n    \"conditions\": [\n      \"<object>\",\n      \"<object>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "243df2a5-b329-4686-901f-17d6b9ade4f1",
+              "name": "DataVolume updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"DataVolume\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1986-03-03T00:27:57.260Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"https://BEnLCZlZEcfiNkujWHQVz.leyUo7nxY4VGEVKLgrg1rlpGvLCkQMjlxPEeGDD3rKO,IRI-CHV1t7J,jHcQzw\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"https://APuuzbztyOPZHCJLCALtoIxMaxTtAraM.ekgXffM.C\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"node\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadOnlyMany\",\n        \"ReadWriteOnce\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": true,\n    \"finalCheckpoint\": false\n  },\n  \"status\": {\n    \"phase\": \"Pending\",\n    \"progress\": \"string\",\n    \"restartCount\": 5542,\n    \"claimName\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d658b081-7081-44a4-95ad-80c15c76ea3a",
+              "name": "Invalid specification",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c01fa248-c4af-47c5-8802-385dfe9d9d0e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b4b2c458-daaa-4cd6-b740-774d96e0a010",
+              "name": "DataVolume not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1956-01-21T14:48:01.708Z\"\n  },\n  \"spec\": {\n    \"source\": {\n      \"http\": {\n        \"url\": \"http://YhfsmjmGMprXofvqeYNluZwlUbrOez.hykCnfvTfl,ix,EXDtU13wE6emmhNloAtW-12B,0fXszoB5LGw8uVbjpsCnl+o+1GP29hFwjRe4q\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"extraHeaders\": [\n          \"string\",\n          \"string\"\n        ],\n        \"secretExtraHeaders\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"s3\": {\n        \"url\": \"http://JZwoeCWhXEGked.euH52iT1fhPt8OPDfTzIph6BPJOJGnJ\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\"\n      },\n      \"registry\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"pullMethod\": \"pod\"\n      },\n      \"pvc\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"snapshot\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"upload\": {},\n      \"blank\": {},\n      \"imageio\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"certConfigMap\": \"string\",\n        \"diskId\": \"string\"\n      },\n      \"vddk\": {\n        \"url\": \"string\",\n        \"secretRef\": \"string\",\n        \"uuid\": \"string\",\n        \"thumbprint\": \"string\",\n        \"backingFile\": \"string\",\n        \"initImageURL\": \"string\"\n      }\n    },\n    \"sourceRef\": {\n      \"kind\": \"DataSource\",\n      \"namespace\": \"string\",\n      \"name\": \"string\"\n    },\n    \"pvc\": {\n      \"accessModes\": [\n        \"ReadWriteMany\",\n        \"ReadWriteMany\"\n      ],\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"volumeMode\": \"Block\"\n    },\n    \"storage\": {\n      \"resources\": {\n        \"requests\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"storageClassName\": \"string\",\n      \"accessModes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"volumeMode\": \"string\"\n    },\n    \"priorityClassName\": \"string\",\n    \"contentType\": \"kubevirt\",\n    \"preallocation\": false,\n    \"finalCheckpoint\": true\n  },\n  \"status\": {\n    \"phase\": \"PVCBound\",\n    \"progress\": \"string\",\n    \"restartCount\": 5163,\n    \"claimName\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b61602b-4db0-4a41-88ce-5a46ef3a8b9c",
+          "name": "KubeVirt Delete a DataVolume",
+          "request": {
+            "name": "KubeVirt Delete a DataVolume",
+            "description": {
+              "content": "Deletes the DataVolume and its managed PersistentVolumeClaim.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "namespaces",
+                ":namespace",
+                "datavolumes",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "01be6950-55e3-4262-9bce-6355cde0cfeb",
+              "name": "DataVolume deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "02708aa3-0a74-4642-99f2-e0e2ac86468e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bac749fb-68fa-4f50-bfa7-9ed76902db5b",
+              "name": "DataVolume not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "namespaces",
+                    ":namespace",
+                    "datavolumes",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "5c252f90-f93b-4a70-9036-f88712899c5a",
+      "name": "StorageProfiles",
+      "description": {
+        "content": "Operations for managing StorageProfile resources. StorageProfiles describe the capabilities of a StorageClass and provide default clone and access mode strategies.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4e4c9bc-50d9-422f-8f19-1f6ee9ea23ac",
+          "name": "KubeVirt List StorageProfiles",
+          "request": {
+            "name": "KubeVirt List StorageProfiles",
+            "description": {
+              "content": "Returns all StorageProfile resources in the cluster. StorageProfiles are automatically created by CDI for each StorageClass and describe its supported access modes and recommended clone strategies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "storageprofiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "labelSelector",
+                  "value": "<string>",
+                  "description": "Label selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results per page."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ae8ce21-5f12-440c-a819-fe69ad87e325",
+              "name": "List of StorageProfiles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"items\": [\n    {\n      \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n      \"kind\": \"StorageProfile\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"2007-08-11T00:09:34.171Z\"\n      },\n      \"spec\": {\n        \"claimPropertySets\": [\n          {\n            \"accessModes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"volumeMode\": \"Block\"\n          },\n          {\n            \"accessModes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"volumeMode\": \"Filesystem\"\n          }\n        ],\n        \"cloneStrategy\": \"copy\",\n        \"dataImportCronSourceFormat\": \"pvc\"\n      },\n      \"status\": {\n        \"storageClass\": \"string\",\n        \"provisioner\": \"string\",\n        \"cloneStrategy\": \"string\",\n        \"dataImportCronSourceFormat\": \"string\"\n      }\n    },\n    {\n      \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n      \"kind\": \"StorageProfile\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1981-07-13T14:30:54.687Z\"\n      },\n      \"spec\": {\n        \"claimPropertySets\": [\n          {\n            \"accessModes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"volumeMode\": \"Block\"\n          },\n          {\n            \"accessModes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"volumeMode\": \"Filesystem\"\n          }\n        ],\n        \"cloneStrategy\": \"copy\",\n        \"dataImportCronSourceFormat\": \"pvc\"\n      },\n      \"status\": {\n        \"storageClass\": \"string\",\n        \"provisioner\": \"string\",\n        \"cloneStrategy\": \"string\",\n        \"dataImportCronSourceFormat\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26fe0306-160b-4f77-a07d-e7d6ba739419",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5531581-add9-4c73-82db-799f6ee6f2b0",
+          "name": "KubeVirt Get a StorageProfile",
+          "request": {
+            "name": "KubeVirt Get a StorageProfile",
+            "description": {
+              "content": "Returns the specified StorageProfile including its claimed PVC properties, data import cron source format, and clone strategy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "storageprofiles",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04a93cc6-4991-4d27-8990-7259a7c8b1a2",
+              "name": "StorageProfile details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"StorageProfile\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"2017-07-06T03:38:01.564Z\"\n  },\n  \"spec\": {\n    \"claimPropertySets\": [\n      {\n        \"accessModes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"volumeMode\": \"Filesystem\"\n      },\n      {\n        \"accessModes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"volumeMode\": \"Filesystem\"\n      }\n    ],\n    \"cloneStrategy\": \"copy\",\n    \"dataImportCronSourceFormat\": \"snapshot\"\n  },\n  \"status\": {\n    \"storageClass\": \"string\",\n    \"provisioner\": \"string\",\n    \"cloneStrategy\": \"string\",\n    \"dataImportCronSourceFormat\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00c31b6f-8e71-4dbf-b119-5156cf0ab146",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d7589c53-ff65-45d0-8291-2a336a643d51",
+              "name": "StorageProfile not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5e154ee-2a5e-448d-bef0-29a95fec2ebb",
+          "name": "KubeVirt Update a StorageProfile",
+          "request": {
+            "name": "KubeVirt Update a StorageProfile",
+            "description": {
+              "content": "Partially updates a StorageProfile to configure custom clone strategies or override default access modes for this StorageClass.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "cdi.kubevirt.io",
+                "v1beta1",
+                "storageprofiles",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/merge-patch+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "841bafeb-78ee-431e-b77d-d5659c787b24",
+              "name": "StorageProfile updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"cdi.kubevirt.io/v1beta1\",\n  \"kind\": \"StorageProfile\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"2017-07-06T03:38:01.564Z\"\n  },\n  \"spec\": {\n    \"claimPropertySets\": [\n      {\n        \"accessModes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"volumeMode\": \"Filesystem\"\n      },\n      {\n        \"accessModes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"volumeMode\": \"Filesystem\"\n      }\n    ],\n    \"cloneStrategy\": \"copy\",\n    \"dataImportCronSourceFormat\": \"snapshot\"\n  },\n  \"status\": {\n    \"storageClass\": \"string\",\n    \"provisioner\": \"string\",\n    \"cloneStrategy\": \"string\",\n    \"dataImportCronSourceFormat\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae077dc1-830c-42df-b097-c1118446138c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "07432220-987f-430b-9c2d-34bcef07c5bb",
+              "name": "StorageProfile not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "cdi.kubevirt.io",
+                    "v1beta1",
+                    "storageprofiles",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Address of the Kubernetes API server",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:6443",
+      "key": "kubernetes-api-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{kubernetes-api-server}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fdef8138-cef0-4b37-820c-f4b0f2d011c4",
+    "name": "KubeVirt Containerized Data Importer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.\n\nContact Support:\n Name: KubeVirt Community",
+      "type": "text/plain"
+    }
+  }
+}

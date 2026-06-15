@@ -1,0 +1,350 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DataVolumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List DataVolumes in a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datavolumes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "fieldSelector",
+                "value": "",
+                "type": "query",
+                "description": "Field selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination continuation token."
+              }
+            ]
+          },
+          "docs": "Returns all DataVolume resources in the specified namespace. Each DataVolume tracks the progress of importing or cloning a VM disk image into a PersistentVolumeClaim."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Create a DataVolume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datavolumes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new DataVolume that will automatically import or clone disk image data from the specified source into a managed PVC. Supports importing from HTTP(S) endpoints, S3 buckets, OCI container registries, existing PVCs, and VolumeSnapshots."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a DataVolume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datavolumes/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified DataVolume including its import progress, phase, and associated PVC status."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Replace a DataVolume",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datavolumes/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the entire DataVolume resource specification."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Delete a DataVolume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datavolumes/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Deletes the DataVolume and its managed PersistentVolumeClaim."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DataSources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List DataSources in a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datasources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              }
+            ]
+          },
+          "docs": "Returns all DataSource resources in the specified namespace. DataSources reference DataVolumes or VolumeSnapshots that can be used as clone sources."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Create a DataSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datasources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a DataSource that points to a DataVolume or VolumeSnapshot as a reusable clone source for new DataVolumes."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a DataSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datasources/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified DataSource including its source reference and ready status."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Delete a DataSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/namespaces/:namespace/datasources/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Deletes the specified DataSource resource."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "StorageProfiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List StorageProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/storageprofiles",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              }
+            ]
+          },
+          "docs": "Returns all StorageProfile resources in the cluster. StorageProfiles are automatically created by CDI for each StorageClass and describe its supported access modes and recommended clone strategies."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a StorageProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/storageprofiles/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified StorageProfile including its claimed PVC properties, data import cron source format, and clone strategy."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Update a StorageProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/storageprofiles/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates a StorageProfile to configure custom clone strategies or override default access modes for this StorageClass."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
