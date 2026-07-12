@@ -62,6 +62,8 @@ apis:
       - Storage
       - Virtual Machines
 common:
+  - type: DomainSecurity
+    url: security/kubevirt-domain-security.yml
   - type: Website
     url: https://kubevirt.io/
   - type: JSONLD
