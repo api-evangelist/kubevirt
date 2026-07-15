@@ -1,0 +1,445 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/kubevirt-cdi-openapi.yml, openapi/kubevirt-vm-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 32
+  by_action_class:
+    connected: 14
+    acting: 18
+  by_consequence:
+    read: 14
+    write: 17
+    safety-critical: 1
+  human_in_the_loop_required: 1
+operations:
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes
+  method: get
+  operationId: listNamespacedDataVolume
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes
+  method: post
+  operationId: createNamespacedDataVolume
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+  method: get
+  operationId: readNamespacedDataVolume
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+  method: put
+  operationId: replaceNamespacedDataVolume
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datavolumes/{name}
+  method: delete
+  operationId: deleteNamespacedDataVolume
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources
+  method: get
+  operationId: listNamespacedDataSource
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources
+  method: post
+  operationId: createNamespacedDataSource
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}
+  method: get
+  operationId: readNamespacedDataSource
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}
+  method: delete
+  operationId: deleteNamespacedDataSource
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles
+  method: get
+  operationId: listStorageProfiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}
+  method: get
+  operationId: readStorageProfile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}
+  method: patch
+  operationId: patchStorageProfile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines
+  method: get
+  operationId: listNamespacedVirtualMachine
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines
+  method: post
+  operationId: createNamespacedVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}
+  method: get
+  operationId: readNamespacedVirtualMachine
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}
+  method: put
+  operationId: replaceNamespacedVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}
+  method: patch
+  operationId: patchNamespacedVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}
+  method: delete
+  operationId: deleteNamespacedVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/start
+  method: put
+  operationId: startVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/stop
+  method: put
+  operationId: stopVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/restart
+  method: put
+  operationId: restartVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/migrate
+  method: put
+  operationId: migrateVirtualMachine
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances
+  method: get
+  operationId: listNamespacedVirtualMachineInstance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}
+  method: get
+  operationId: readNamespacedVirtualMachineInstance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/pause
+  method: put
+  operationId: pauseVirtualMachineInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/unpause
+  method: put
+  operationId: unpauseVirtualMachineInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/vnc
+  method: get
+  operationId: getVirtualMachineInstanceVNC
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/console
+  method: get
+  operationId: getVirtualMachineInstanceConsole
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations
+  method: get
+  operationId: listNamespacedVMIMigration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations
+  method: post
+  operationId: createNamespacedVMIMigration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}
+  method: get
+  operationId: readNamespacedVMIMigration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}
+  method: delete
+  operationId: deleteNamespacedVMIMigration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
