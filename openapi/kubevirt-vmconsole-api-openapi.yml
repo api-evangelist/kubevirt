@@ -1,0 +1,75 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer DataSources VMConsole API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
+  version: 1.59.0
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://{kubernetes-api-server}
+  description: Kubernetes API server
+  variables:
+    kubernetes-api-server:
+      default: localhost:6443
+      description: Address of the Kubernetes API server
+tags:
+- name: VMConsole
+  description: Subresource endpoints for accessing VM consoles via VNC, serial console, and USB redirection.
+paths:
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/vnc:
+    get:
+      operationId: getVirtualMachineInstanceVNC
+      summary: KubeVirt Access VM VNC console
+      description: Opens a WebSocket connection to the VNC console of the specified VirtualMachineInstance for graphical console access.
+      tags:
+      - VMConsole
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '101':
+          description: WebSocket connection established for VNC access
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/console:
+    get:
+      operationId: getVirtualMachineInstanceConsole
+      summary: KubeVirt Access VM serial console
+      description: Opens a WebSocket connection to the serial console of the specified VirtualMachineInstance for text-based console access.
+      tags:
+      - VMConsole
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '101':
+          description: WebSocket connection established for serial console access
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+components:
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

@@ -1,0 +1,219 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer DataSources StorageProfiles API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
+  version: 1.59.0
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://{kubernetes-api-server}
+  description: Kubernetes API server
+  variables:
+    kubernetes-api-server:
+      default: localhost:6443
+      description: Address of the Kubernetes API server
+tags:
+- name: StorageProfiles
+  description: Operations for managing StorageProfile resources. StorageProfiles describe the capabilities of a StorageClass and provide default clone and access mode strategies.
+paths:
+  /apis/cdi.kubevirt.io/v1beta1/storageprofiles:
+    get:
+      operationId: listStorageProfiles
+      summary: KubeVirt List StorageProfiles
+      description: Returns all StorageProfile resources in the cluster. StorageProfiles are automatically created by CDI for each StorageClass and describe its supported access modes and recommended clone strategies.
+      tags:
+      - StorageProfiles
+      parameters:
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of StorageProfiles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfileList'
+        '401':
+          description: Unauthorized
+  /apis/cdi.kubevirt.io/v1beta1/storageprofiles/{name}:
+    get:
+      operationId: readStorageProfile
+      summary: KubeVirt Get a StorageProfile
+      description: Returns the specified StorageProfile including its claimed PVC properties, data import cron source format, and clone strategy.
+      tags:
+      - StorageProfiles
+      parameters:
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: StorageProfile details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfile'
+        '401':
+          description: Unauthorized
+        '404':
+          description: StorageProfile not found
+    patch:
+      operationId: patchStorageProfile
+      summary: KubeVirt Update a StorageProfile
+      description: Partially updates a StorageProfile to configure custom clone strategies or override default access modes for this StorageClass.
+      tags:
+      - StorageProfiles
+      parameters:
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: StorageProfile updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageProfile'
+        '401':
+          description: Unauthorized
+        '404':
+          description: StorageProfile not found
+components:
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
+    StorageProfileList:
+      type: object
+      description: List of StorageProfile resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageProfile'
+    StorageProfile:
+      type: object
+      description: A CDI StorageProfile describing the capabilities and recommended configuration for a specific Kubernetes StorageClass.
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+          - StorageProfile
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: StorageProfile specification with user-overridable settings.
+          properties:
+            claimPropertySets:
+              type: array
+              description: Access mode and volume mode combinations to use when creating PVCs from this StorageClass.
+              items:
+                type: object
+                properties:
+                  accessModes:
+                    type: array
+                    items:
+                      type: string
+                  volumeMode:
+                    type: string
+                    enum:
+                    - Block
+                    - Filesystem
+            cloneStrategy:
+              type: string
+              description: Preferred clone strategy for this StorageClass. 'copy' uses pod-based copy, 'snapshot' uses VolumeSnapshot, 'csi-clone' uses CSI clone.
+              enum:
+              - copy
+              - snapshot
+              - csi-clone
+            dataImportCronSourceFormat:
+              type: string
+              description: Source format used by DataImportCron.
+              enum:
+              - pvc
+              - snapshot
+        status:
+          type: object
+          description: Observed StorageProfile status.
+          properties:
+            storageClass:
+              type: string
+              description: Name of the associated StorageClass.
+            provisioner:
+              type: string
+              description: CSI provisioner name.
+            claimPropertySets:
+              type: array
+              description: Detected PVC property sets.
+              items:
+                type: object
+            cloneStrategy:
+              type: string
+              description: Detected clone strategy.
+            dataImportCronSourceFormat:
+              type: string
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

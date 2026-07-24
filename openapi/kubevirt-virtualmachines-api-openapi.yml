@@ -1,0 +1,729 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer DataSources VirtualMachines API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
+  version: 1.59.0
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://{kubernetes-api-server}
+  description: Kubernetes API server
+  variables:
+    kubernetes-api-server:
+      default: localhost:6443
+      description: Address of the Kubernetes API server
+tags:
+- name: VirtualMachines
+  description: Operations for managing VirtualMachine (VM) resources. A VirtualMachine defines the desired state and configuration of a virtual machine, providing lifecycle management and persistence across restarts.
+paths:
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines:
+    get:
+      operationId: listNamespacedVirtualMachine
+      summary: KubeVirt List VirtualMachines in a namespace
+      description: Returns all VirtualMachine resources in the specified namespace. Each VirtualMachine defines a desired VM configuration and controls whether the VM is running or stopped.
+      tags:
+      - VirtualMachines
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/fieldSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: List of VirtualMachines
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      operationId: createNamespacedVirtualMachine
+      summary: KubeVirt Create a VirtualMachine
+      description: Creates a new VirtualMachine resource defining the VM's CPU, memory, disk, network configuration, and run strategy. KubeVirt will create a VirtualMachineInstance when the VM is started.
+      tags:
+      - VirtualMachines
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachine'
+      responses:
+        '201':
+          description: VirtualMachine created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '400':
+          description: Invalid VirtualMachine specification
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: VirtualMachine already exists
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}:
+    get:
+      operationId: readNamespacedVirtualMachine
+      summary: KubeVirt Get a VirtualMachine
+      description: Returns the specified VirtualMachine resource including its current status, run strategy, and associated VirtualMachineInstance reference.
+      tags:
+      - VirtualMachines
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: VirtualMachine details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: VirtualMachine not found
+    put:
+      operationId: replaceNamespacedVirtualMachine
+      summary: KubeVirt Replace a VirtualMachine
+      description: Replaces the entire VirtualMachine resource. Changes to the template take effect on the next VM start or restart.
+      tags:
+      - VirtualMachines
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachine'
+      responses:
+        '200':
+          description: VirtualMachine updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '400':
+          description: Invalid specification
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+    patch:
+      operationId: patchNamespacedVirtualMachine
+      summary: KubeVirt Partially update a VirtualMachine
+      description: Applies a partial update to the VirtualMachine using JSON Merge Patch or Strategic Merge Patch.
+      tags:
+      - VirtualMachines
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: VirtualMachine patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachine'
+        '400':
+          description: Invalid patch
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+    delete:
+      operationId: deleteNamespacedVirtualMachine
+      summary: KubeVirt Delete a VirtualMachine
+      description: Deletes the VirtualMachine resource. If the VM is running, it will be stopped first.
+      tags:
+      - VirtualMachines
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: VirtualMachine deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: VirtualMachine not found
+components:
+  schemas:
+    VirtualMachineStatus:
+      type: object
+      description: Observed status of a VirtualMachine.
+      properties:
+        ready:
+          type: boolean
+          description: Whether the VM is ready to accept connections.
+        created:
+          type: boolean
+          description: Whether the VMI has been created.
+        printableStatus:
+          type: string
+          description: Human-readable status string.
+          enum:
+          - Stopped
+          - Provisioning
+          - Starting
+          - Running
+          - Paused
+          - Migrating
+          - Stopping
+          - Terminating
+          - CrashLoopBackOff
+          - Unknown
+          - WaitingForVolumeBinding
+        conditions:
+          type: array
+          description: Conditions describing the VM's current state.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              status:
+                type: string
+              reason:
+                type: string
+              message:
+                type: string
+              lastTransitionTime:
+                type: string
+                format: date-time
+        volumeSnapshotStatuses:
+          type: array
+          description: Snapshot status of attached volumes.
+          items:
+            type: object
+    VirtualMachine:
+      type: object
+      description: A KubeVirt VirtualMachine resource defining the desired configuration and lifecycle of a virtual machine. Provides persistent VM definition with start/stop control.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - kubevirt.io/v1
+        kind:
+          type: string
+          enum:
+          - VirtualMachine
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/VirtualMachineSpec'
+        status:
+          $ref: '#/components/schemas/VirtualMachineStatus'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: Labels for organizing and selecting resources.
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: Non-identifying metadata.
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
+    VirtualMachineSpec:
+      type: object
+      description: Specification of a VirtualMachine.
+      properties:
+        running:
+          type: boolean
+          description: Mutually exclusive with runStrategy. If true, the VM should be running. Deprecated in favor of runStrategy.
+        runStrategy:
+          type: string
+          description: Controls when the VM is running. 'Always' restarts after crash, 'RerunOnFailure' only restarts on failure, 'Manual' requires explicit start/stop, 'Halted' keeps the VM stopped.
+          enum:
+          - Always
+          - RerunOnFailure
+          - Manual
+          - Halted
+          - Once
+        template:
+          $ref: '#/components/schemas/VirtualMachineInstanceTemplateSpec'
+        dataVolumeTemplates:
+          type: array
+          description: DataVolume templates to create alongside the VM. These are automatically managed by KubeVirt as part of the VM lifecycle.
+          items:
+            type: object
+    VirtualMachineInstanceTemplateSpec:
+      type: object
+      description: Template for creating a VirtualMachineInstance.
+      properties:
+        metadata:
+          type: object
+          description: Labels and annotations for the VMI.
+        spec:
+          $ref: '#/components/schemas/VirtualMachineInstanceSpec'
+    Disk:
+      type: object
+      description: A virtual disk device attached to the VM.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the disk, must match a volume name.
+        bootOrder:
+          type: integer
+          description: Boot order for this disk (lower numbers boot first).
+          minimum: 1
+        disk:
+          type: object
+          description: Virtio disk configuration.
+          properties:
+            bus:
+              type: string
+              enum:
+              - virtio
+              - sata
+              - scsi
+              - ide
+        cdrom:
+          type: object
+          description: CD-ROM device configuration.
+          properties:
+            bus:
+              type: string
+              enum:
+              - virtio
+              - sata
+              - scsi
+            readonly:
+              type: boolean
+        lun:
+          type: object
+          description: LUN device configuration.
+          properties:
+            bus:
+              type: string
+    VirtualMachineInstanceSpec:
+      type: object
+      description: Specification of the virtual machine hardware and guest configuration.
+      properties:
+        domain:
+          $ref: '#/components/schemas/DomainSpec'
+        networks:
+          type: array
+          description: Network interfaces to attach to the VM.
+          items:
+            $ref: '#/components/schemas/Network'
+        volumes:
+          type: array
+          description: Volumes to attach to the VM.
+          items:
+            $ref: '#/components/schemas/Volume'
+        affinity:
+          type: object
+          description: Kubernetes affinity rules for pod scheduling.
+        tolerations:
+          type: array
+          description: Kubernetes tolerations for node scheduling.
+          items:
+            type: object
+        nodeSelector:
+          type: object
+          additionalProperties:
+            type: string
+          description: Node selector constraints for VM placement.
+        hostname:
+          type: string
+          description: Hostname to set in the guest OS.
+        subdomain:
+          type: string
+          description: Subdomain for the VM's DNS entry.
+        terminationGracePeriodSeconds:
+          type: integer
+          description: Grace period in seconds before forceful VM termination.
+          minimum: 0
+        evictionStrategy:
+          type: string
+          description: Controls how the VM behaves during node eviction. 'LiveMigrate' migrates instead of stopping.
+          enum:
+          - LiveMigrate
+          - None
+    Interface:
+      type: object
+      description: A virtual network interface device.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the interface, must match a network name.
+        model:
+          type: string
+          description: Network interface model type. 'virtio' is recommended for best performance.
+          enum:
+          - virtio
+          - e1000
+          - e1000e
+          - rtl8139
+        masquerade:
+          type: object
+          description: NAT masquerade networking mode.
+        bridge:
+          type: object
+          description: Bridge networking mode, connected to a host bridge.
+        sriov:
+          type: object
+          description: SR-IOV passthrough networking mode.
+        macAddress:
+          type: string
+          description: Fixed MAC address for the interface.
+          pattern: ^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$
+        ports:
+          type: array
+          description: Port forwarding rules for masquerade interfaces.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              port:
+                type: integer
+                minimum: 1
+                maximum: 65535
+              protocol:
+                type: string
+                enum:
+                - TCP
+                - UDP
+    Volume:
+      type: object
+      description: A storage volume to attach to a disk device.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the volume, referenced by disk name.
+        containerDisk:
+          type: object
+          description: OCI container image used as a disk.
+          properties:
+            image:
+              type: string
+              description: OCI image reference containing the disk image.
+            imagePullPolicy:
+              type: string
+              enum:
+              - Always
+              - Never
+              - IfNotPresent
+        dataVolume:
+          type: object
+          description: DataVolume (CDI) as a disk source.
+          properties:
+            name:
+              type: string
+              description: Name of the DataVolume resource.
+        persistentVolumeClaim:
+          type: object
+          description: Kubernetes PersistentVolumeClaim as a disk source.
+          properties:
+            claimName:
+              type: string
+              description: Name of the PVC.
+            readOnly:
+              type: boolean
+        cloudInitNoCloud:
+          type: object
+          description: Cloud-init NoCloud data source for guest initialization.
+          properties:
+            userData:
+              type: string
+              description: Cloud-init user-data as a string.
+            networkData:
+              type: string
+              description: Cloud-init network-config as a string.
+        cloudInitConfigDrive:
+          type: object
+          description: Cloud-init Config Drive data source.
+          properties:
+            userData:
+              type: string
+            networkData:
+              type: string
+        sysprep:
+          type: object
+          description: Windows Sysprep answer file source.
+          properties:
+            configMap:
+              type: object
+              properties:
+                name:
+                  type: string
+        emptyDisk:
+          type: object
+          description: Ephemeral empty disk created for the VM.
+          properties:
+            capacity:
+              type: string
+              description: Disk capacity in Kubernetes resource quantity format.
+        hostDisk:
+          type: object
+          description: Host filesystem path as a disk.
+          properties:
+            path:
+              type: string
+              description: Absolute path on the host.
+            type:
+              type: string
+              enum:
+              - DiskOrCreate
+              - Disk
+    Network:
+      type: object
+      description: A network to attach a VM interface to.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the network, referenced by interface name.
+        pod:
+          type: object
+          description: Default pod network configuration.
+          properties:
+            vmNetworkCIDR:
+              type: string
+              description: CIDR for the VM network in masquerade mode.
+        multus:
+          type: object
+          description: Multus CNI network attachment.
+          properties:
+            networkName:
+              type: string
+              description: Name of the NetworkAttachmentDefinition.
+            default:
+              type: boolean
+              description: If true, this is the default network.
+    DomainSpec:
+      type: object
+      description: Virtual hardware configuration for the VM guest.
+      properties:
+        cpu:
+          type: object
+          description: CPU configuration for the VM.
+          properties:
+            cores:
+              type: integer
+              description: Number of CPU cores.
+              minimum: 1
+            sockets:
+              type: integer
+              description: Number of CPU sockets.
+              minimum: 1
+            threads:
+              type: integer
+              description: Number of CPU threads per core.
+              minimum: 1
+            model:
+              type: string
+              description: CPU model to emulate, e.g. 'host-model' or 'Westmere'.
+            dedicatedCpuPlacement:
+              type: boolean
+              description: If true, requests dedicated CPU pinning via CPU Manager.
+            features:
+              type: array
+              description: CPU feature flags to enable or disable.
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  policy:
+                    type: string
+                    enum:
+                    - force
+                    - require
+                    - optional
+                    - disable
+                    - forbid
+        memory:
+          type: object
+          description: Memory configuration for the VM.
+          properties:
+            guest:
+              type: string
+              description: Amount of memory for the guest OS in Kubernetes resource quantity format, e.g. '2Gi', '512Mi'.
+            hugepages:
+              type: object
+              description: Huge pages configuration.
+              properties:
+                pageSize:
+                  type: string
+                  description: Size of huge pages, e.g. '2Mi' or '1Gi'.
+        devices:
+          type: object
+          description: Virtual device configuration.
+          properties:
+            disks:
+              type: array
+              description: Disk devices attached to the VM.
+              items:
+                $ref: '#/components/schemas/Disk'
+            interfaces:
+              type: array
+              description: Network interface devices.
+              items:
+                $ref: '#/components/schemas/Interface'
+            rng:
+              type: object
+              description: Random number generator device configuration.
+            watchdog:
+              type: object
+              description: Hardware watchdog device configuration.
+        features:
+          type: object
+          description: Hardware feature flags for the VM.
+          properties:
+            acpi:
+              type: object
+              description: ACPI configuration.
+            smm:
+              type: object
+              description: System Management Mode configuration.
+            hyperv:
+              type: object
+              description: Hyper-V enlightenments for Windows VMs.
+        firmware:
+          type: object
+          description: Firmware configuration for the VM.
+          properties:
+            bootloader:
+              type: object
+              description: Bootloader configuration (BIOS or UEFI).
+              properties:
+                bios:
+                  type: object
+                  description: BIOS bootloader.
+                efi:
+                  type: object
+                  description: EFI/UEFI bootloader.
+                  properties:
+                    secureBoot:
+                      type: boolean
+                      description: If true, enables Secure Boot.
+            serial:
+              type: string
+              description: Serial number to expose to the guest.
+            uuid:
+              type: string
+              format: uuid
+              description: SMBIOS UUID for the VM.
+        machine:
+          type: object
+          description: Machine type configuration.
+          properties:
+            type:
+              type: string
+              description: Machine type, e.g. 'q35' or 'pc-q35-rhel8.4.0'.
+    VirtualMachineList:
+      type: object
+      description: List of VirtualMachine resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachine'
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination continuation token.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: Field selector to filter resources.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

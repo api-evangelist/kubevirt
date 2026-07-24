@@ -1,0 +1,212 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer DataSources VMLifecycle API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
+  version: 1.59.0
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://{kubernetes-api-server}
+  description: Kubernetes API server
+  variables:
+    kubernetes-api-server:
+      default: localhost:6443
+      description: Address of the Kubernetes API server
+tags:
+- name: VMLifecycle
+  description: Subresource operations for VM lifecycle management including start, stop, pause, unpause, restart, migrate, and adding/removing volumes.
+paths:
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/start:
+    put:
+      operationId: startVirtualMachine
+      summary: KubeVirt Start a VirtualMachine
+      description: Starts a stopped VirtualMachine by creating a VirtualMachineInstance. The VM must be in the Stopped state. Optionally accepts a start options body to control start behavior such as pausing immediately after start.
+      tags:
+      - VMLifecycle
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartOptions'
+      responses:
+        '202':
+          description: Start request accepted
+        '400':
+          description: VM is not in a startable state
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/stop:
+    put:
+      operationId: stopVirtualMachine
+      summary: KubeVirt Stop a VirtualMachine
+      description: Stops a running VirtualMachine by deleting its VirtualMachineInstance. Optionally accepts stop options including a grace period for shutdown.
+      tags:
+      - VMLifecycle
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopOptions'
+      responses:
+        '202':
+          description: Stop request accepted
+        '400':
+          description: VM is not running
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/restart:
+    put:
+      operationId: restartVirtualMachine
+      summary: KubeVirt Restart a VirtualMachine
+      description: Restarts a running VirtualMachine by stopping and starting it. The VM must currently be running.
+      tags:
+      - VMLifecycle
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestartOptions'
+      responses:
+        '202':
+          description: Restart request accepted
+        '400':
+          description: VM is not running
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachines/{name}/migrate:
+    put:
+      operationId: migrateVirtualMachine
+      summary: KubeVirt Migrate a VirtualMachine
+      description: Initiates a live migration of the running VirtualMachine to another node. Creates a VirtualMachineInstanceMigration resource to track the migration.
+      tags:
+      - VMLifecycle
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '202':
+          description: Migration request accepted
+        '400':
+          description: VM is not running or not migratable
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachine not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/pause:
+    put:
+      operationId: pauseVirtualMachineInstance
+      summary: KubeVirt Pause a VirtualMachineInstance
+      description: Pauses the CPU execution of a running VirtualMachineInstance. The VMI remains in memory but no CPU cycles are consumed.
+      tags:
+      - VMLifecycle
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '202':
+          description: Pause request accepted
+        '400':
+          description: VMI is not in a pausable state
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstances/{name}/unpause:
+    put:
+      operationId: unpauseVirtualMachineInstance
+      summary: KubeVirt Unpause a VirtualMachineInstance
+      description: Resumes CPU execution of a paused VirtualMachineInstance.
+      tags:
+      - VMLifecycle
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '202':
+          description: Unpause request accepted
+        '400':
+          description: VMI is not paused
+        '401':
+          description: Unauthorized
+        '404':
+          description: VirtualMachineInstance not found
+components:
+  schemas:
+    StartOptions:
+      type: object
+      description: Options for the VM start operation.
+      properties:
+        paused:
+          type: boolean
+          description: If true, starts the VM in a paused state.
+        dryRun:
+          type: array
+          description: Dry run options.
+          items:
+            type: string
+    RestartOptions:
+      type: object
+      description: Options for the VM restart operation.
+      properties:
+        gracePeriodSeconds:
+          type: integer
+          format: int64
+          description: Grace period in seconds before forced restart.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
+    StopOptions:
+      type: object
+      description: Options for the VM stop operation.
+      properties:
+        gracePeriod:
+          type: integer
+          format: int64
+          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

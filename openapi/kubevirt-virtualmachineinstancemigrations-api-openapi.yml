@@ -1,0 +1,246 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer DataSources VirtualMachineInstanceMigrations API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
+  version: 1.59.0
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://{kubernetes-api-server}
+  description: Kubernetes API server
+  variables:
+    kubernetes-api-server:
+      default: localhost:6443
+      description: Address of the Kubernetes API server
+tags:
+- name: VirtualMachineInstanceMigrations
+  description: Operations for managing live migration of VirtualMachineInstances from one node to another without downtime.
+paths:
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations:
+    get:
+      operationId: listNamespacedVMIMigration
+      summary: KubeVirt List VirtualMachineInstanceMigrations
+      description: Returns all VirtualMachineInstanceMigration resources in the specified namespace. Each migration resource tracks the state of a live migration.
+      tags:
+      - VirtualMachineInstanceMigrations
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of migrations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceMigrationList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      operationId: createNamespacedVMIMigration
+      summary: KubeVirt Create a VirtualMachineInstanceMigration
+      description: Initiates a live migration by creating a VirtualMachineInstanceMigration resource. The migration moves the VMI to another node while it continues running.
+      tags:
+      - VirtualMachineInstanceMigrations
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+      responses:
+        '201':
+          description: Migration created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+        '400':
+          description: Invalid migration specification
+        '401':
+          description: Unauthorized
+  /apis/kubevirt.io/v1/namespaces/{namespace}/virtualmachineinstancemigrations/{name}:
+    get:
+      operationId: readNamespacedVMIMigration
+      summary: KubeVirt Get a VirtualMachineInstanceMigration
+      description: Returns the specified migration resource including its current phase, source and target node information, and completion status.
+      tags:
+      - VirtualMachineInstanceMigrations
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Migration details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Migration not found
+    delete:
+      operationId: deleteNamespacedVMIMigration
+      summary: KubeVirt Cancel a VirtualMachineInstanceMigration
+      description: Cancels an in-progress migration by deleting the VirtualMachineInstanceMigration resource.
+      tags:
+      - VirtualMachineInstanceMigrations
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Migration cancelled
+        '401':
+          description: Unauthorized
+        '404':
+          description: Migration not found
+components:
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+          description: Labels for organizing and selecting resources.
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+          description: Non-identifying metadata.
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
+    VirtualMachineInstanceMigration:
+      type: object
+      description: A VirtualMachineInstanceMigration resource tracking the live migration of a VirtualMachineInstance from one node to another.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - kubevirt.io/v1
+        kind:
+          type: string
+          enum:
+          - VirtualMachineInstanceMigration
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Migration specification.
+          required:
+          - vmiName
+          properties:
+            vmiName:
+              type: string
+              description: Name of the VirtualMachineInstance to migrate.
+        status:
+          type: object
+          description: Observed migration status.
+          properties:
+            phase:
+              type: string
+              description: Current phase of the migration.
+              enum:
+              - Pending
+              - Scheduling
+              - Scheduled
+              - PreparingTarget
+              - TargetReady
+              - Running
+              - Succeeded
+              - Failed
+            migrationState:
+              type: object
+              description: Detailed migration state.
+              properties:
+                startTimestamp:
+                  type: string
+                  format: date-time
+                endTimestamp:
+                  type: string
+                  format: date-time
+                targetNode:
+                  type: string
+                sourceNode:
+                  type: string
+                completed:
+                  type: boolean
+                failed:
+                  type: boolean
+                failureReason:
+                  type: string
+    VirtualMachineInstanceMigrationList:
+      type: object
+      description: List of VirtualMachineInstanceMigration resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineInstanceMigration'
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

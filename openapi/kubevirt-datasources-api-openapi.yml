@@ -1,0 +1,232 @@
+openapi: 3.1.0
+info:
+  title: KubeVirt Containerized Data Importer DataSources API
+  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
+  version: 1.59.0
+  contact:
+    name: KubeVirt Community
+    url: https://kubevirt.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://{kubernetes-api-server}
+  description: Kubernetes API server
+  variables:
+    kubernetes-api-server:
+      default: localhost:6443
+      description: Address of the Kubernetes API server
+tags:
+- name: DataSources
+  description: Operations for managing DataSource resources. A DataSource references an existing DataVolume or VolumeSnapshot as a source for cloning into new DataVolumes.
+paths:
+  /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources:
+    get:
+      operationId: listNamespacedDataSource
+      summary: KubeVirt List DataSources in a namespace
+      description: Returns all DataSource resources in the specified namespace. DataSources reference DataVolumes or VolumeSnapshots that can be used as clone sources.
+      tags:
+      - DataSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: List of DataSources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceList'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createNamespacedDataSource
+      summary: KubeVirt Create a DataSource
+      description: Creates a DataSource that points to a DataVolume or VolumeSnapshot as a reusable clone source for new DataVolumes.
+      tags:
+      - DataSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSource'
+      responses:
+        '201':
+          description: DataSource created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+        '400':
+          description: Invalid DataSource specification
+        '401':
+          description: Unauthorized
+  /apis/cdi.kubevirt.io/v1beta1/namespaces/{namespace}/datasources/{name}:
+    get:
+      operationId: readNamespacedDataSource
+      summary: KubeVirt Get a DataSource
+      description: Returns the specified DataSource including its source reference and ready status.
+      tags:
+      - DataSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DataSource details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataSource not found
+    delete:
+      operationId: deleteNamespacedDataSource
+      summary: KubeVirt Delete a DataSource
+      description: Deletes the specified DataSource resource.
+      tags:
+      - DataSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DataSource deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: DataSource not found
+components:
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
+    DataSource:
+      type: object
+      description: A CDI DataSource referencing a DataVolume or VolumeSnapshot as a reusable source for cloning into new DataVolumes.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+          - DataSource
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: DataSource specification.
+          properties:
+            source:
+              type: object
+              description: Reference to the clone source.
+              properties:
+                pvc:
+                  type: object
+                  description: PVC clone source reference.
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                snapshot:
+                  type: object
+                  description: VolumeSnapshot clone source reference.
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+        status:
+          type: object
+          description: DataSource readiness status.
+          properties:
+            conditions:
+              type: array
+              items:
+                type: object
+            source:
+              type: object
+              description: Resolved source reference.
+    DataSourceList:
+      type: object
+      description: List of DataSource resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+  parameters:
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+externalDocs:
+  description: CDI Documentation
+  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
