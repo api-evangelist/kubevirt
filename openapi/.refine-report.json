@@ -1,0 +1,28 @@
+{
+  "provider": "kubevirt",
+  "sources": [
+    "kubevirt-datasources-api-openapi.yml",
+    "kubevirt-datavolumes-api-openapi.yml",
+    "kubevirt-storageprofiles-api-openapi.yml",
+    "kubevirt-virtualmachineinstancemigrations-api-openapi.yml",
+    "kubevirt-virtualmachineinstances-api-openapi.yml",
+    "kubevirt-virtualmachines-api-openapi.yml",
+    "kubevirt-vmconsole-api-openapi.yml",
+    "kubevirt-vmlifecycle-api-openapi.yml"
+  ],
+  "outputs": [
+    "kubevirt-datasources-api-openapi.yml",
+    "kubevirt-datavolumes-api-openapi.yml",
+    "kubevirt-storageprofiles-api-openapi.yml",
+    "kubevirt-virtualmachineinstancemigrations-api-openapi.yml",
+    "kubevirt-virtualmachineinstances-api-openapi.yml",
+    "kubevirt-virtualmachines-api-openapi.yml",
+    "kubevirt-vmconsole-api-openapi.yml",
+    "kubevirt-vmlifecycle-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
