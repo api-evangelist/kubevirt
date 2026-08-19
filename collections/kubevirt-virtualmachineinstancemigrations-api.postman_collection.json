@@ -1,0 +1,986 @@
+{
+  "item": [
+    {
+      "id": "45e79e63-d72c-4d3f-891c-ca06421db2fb",
+      "name": "VirtualMachineInstanceMigrations",
+      "description": {
+        "content": "Operations for managing live migration of VirtualMachineInstances from one node to another without downtime.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "63bcdab6-af8c-4f41-93a8-fa57a1033ce0",
+          "name": "KubeVirt List VirtualMachineInstanceMigrations",
+          "request": {
+            "name": "KubeVirt List VirtualMachineInstanceMigrations",
+            "description": {
+              "content": "Returns all VirtualMachineInstanceMigration resources in the specified namespace. Each migration resource tracks the state of a live migration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "kubevirt.io",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "virtualmachineinstancemigrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "labelSelector",
+                  "value": "<string>",
+                  "description": "Label selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f31ef778-2e63-4d09-b875-6e4eb129f2f3",
+              "name": "List of migrations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"items\": [\n    {\n      \"apiVersion\": \"kubevirt.io/v1\",\n      \"kind\": \"VirtualMachineInstanceMigration\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1994-08-30T23:04:38.036Z\"\n      },\n      \"spec\": {\n        \"vmiName\": \"string\"\n      },\n      \"status\": {\n        \"phase\": \"Failed\",\n        \"migrationState\": {\n          \"startTimestamp\": \"1980-04-08T17:19:48.107Z\",\n          \"endTimestamp\": \"1976-01-07T17:14:45.979Z\",\n          \"targetNode\": \"string\",\n          \"sourceNode\": \"string\",\n          \"completed\": false,\n          \"failed\": false,\n          \"failureReason\": \"string\"\n        }\n      }\n    },\n    {\n      \"apiVersion\": \"kubevirt.io/v1\",\n      \"kind\": \"VirtualMachineInstanceMigration\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1983-12-16T13:03:22.663Z\"\n      },\n      \"spec\": {\n        \"vmiName\": \"string\"\n      },\n      \"status\": {\n        \"phase\": \"Pending\",\n        \"migrationState\": {\n          \"startTimestamp\": \"2020-03-03T15:44:42.306Z\",\n          \"endTimestamp\": \"1946-12-19T10:22:37.911Z\",\n          \"targetNode\": \"string\",\n          \"sourceNode\": \"string\",\n          \"completed\": false,\n          \"failed\": false,\n          \"failureReason\": \"string\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "713dc16f-4a63-41ec-859b-e9af4e5e6bd5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "448652dd-0566-44a9-8cfc-394cbce48e6a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddca8dcd-90b9-466c-8382-08f8ae501075",
+          "name": "KubeVirt Create a VirtualMachineInstanceMigration",
+          "request": {
+            "name": "KubeVirt Create a VirtualMachineInstanceMigration",
+            "description": {
+              "content": "Initiates a live migration by creating a VirtualMachineInstanceMigration resource. The migration moves the VMI to another node while it continues running.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "kubevirt.io",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "virtualmachineinstancemigrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"vmiName\": \"<string>\"\n  },\n  \"status\": {\n    \"phase\": \"<string>\",\n    \"migrationState\": {\n      \"startTimestamp\": \"<dateTime>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"targetNode\": \"<string>\",\n      \"sourceNode\": \"<string>\",\n      \"completed\": \"<boolean>\",\n      \"failed\": \"<boolean>\",\n      \"failureReason\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f826497-a540-4695-a123-2d87bb73ae8e",
+              "name": "Migration created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1995-12-09T03:56:13.471Z\"\n  },\n  \"spec\": {\n    \"vmiName\": \"<string>\"\n  },\n  \"status\": {\n    \"phase\": \"<string>\",\n    \"migrationState\": {\n      \"startTimestamp\": \"<dateTime>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"targetNode\": \"<string>\",\n      \"sourceNode\": \"<string>\",\n      \"completed\": \"<boolean>\",\n      \"failed\": \"<boolean>\",\n      \"failureReason\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"kubevirt.io/v1\",\n  \"kind\": \"VirtualMachineInstanceMigration\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1972-08-02T17:59:12.383Z\"\n  },\n  \"spec\": {\n    \"vmiName\": \"string\"\n  },\n  \"status\": {\n    \"phase\": \"PreparingTarget\",\n    \"migrationState\": {\n      \"startTimestamp\": \"2002-10-13T16:38:26.329Z\",\n      \"endTimestamp\": \"1992-04-05T03:22:51.493Z\",\n      \"targetNode\": \"string\",\n      \"sourceNode\": \"string\",\n      \"completed\": true,\n      \"failed\": true,\n      \"failureReason\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aebb0593-af03-4d57-93a6-9c428bd21412",
+              "name": "Invalid migration specification",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1995-12-09T03:56:13.471Z\"\n  },\n  \"spec\": {\n    \"vmiName\": \"<string>\"\n  },\n  \"status\": {\n    \"phase\": \"<string>\",\n    \"migrationState\": {\n      \"startTimestamp\": \"<dateTime>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"targetNode\": \"<string>\",\n      \"sourceNode\": \"<string>\",\n      \"completed\": \"<boolean>\",\n      \"failed\": \"<boolean>\",\n      \"failureReason\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "89b6e740-15a1-412d-87fb-2f2400e63862",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1995-12-09T03:56:13.471Z\"\n  },\n  \"spec\": {\n    \"vmiName\": \"<string>\"\n  },\n  \"status\": {\n    \"phase\": \"<string>\",\n    \"migrationState\": {\n      \"startTimestamp\": \"<dateTime>\",\n      \"endTimestamp\": \"<dateTime>\",\n      \"targetNode\": \"<string>\",\n      \"sourceNode\": \"<string>\",\n      \"completed\": \"<boolean>\",\n      \"failed\": \"<boolean>\",\n      \"failureReason\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "047e1e3a-3734-4d5e-ba5c-6b9f23fb5a84",
+          "name": "KubeVirt Get a VirtualMachineInstanceMigration",
+          "request": {
+            "name": "KubeVirt Get a VirtualMachineInstanceMigration",
+            "description": {
+              "content": "Returns the specified migration resource including its current phase, source and target node information, and completion status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "kubevirt.io",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "virtualmachineinstancemigrations",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace of the resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60488978-6836-4124-bf6a-f21b3cb12391",
+              "name": "Migration details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"kubevirt.io/v1\",\n  \"kind\": \"VirtualMachineInstanceMigration\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1972-08-02T17:59:12.383Z\"\n  },\n  \"spec\": {\n    \"vmiName\": \"string\"\n  },\n  \"status\": {\n    \"phase\": \"PreparingTarget\",\n    \"migrationState\": {\n      \"startTimestamp\": \"2002-10-13T16:38:26.329Z\",\n      \"endTimestamp\": \"1992-04-05T03:22:51.493Z\",\n      \"targetNode\": \"string\",\n      \"sourceNode\": \"string\",\n      \"completed\": true,\n      \"failed\": true,\n      \"failureReason\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05b5a89b-897c-4a40-8f10-465f34da69c4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8f37908a-e3a7-40bf-b5dd-4ce03fc48990",
+              "name": "Migration not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23394cb9-0be4-4aef-8dc2-5c2898de936b",
+          "name": "KubeVirt Cancel a VirtualMachineInstanceMigration",
+          "request": {
+            "name": "KubeVirt Cancel a VirtualMachineInstanceMigration",
+            "description": {
+              "content": "Cancels an in-progress migration by deleting the VirtualMachineInstanceMigration resource.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "kubevirt.io",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "virtualmachineinstancemigrations",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace of the resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "170c4f16-7b8f-4edd-a598-b9bf774d2d06",
+              "name": "Migration cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a8454fb5-7cf9-4a23-a82f-2ca0bcb1b81c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e70bc628-6165-4cf2-8ddf-a22390107efe",
+              "name": "Migration not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstancemigrations",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Address of the Kubernetes API server",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:6443",
+      "key": "kubernetes-api-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{kubernetes-api-server}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a657050e-062d-41b4-9162-8197e05719e1",
+    "name": "KubeVirt Containerized Data Importer DataSources VirtualMachineInstanceMigrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.\n\nContact Support:\n Name: KubeVirt Community",
+      "type": "text/plain"
+    }
+  }
+}

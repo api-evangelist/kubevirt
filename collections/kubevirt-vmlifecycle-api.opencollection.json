@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer DataSources VMLifecycle API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VMLifecycle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt Start a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name/start",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a stopped VirtualMachine by creating a VirtualMachineInstance. The VM must be in the Stopped state. Optionally accepts a start options body to control start behavior such as pausing immediately after start."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Stop a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name/stop",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stops a running VirtualMachine by deleting its VirtualMachineInstance. Optionally accepts stop options including a grace period for shutdown."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Restart a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name/restart",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restarts a running VirtualMachine by stopping and starting it. The VM must currently be running."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Migrate a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name/migrate",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Initiates a live migration of the running VirtualMachine to another node. Creates a VirtualMachineInstanceMigration resource to track the migration."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Pause a VirtualMachineInstance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstances/:name/pause",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Pauses the CPU execution of a running VirtualMachineInstance. The VMI remains in memory but no CPU cycles are consumed."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Unpause a VirtualMachineInstance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstances/:name/unpause",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Resumes CPU execution of a paused VirtualMachineInstance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

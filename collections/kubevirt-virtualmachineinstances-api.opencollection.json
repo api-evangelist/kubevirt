@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer DataSources VirtualMachineInstances API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VirtualMachineInstances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List VirtualMachineInstances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstances",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "fieldSelector",
+                "value": "",
+                "type": "query",
+                "description": "Field selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              }
+            ]
+          },
+          "docs": "Returns all running VirtualMachineInstance resources in the specified namespace. Each VMI represents an active virtual machine process."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a VirtualMachineInstance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstances/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified VirtualMachineInstance including its phase, network interfaces, volumes, node assignment, and guest OS information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

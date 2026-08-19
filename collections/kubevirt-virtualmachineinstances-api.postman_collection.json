@@ -1,0 +1,539 @@
+{
+  "item": [
+    {
+      "id": "c7d14f19-6693-4d2c-aebd-6e6b60b47099",
+      "name": "VirtualMachineInstances",
+      "description": {
+        "content": "Operations for managing VirtualMachineInstance (VMI) resources. A VirtualMachineInstance represents a running virtual machine and tracks its actual state.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c10341f5-f8b6-40f3-871b-2cb4dceba7ea",
+          "name": "KubeVirt List VirtualMachineInstances",
+          "request": {
+            "name": "KubeVirt List VirtualMachineInstances",
+            "description": {
+              "content": "Returns all running VirtualMachineInstance resources in the specified namespace. Each VMI represents an active virtual machine process.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "kubevirt.io",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "virtualmachineinstances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "labelSelector",
+                  "value": "<string>",
+                  "description": "Label selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "fieldSelector",
+                  "value": "<string>",
+                  "description": "Field selector to filter resources."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52737825-47ce-4b05-a535-7e93b116550f",
+              "name": "List of VirtualMachineInstances",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"items\": [\n    {\n      \"apiVersion\": \"kubevirt.io/v1\",\n      \"kind\": \"VirtualMachineInstance\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1989-06-30T16:17:26.488Z\"\n      },\n      \"spec\": {\n        \"domain\": {\n          \"cpu\": {\n            \"cores\": 3989,\n            \"sockets\": 4578,\n            \"threads\": 3431,\n            \"model\": \"string\",\n            \"dedicatedCpuPlacement\": false,\n            \"features\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"memory\": {\n            \"guest\": \"string\",\n            \"hugepages\": {\n              \"pageSize\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"devices\": {\n            \"disks\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"interfaces\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"rng\": {},\n            \"watchdog\": {}\n          },\n          \"features\": {\n            \"acpi\": {},\n            \"smm\": {},\n            \"hyperv\": {}\n          },\n          \"firmware\": {\n            \"bootloader\": {\n              \"bios\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"efi\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"serial\": \"string\",\n            \"uuid\": \"e1c9d21a-3042-5e61-c8aa-174c5dd4a366\"\n          },\n          \"machine\": {\n            \"type\": \"string\"\n          }\n        },\n        \"networks\": [\n          {\n            \"name\": \"string\",\n            \"pod\": {\n              \"vmNetworkCIDR\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"multus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"pod\": {\n              \"vmNetworkCIDR\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"multus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"volumes\": [\n          {\n            \"name\": \"string\",\n            \"containerDisk\": {\n              \"image\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"imagePullPolicy\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"dataVolume\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"persistentVolumeClaim\": {\n              \"claimName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"readOnly\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitNoCloud\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitConfigDrive\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"sysprep\": {\n              \"configMap\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"emptyDisk\": {\n              \"capacity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"hostDisk\": {\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"containerDisk\": {\n              \"image\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"imagePullPolicy\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"dataVolume\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"persistentVolumeClaim\": {\n              \"claimName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"readOnly\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitNoCloud\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitConfigDrive\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"sysprep\": {\n              \"configMap\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"emptyDisk\": {\n              \"capacity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"hostDisk\": {\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"affinity\": {},\n        \"nodeSelector\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"hostname\": \"string\",\n        \"subdomain\": \"string\",\n        \"terminationGracePeriodSeconds\": 5919,\n        \"evictionStrategy\": \"LiveMigrate\"\n      },\n      \"status\": {\n        \"nodeName\": \"string\",\n        \"guestOSInfo\": {\n          \"name\": \"string\",\n          \"version\": \"string\",\n          \"id\": \"string\",\n          \"prettyName\": \"string\"\n        },\n        \"interfaces\": [\n          {\n            \"name\": \"string\",\n            \"mac\": \"string\",\n            \"ipAddress\": \"string\",\n            \"ipAddresses\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"name\": \"string\",\n            \"mac\": \"string\",\n            \"ipAddress\": \"string\",\n            \"ipAddresses\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"phase\": \"Scheduled\",\n        \"phaseTransitionTimestamps\": [\n          {\n            \"phase\": \"string\",\n            \"phaseTransitionTimestamp\": \"2021-03-10T22:28:30.164Z\"\n          },\n          {\n            \"phase\": \"string\",\n            \"phaseTransitionTimestamp\": \"2021-07-20T18:44:17.367Z\"\n          }\n        ],\n        \"migrationState\": {\n          \"startTimestamp\": \"1963-08-17T21:04:51.610Z\",\n          \"endTimestamp\": \"1961-12-23T13:26:27.559Z\",\n          \"targetNode\": \"string\",\n          \"sourceNode\": \"string\",\n          \"completed\": false,\n          \"failed\": true\n        }\n      }\n    },\n    {\n      \"apiVersion\": \"kubevirt.io/v1\",\n      \"kind\": \"VirtualMachineInstance\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"creationTimestamp\": \"1950-07-15T09:44:56.555Z\"\n      },\n      \"spec\": {\n        \"domain\": {\n          \"cpu\": {\n            \"cores\": 5956,\n            \"sockets\": 2239,\n            \"threads\": 7783,\n            \"model\": \"string\",\n            \"dedicatedCpuPlacement\": false,\n            \"features\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"memory\": {\n            \"guest\": \"string\",\n            \"hugepages\": {\n              \"pageSize\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"devices\": {\n            \"disks\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"interfaces\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"rng\": {},\n            \"watchdog\": {}\n          },\n          \"features\": {\n            \"acpi\": {},\n            \"smm\": {},\n            \"hyperv\": {}\n          },\n          \"firmware\": {\n            \"bootloader\": {\n              \"bios\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"efi\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"serial\": \"string\",\n            \"uuid\": \"2779f731-8834-464f-3ea2-beece4567428\"\n          },\n          \"machine\": {\n            \"type\": \"string\"\n          }\n        },\n        \"networks\": [\n          {\n            \"name\": \"string\",\n            \"pod\": {\n              \"vmNetworkCIDR\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"multus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"pod\": {\n              \"vmNetworkCIDR\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"multus\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"volumes\": [\n          {\n            \"name\": \"string\",\n            \"containerDisk\": {\n              \"image\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"imagePullPolicy\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"dataVolume\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"persistentVolumeClaim\": {\n              \"claimName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"readOnly\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitNoCloud\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitConfigDrive\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"sysprep\": {\n              \"configMap\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"emptyDisk\": {\n              \"capacity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"hostDisk\": {\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"containerDisk\": {\n              \"image\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"imagePullPolicy\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"dataVolume\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"persistentVolumeClaim\": {\n              \"claimName\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"readOnly\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitNoCloud\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cloudInitConfigDrive\": {\n              \"userData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"networkData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"sysprep\": {\n              \"configMap\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"emptyDisk\": {\n              \"capacity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"hostDisk\": {\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"affinity\": {},\n        \"nodeSelector\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"hostname\": \"string\",\n        \"subdomain\": \"string\",\n        \"terminationGracePeriodSeconds\": 1345,\n        \"evictionStrategy\": \"None\"\n      },\n      \"status\": {\n        \"nodeName\": \"string\",\n        \"guestOSInfo\": {\n          \"name\": \"string\",\n          \"version\": \"string\",\n          \"id\": \"string\",\n          \"prettyName\": \"string\"\n        },\n        \"interfaces\": [\n          {\n            \"name\": \"string\",\n            \"mac\": \"string\",\n            \"ipAddress\": \"string\",\n            \"ipAddresses\": [\n              \"string\",\n              \"string\"\n            ]\n          },\n          {\n            \"name\": \"string\",\n            \"mac\": \"string\",\n            \"ipAddress\": \"string\",\n            \"ipAddresses\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        ],\n        \"phase\": \"Scheduling\",\n        \"phaseTransitionTimestamps\": [\n          {\n            \"phase\": \"string\",\n            \"phaseTransitionTimestamp\": \"2023-10-17T16:18:52.875Z\"\n          },\n          {\n            \"phase\": \"string\",\n            \"phaseTransitionTimestamp\": \"1978-11-22T07:25:30.773Z\"\n          }\n        ],\n        \"migrationState\": {\n          \"startTimestamp\": \"1978-12-11T19:35:27.787Z\",\n          \"endTimestamp\": \"1950-01-02T12:13:08.449Z\",\n          \"targetNode\": \"string\",\n          \"sourceNode\": \"string\",\n          \"completed\": true,\n          \"failed\": true\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c29eaf3-9d97-40f6-a637-732e38b7ad12",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "69151041-e8b7-42b3-a3c2-beb9eb456137",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce2d343d-f730-4207-9b61-4220e92d34b0",
+          "name": "KubeVirt Get a VirtualMachineInstance",
+          "request": {
+            "name": "KubeVirt Get a VirtualMachineInstance",
+            "description": {
+              "content": "Returns the specified VirtualMachineInstance including its phase, network interfaces, volumes, node assignment, and guest OS information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "kubevirt.io",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "virtualmachineinstances",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) The Kubernetes namespace of the resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) The name of the resource."
+                },
+                {
+                  "description": "Address of the Kubernetes API server",
+                  "type": "any",
+                  "value": "{{kubernetes-api-server}}",
+                  "key": "kubernetes-api-server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e00b0742-7ca3-4f21-a356-11ca4eb44fdd",
+              "name": "VirtualMachineInstance details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstances",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"kubevirt.io/v1\",\n  \"kind\": \"VirtualMachineInstance\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"creationTimestamp\": \"1975-08-15T16:29:42.099Z\"\n  },\n  \"spec\": {\n    \"domain\": {\n      \"cpu\": {\n        \"cores\": 7346,\n        \"sockets\": 7792,\n        \"threads\": 9343,\n        \"model\": \"string\",\n        \"dedicatedCpuPlacement\": false,\n        \"features\": [\n          {\n            \"name\": \"string\",\n            \"policy\": \"require\"\n          },\n          {\n            \"name\": \"string\",\n            \"policy\": \"disable\"\n          }\n        ]\n      },\n      \"memory\": {\n        \"guest\": \"string\",\n        \"hugepages\": {\n          \"pageSize\": \"string\"\n        }\n      },\n      \"devices\": {\n        \"disks\": [\n          {\n            \"name\": \"string\",\n            \"bootOrder\": 2896,\n            \"disk\": {\n              \"bus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cdrom\": {\n              \"bus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"readonly\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"lun\": {\n              \"bus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"name\": \"string\",\n            \"bootOrder\": 8803,\n            \"disk\": {\n              \"bus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"cdrom\": {\n              \"bus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"readonly\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"lun\": {\n              \"bus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"interfaces\": [\n          {\n            \"name\": \"string\",\n            \"model\": \"e1000\",\n            \"masquerade\": {},\n            \"bridge\": {},\n            \"sriov\": {},\n            \"macAddress\": \"c4:cc:6A:b7:b4:aA\",\n            \"ports\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"name\": \"string\",\n            \"model\": \"e1000\",\n            \"masquerade\": {},\n            \"bridge\": {},\n            \"sriov\": {},\n            \"macAddress\": \"EE:1d:3c:c3:43:9b\",\n            \"ports\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"rng\": {},\n        \"watchdog\": {}\n      },\n      \"features\": {\n        \"acpi\": {},\n        \"smm\": {},\n        \"hyperv\": {}\n      },\n      \"firmware\": {\n        \"bootloader\": {\n          \"bios\": {},\n          \"efi\": {\n            \"secureBoot\": true\n          }\n        },\n        \"serial\": \"string\",\n        \"uuid\": \"7b07d389-f3bf-b2a7-f1c7-4b5157adfe84\"\n      },\n      \"machine\": {\n        \"type\": \"string\"\n      }\n    },\n    \"networks\": [\n      {\n        \"name\": \"string\",\n        \"pod\": {\n          \"vmNetworkCIDR\": \"string\"\n        },\n        \"multus\": {\n          \"networkName\": \"string\",\n          \"default\": false\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"pod\": {\n          \"vmNetworkCIDR\": \"string\"\n        },\n        \"multus\": {\n          \"networkName\": \"string\",\n          \"default\": false\n        }\n      }\n    ],\n    \"volumes\": [\n      {\n        \"name\": \"string\",\n        \"containerDisk\": {\n          \"image\": \"string\",\n          \"imagePullPolicy\": \"IfNotPresent\"\n        },\n        \"dataVolume\": {\n          \"name\": \"string\"\n        },\n        \"persistentVolumeClaim\": {\n          \"claimName\": \"string\",\n          \"readOnly\": true\n        },\n        \"cloudInitNoCloud\": {\n          \"userData\": \"string\",\n          \"networkData\": \"string\"\n        },\n        \"cloudInitConfigDrive\": {\n          \"userData\": \"string\",\n          \"networkData\": \"string\"\n        },\n        \"sysprep\": {\n          \"configMap\": {\n            \"name\": \"string\"\n          }\n        },\n        \"emptyDisk\": {\n          \"capacity\": \"string\"\n        },\n        \"hostDisk\": {\n          \"path\": \"string\",\n          \"type\": \"Disk\"\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"containerDisk\": {\n          \"image\": \"string\",\n          \"imagePullPolicy\": \"Always\"\n        },\n        \"dataVolume\": {\n          \"name\": \"string\"\n        },\n        \"persistentVolumeClaim\": {\n          \"claimName\": \"string\",\n          \"readOnly\": false\n        },\n        \"cloudInitNoCloud\": {\n          \"userData\": \"string\",\n          \"networkData\": \"string\"\n        },\n        \"cloudInitConfigDrive\": {\n          \"userData\": \"string\",\n          \"networkData\": \"string\"\n        },\n        \"sysprep\": {\n          \"configMap\": {\n            \"name\": \"string\"\n          }\n        },\n        \"emptyDisk\": {\n          \"capacity\": \"string\"\n        },\n        \"hostDisk\": {\n          \"path\": \"string\",\n          \"type\": \"DiskOrCreate\"\n        }\n      }\n    ],\n    \"affinity\": {},\n    \"nodeSelector\": {\n      \"key_0\": \"string\"\n    },\n    \"hostname\": \"string\",\n    \"subdomain\": \"string\",\n    \"terminationGracePeriodSeconds\": 4758,\n    \"evictionStrategy\": \"LiveMigrate\"\n  },\n  \"status\": {\n    \"nodeName\": \"string\",\n    \"guestOSInfo\": {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"id\": \"string\",\n      \"prettyName\": \"string\"\n    },\n    \"interfaces\": [\n      {\n        \"name\": \"string\",\n        \"mac\": \"string\",\n        \"ipAddress\": \"string\",\n        \"ipAddresses\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"mac\": \"string\",\n        \"ipAddress\": \"string\",\n        \"ipAddresses\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"phase\": \"Unknown\",\n    \"phaseTransitionTimestamps\": [\n      {\n        \"phase\": \"string\",\n        \"phaseTransitionTimestamp\": \"1983-12-08T01:41:16.628Z\"\n      },\n      {\n        \"phase\": \"string\",\n        \"phaseTransitionTimestamp\": \"1970-10-27T07:21:47.284Z\"\n      }\n    ],\n    \"migrationState\": {\n      \"startTimestamp\": \"2022-12-09T15:49:03.507Z\",\n      \"endTimestamp\": \"1997-08-26T14:17:28.494Z\",\n      \"targetNode\": \"string\",\n      \"sourceNode\": \"string\",\n      \"completed\": false,\n      \"failed\": false\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7eac5945-85dc-4367-a775-e7fa57480b1d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstances",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "780480b3-41a3-41a8-9525-18296b7b13cb",
+              "name": "VirtualMachineInstance not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "kubevirt.io",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "virtualmachineinstances",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) The Kubernetes namespace of the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) The name of the resource."
+                    },
+                    {
+                      "description": "Address of the Kubernetes API server",
+                      "type": "any",
+                      "value": "{{kubernetes-api-server}}",
+                      "key": "kubernetes-api-server"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Address of the Kubernetes API server",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "localhost:6443",
+      "key": "kubernetes-api-server"
+    },
+    {
+      "type": "string",
+      "value": "https://{{kubernetes-api-server}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "076ae715-b4a8-4ce8-b00f-b9227b1d2607",
+    "name": "KubeVirt Containerized Data Importer DataSources VirtualMachineInstances API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.\n\nContact Support:\n Name: KubeVirt Community",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer DataSources StorageProfiles API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "StorageProfiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List StorageProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/storageprofiles",
+            "params": [
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              }
+            ]
+          },
+          "docs": "Returns all StorageProfile resources in the cluster. StorageProfiles are automatically created by CDI for each StorageClass and describe its supported access modes and recommended clone strategies."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a StorageProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/storageprofiles/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified StorageProfile including its claimed PVC properties, data import cron source format, and clone strategy."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Update a StorageProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{kubernetes-api-server}/apis/cdi.kubevirt.io/v1beta1/storageprofiles/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates a StorageProfile to configure custom clone strategies or override default access modes for this StorageClass."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

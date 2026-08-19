@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer DataSources VirtualMachineInstanceMigrations API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VirtualMachineInstanceMigrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List VirtualMachineInstanceMigrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstancemigrations",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              }
+            ]
+          },
+          "docs": "Returns all VirtualMachineInstanceMigration resources in the specified namespace. Each migration resource tracks the state of a live migration."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Create a VirtualMachineInstanceMigration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstancemigrations",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a live migration by creating a VirtualMachineInstanceMigration resource. The migration moves the VMI to another node while it continues running."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a VirtualMachineInstanceMigration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstancemigrations/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified migration resource including its current phase, source and target node information, and completion status."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Cancel a VirtualMachineInstanceMigration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstancemigrations/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Cancels an in-progress migration by deleting the VirtualMachineInstanceMigration resource."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

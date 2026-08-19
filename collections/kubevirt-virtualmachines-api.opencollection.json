@@ -1,0 +1,192 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer DataSources VirtualMachines API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VirtualMachines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt List VirtualMachines in a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter resources."
+              },
+              {
+                "name": "fieldSelector",
+                "value": "",
+                "type": "query",
+                "description": "Field selector to filter resources."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination continuation token."
+              }
+            ]
+          },
+          "docs": "Returns all VirtualMachine resources in the specified namespace. Each VirtualMachine defines a desired VM configuration and controls whether the VM is running or stopped."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Create a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new VirtualMachine resource defining the VM's CPU, memory, disk, network configuration, and run strategy. KubeVirt will create a VirtualMachineInstance when the VM is started."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Get a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Returns the specified VirtualMachine resource including its current status, run strategy, and associated VirtualMachineInstance reference."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Replace a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the entire VirtualMachine resource. Changes to the template take effect on the next VM start or restart."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Partially update a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Applies a partial update to the VirtualMachine using JSON Merge Patch or Strategic Merge Patch."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Delete a VirtualMachine",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachines/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Deletes the VirtualMachine resource. If the VM is running, it will be stopped first."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

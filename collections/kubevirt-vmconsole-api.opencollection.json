@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KubeVirt Containerized Data Importer DataSources VMConsole API",
+    "version": "1.59.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VMConsole",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "KubeVirt Access VM VNC console",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstances/:name/vnc",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Opens a WebSocket connection to the VNC console of the specified VirtualMachineInstance for graphical console access."
+        },
+        {
+          "info": {
+            "name": "KubeVirt Access VM serial console",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{kubernetes-api-server}/apis/kubevirt.io/v1/namespaces/:namespace/virtualmachineinstances/:name/console",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "The Kubernetes namespace of the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the resource."
+              }
+            ]
+          },
+          "docs": "Opens a WebSocket connection to the serial console of the specified VirtualMachineInstance for text-based console access."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
