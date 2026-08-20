@@ -19,6 +19,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kubevirt.png
 tags:
+  - Cloud-Native
+  - Incubating
+  - Kubernetes
+  - Migration
+  - Virtual Machines
+  - Virtualization
+tags_raw:
   - Cloud Native
   - Incubating
   - Kubernetes
@@ -37,6 +44,8 @@ apis:
     as a source for cloning into new DataVolumes.
   humanURL: https://kubevirt.io/user-guide/
   tags:
+  - Data Sources
+  tags_raw:
   - DataSources
   properties:
   - type: OpenAPI
@@ -60,6 +69,8 @@ apis:
     an integrated import/clone pipeline that automatically populates the volume from a specified source.
   humanURL: https://kubevirt.io/user-guide/
   tags:
+  - Data Volumes
+  tags_raw:
   - DataVolumes
   properties:
   - type: OpenAPI
@@ -152,6 +163,8 @@ apis:
     and configuration of a virtual machine, providing lifecycle management and persistence across restarts.
   humanURL: https://kubevirt.io/user-guide/
   tags:
+  - Virtual Machines
+  tags_raw:
   - VirtualMachines
   properties:
   - type: OpenAPI
