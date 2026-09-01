@@ -57,7 +57,7 @@ apis:
     as a source for cloning into new DataVolumes.
   humanURL: https://kubevirt.io/user-guide/
   tags:
-  - DataSources
+  - Data Sources
   tags_raw:
   - DataSources
   properties:
@@ -82,7 +82,7 @@ apis:
     an integrated import/clone pipeline that automatically populates the volume from a specified source.
   humanURL: https://kubevirt.io/user-guide/
   tags:
-  - DataVolumes
+  - Data Volumes
   tags_raw:
   - DataVolumes
   properties:
@@ -176,7 +176,7 @@ apis:
     and configuration of a virtual machine, providing lifecycle management and persistence across restarts.
   humanURL: https://kubevirt.io/user-guide/
   tags:
-  - VirtualMachines
+  - Virtual Machines
   tags_raw:
   - VirtualMachines
   properties:
