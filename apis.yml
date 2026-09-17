@@ -50,56 +50,6 @@ modified: '2026-05-19'
 specificationVersion: '0.23'
 type: Index
 apis:
-- aid: kubevirt:kubevirt-datasources-api
-  name: KubeVirt DataSources API
-  description: >-
-    Operations for managing DataSource resources. A DataSource references an existing DataVolume or VolumeSnapshot
-    as a source for cloning into new DataVolumes.
-  humanURL: https://kubevirt.io/user-guide/
-  tags:
-  - Data Sources
-  tags_raw:
-  - DataSources
-  properties:
-  - type: OpenAPI
-    url: openapi/kubevirt-datasources-api-openapi.yml
-  - type: Documentation
-    url: https://kubevirt.io/user-guide/
-  - type: Reference
-    url: https://kubevirt.io/api-reference/
-  - type: JSONSchema
-    url: json-schema/kubevirt-vm-schema.json
-  - type: Documentation
-    url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
-  - type: Reference
-    url: https://kubevirt.io/cdi-api-reference/
-  - type: GitHubRepository
-    url: https://github.com/kubevirt/containerized-data-importer
-- aid: kubevirt:kubevirt-datavolumes-api
-  name: KubeVirt DataVolumes API
-  description: >-
-    Operations for managing DataVolume resources. A DataVolume is a managed PersistentVolumeClaim with
-    an integrated import/clone pipeline that automatically populates the volume from a specified source.
-  humanURL: https://kubevirt.io/user-guide/
-  tags:
-  - Data Volumes
-  tags_raw:
-  - DataVolumes
-  properties:
-  - type: OpenAPI
-    url: openapi/kubevirt-datavolumes-api-openapi.yml
-  - type: Documentation
-    url: https://kubevirt.io/user-guide/
-  - type: Reference
-    url: https://kubevirt.io/api-reference/
-  - type: JSONSchema
-    url: json-schema/kubevirt-vm-schema.json
-  - type: Documentation
-    url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
-  - type: Reference
-    url: https://kubevirt.io/cdi-api-reference/
-  - type: GitHubRepository
-    url: https://github.com/kubevirt/containerized-data-importer
 - aid: kubevirt:kubevirt-storageprofiles-api
   name: KubeVirt StorageProfiles API
   description: >-
@@ -169,31 +119,6 @@ apis:
     url: https://kubevirt.io/cdi-api-reference/
   - type: GitHubRepository
     url: https://github.com/kubevirt/containerized-data-importer
-- aid: kubevirt:kubevirt-virtualmachines-api
-  name: KubeVirt VirtualMachines API
-  description: >-
-    Operations for managing VirtualMachine (VM) resources. A VirtualMachine defines the desired state
-    and configuration of a virtual machine, providing lifecycle management and persistence across restarts.
-  humanURL: https://kubevirt.io/user-guide/
-  tags:
-  - Virtual Machines
-  tags_raw:
-  - VirtualMachines
-  properties:
-  - type: OpenAPI
-    url: openapi/kubevirt-virtualmachines-api-openapi.yml
-  - type: Documentation
-    url: https://kubevirt.io/user-guide/
-  - type: Reference
-    url: https://kubevirt.io/api-reference/
-  - type: JSONSchema
-    url: json-schema/kubevirt-vm-schema.json
-  - type: Documentation
-    url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
-  - type: Reference
-    url: https://kubevirt.io/cdi-api-reference/
-  - type: GitHubRepository
-    url: https://github.com/kubevirt/containerized-data-importer
 - aid: kubevirt:kubevirt-vmconsole-api
   name: KubeVirt VMConsole API
   description: >-
@@ -227,6 +152,75 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kubevirt-vmlifecycle-api-openapi.yml
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/
+  - type: Reference
+    url: https://kubevirt.io/api-reference/
+  - type: JSONSchema
+    url: json-schema/kubevirt-vm-schema.json
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
+  - type: Reference
+    url: https://kubevirt.io/cdi-api-reference/
+  - type: GitHubRepository
+    url: https://github.com/kubevirt/containerized-data-importer
+- aid: kubevirt:kubevirt-data-sources-api
+  name: KubeVirt Data Sources API
+  description: >-
+    Operations for managing DataSource resources. A DataSource references an existing DataVolume or VolumeSnapshot
+    as a source for cloning into new DataVolumes.
+  humanURL: https://kubevirt.io/user-guide/
+  tags:
+  - Data Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/kubevirt-data-sources-api-openapi.yml
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/
+  - type: Reference
+    url: https://kubevirt.io/api-reference/
+  - type: JSONSchema
+    url: json-schema/kubevirt-vm-schema.json
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
+  - type: Reference
+    url: https://kubevirt.io/cdi-api-reference/
+  - type: GitHubRepository
+    url: https://github.com/kubevirt/containerized-data-importer
+- aid: kubevirt:kubevirt-data-volumes-api
+  name: KubeVirt Data Volumes API
+  description: >-
+    Operations for managing DataVolume resources. A DataVolume is a managed PersistentVolumeClaim with
+    an integrated import/clone pipeline that automatically populates the volume from a specified source.
+  humanURL: https://kubevirt.io/user-guide/
+  tags:
+  - Data Volumes
+  properties:
+  - type: OpenAPI
+    url: openapi/kubevirt-data-volumes-api-openapi.yml
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/
+  - type: Reference
+    url: https://kubevirt.io/api-reference/
+  - type: JSONSchema
+    url: json-schema/kubevirt-vm-schema.json
+  - type: Documentation
+    url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
+  - type: Reference
+    url: https://kubevirt.io/cdi-api-reference/
+  - type: GitHubRepository
+    url: https://github.com/kubevirt/containerized-data-importer
+- aid: kubevirt:kubevirt-virtual-machines-api
+  name: KubeVirt Virtual Machines API
+  description: >-
+    Operations for managing VirtualMachine (VM) resources. A VirtualMachine defines the desired state
+    and configuration of a virtual machine, providing lifecycle management and persistence across restarts.
+  humanURL: https://kubevirt.io/user-guide/
+  tags:
+  - Virtual Machines
+  properties:
+  - type: OpenAPI
+    url: openapi/kubevirt-virtual-machines-api-openapi.yml
   - type: Documentation
     url: https://kubevirt.io/user-guide/
   - type: Reference
