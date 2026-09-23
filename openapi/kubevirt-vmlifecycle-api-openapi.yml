@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: KubeVirt Containerized Data Importer DataSources VMLifecycle API
-  description: The KubeVirt Containerized Data Importer (CDI) API provides Kubernetes CRD endpoints for managing virtual machine disk image import and cloning pipelines. CDI introduces DataVolume, DataSource, and StorageProfile resources that automate importing VM disk images from HTTP, S3, OCI registries, and other sources into PersistentVolumeClaims ready for use as KubeVirt VM disks.
-  version: 1.59.0
+  title: KubeVirt VM Management VM Lifecycle API
+  description: The KubeVirt VM Management API extends the Kubernetes API with custom resources for running and managing virtual machines alongside containers. It provides CRD endpoints for VirtualMachine, VirtualMachineInstance, and VirtualMachineInstanceMigration resources, plus subresource REST endpoints for VM lifecycle operations including start, stop, pause, unpause, restart, migrate, and console/VNC access.
+  version: 1.3.0
   contact:
     name: KubeVirt Community
     url: https://kubevirt.io/
@@ -154,18 +154,6 @@ paths:
           description: VirtualMachineInstance not found
 components:
   schemas:
-    StartOptions:
-      type: object
-      description: Options for the VM start operation.
-      properties:
-        paused:
-          type: boolean
-          description: If true, starts the VM in a paused state.
-        dryRun:
-          type: array
-          description: Dry run options.
-          items:
-            type: string
     RestartOptions:
       type: object
       description: Options for the VM restart operation.
@@ -192,14 +180,19 @@ components:
           type: array
           items:
             type: string
+    StartOptions:
+      type: object
+      description: Options for the VM start operation.
+      properties:
+        paused:
+          type: boolean
+          description: If true, starts the VM in a paused state.
+        dryRun:
+          type: array
+          description: Dry run options.
+          items:
+            type: string
   parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace of the resource.
-      schema:
-        type: string
     name:
       name: name
       in: path
@@ -207,6 +200,13 @@ components:
       description: The name of the resource.
       schema:
         type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
 externalDocs:
-  description: CDI Documentation
-  url: https://kubevirt.io/user-guide/storage/containerized_data_importer/
+  description: KubeVirt User Guide
+  url: https://kubevirt.io/user-guide/

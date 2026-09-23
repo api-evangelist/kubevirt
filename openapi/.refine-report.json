@@ -1,28 +1,39 @@
 {
   "provider": "kubevirt",
   "sources": [
-    "kubevirt-datasources-api-openapi.yml",
-    "kubevirt-datavolumes-api-openapi.yml",
-    "kubevirt-storageprofiles-api-openapi.yml",
-    "kubevirt-virtualmachineinstancemigrations-api-openapi.yml",
-    "kubevirt-virtualmachineinstances-api-openapi.yml",
-    "kubevirt-virtualmachines-api-openapi.yml",
-    "kubevirt-vmconsole-api-openapi.yml",
-    "kubevirt-vmlifecycle-api-openapi.yml"
+    "_original/kubevirt-cdi-openapi.yml",
+    "_original/kubevirt-vm-openapi.yml"
   ],
   "outputs": [
     "kubevirt-datasources-api-openapi.yml",
     "kubevirt-datavolumes-api-openapi.yml",
     "kubevirt-storageprofiles-api-openapi.yml",
+    "kubevirt-vmconsole-api-openapi.yml",
+    "kubevirt-vmlifecycle-api-openapi.yml",
     "kubevirt-virtualmachineinstancemigrations-api-openapi.yml",
     "kubevirt-virtualmachineinstances-api-openapi.yml",
-    "kubevirt-virtualmachines-api-openapi.yml",
-    "kubevirt-vmconsole-api-openapi.yml",
-    "kubevirt-vmlifecycle-api-openapi.yml"
+    "kubevirt-virtualmachines-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 3 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kubevirt-cdi-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kubevirt-vm-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: kubevirt-data-sources-api-openapi.yml, kubevirt-data-volumes-api-openapi.yml, kubevirt-virtual-machines-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 8 total)"
+  ],
+  "skipped": [
+    "kubevirt-data-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-data-volumes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-storageprofiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-virtual-machines-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-virtualmachineinstancemigrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-virtualmachineinstances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-vmconsole-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubevirt-vmlifecycle-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
