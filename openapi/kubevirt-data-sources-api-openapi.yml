@@ -104,11 +104,11 @@ paths:
           description: DataSource not found
 components:
   parameters:
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Label selector to filter resources.
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace.
       schema:
         type: string
     name:
@@ -116,6 +116,13 @@ components:
       in: path
       required: true
       description: The name of the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
       schema:
         type: string
     limit:
@@ -126,26 +133,7 @@ components:
       schema:
         type: integer
         minimum: 1
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace.
-      schema:
-        type: string
   schemas:
-    DataSourceList:
-      type: object
-      description: List of DataSource resources.
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataSource'
     DataSource:
       type: object
       description: A CDI DataSource referencing a DataVolume or VolumeSnapshot as a reusable source for cloning into new DataVolumes.
@@ -227,6 +215,18 @@ components:
         creationTimestamp:
           type: string
           format: date-time
+    DataSourceList:
+      type: object
+      description: List of DataSource resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
 externalDocs:
   description: CDI Documentation
   url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

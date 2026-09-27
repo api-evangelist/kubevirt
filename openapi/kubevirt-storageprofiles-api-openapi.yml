@@ -85,29 +85,6 @@ paths:
         '404':
           description: StorageProfile not found
 components:
-  parameters:
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Label selector to filter resources.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results per page.
-      schema:
-        type: integer
-        minimum: 1
-    name:
-      name: name
-      in: path
-      required: true
-      description: The name of the resource.
-      schema:
-        type: string
   schemas:
     StorageProfile:
       type: object
@@ -214,6 +191,29 @@ components:
         creationTimestamp:
           type: string
           format: date-time
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
 externalDocs:
   description: CDI Documentation
   url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

@@ -66,337 +66,6 @@ paths:
           description: VirtualMachineInstance not found
 components:
   schemas:
-    Disk:
-      type: object
-      description: A virtual disk device attached to the VM.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the disk, must match a volume name.
-        bootOrder:
-          type: integer
-          description: Boot order for this disk (lower numbers boot first).
-          minimum: 1
-        disk:
-          type: object
-          description: Virtio disk configuration.
-          properties:
-            bus:
-              type: string
-              enum:
-              - virtio
-              - sata
-              - scsi
-              - ide
-        cdrom:
-          type: object
-          description: CD-ROM device configuration.
-          properties:
-            bus:
-              type: string
-              enum:
-              - virtio
-              - sata
-              - scsi
-            readonly:
-              type: boolean
-        lun:
-          type: object
-          description: LUN device configuration.
-          properties:
-            bus:
-              type: string
-    Volume:
-      type: object
-      description: A storage volume to attach to a disk device.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the volume, referenced by disk name.
-        containerDisk:
-          type: object
-          description: OCI container image used as a disk.
-          properties:
-            image:
-              type: string
-              description: OCI image reference containing the disk image.
-            imagePullPolicy:
-              type: string
-              enum:
-              - Always
-              - Never
-              - IfNotPresent
-        dataVolume:
-          type: object
-          description: DataVolume (CDI) as a disk source.
-          properties:
-            name:
-              type: string
-              description: Name of the DataVolume resource.
-        persistentVolumeClaim:
-          type: object
-          description: Kubernetes PersistentVolumeClaim as a disk source.
-          properties:
-            claimName:
-              type: string
-              description: Name of the PVC.
-            readOnly:
-              type: boolean
-        cloudInitNoCloud:
-          type: object
-          description: Cloud-init NoCloud data source for guest initialization.
-          properties:
-            userData:
-              type: string
-              description: Cloud-init user-data as a string.
-            networkData:
-              type: string
-              description: Cloud-init network-config as a string.
-        cloudInitConfigDrive:
-          type: object
-          description: Cloud-init Config Drive data source.
-          properties:
-            userData:
-              type: string
-            networkData:
-              type: string
-        sysprep:
-          type: object
-          description: Windows Sysprep answer file source.
-          properties:
-            configMap:
-              type: object
-              properties:
-                name:
-                  type: string
-        emptyDisk:
-          type: object
-          description: Ephemeral empty disk created for the VM.
-          properties:
-            capacity:
-              type: string
-              description: Disk capacity in Kubernetes resource quantity format.
-        hostDisk:
-          type: object
-          description: Host filesystem path as a disk.
-          properties:
-            path:
-              type: string
-              description: Absolute path on the host.
-            type:
-              type: string
-              enum:
-              - DiskOrCreate
-              - Disk
-    VirtualMachineInstance:
-      type: object
-      description: A running VirtualMachineInstance representing the actual state of an active virtual machine process in KubeVirt.
-      properties:
-        apiVersion:
-          type: string
-          enum:
-          - kubevirt.io/v1
-        kind:
-          type: string
-          enum:
-          - VirtualMachineInstance
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/VirtualMachineInstanceSpec'
-        status:
-          $ref: '#/components/schemas/VirtualMachineInstanceStatus'
-    Interface:
-      type: object
-      description: A virtual network interface device.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the interface, must match a network name.
-        model:
-          type: string
-          description: Network interface model type. 'virtio' is recommended for best performance.
-          enum:
-          - virtio
-          - e1000
-          - e1000e
-          - rtl8139
-        masquerade:
-          type: object
-          description: NAT masquerade networking mode.
-        bridge:
-          type: object
-          description: Bridge networking mode, connected to a host bridge.
-        sriov:
-          type: object
-          description: SR-IOV passthrough networking mode.
-        macAddress:
-          type: string
-          description: Fixed MAC address for the interface.
-          pattern: ^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$
-        ports:
-          type: array
-          description: Port forwarding rules for masquerade interfaces.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              port:
-                type: integer
-                minimum: 1
-                maximum: 65535
-              protocol:
-                type: string
-                enum:
-                - TCP
-                - UDP
-    VirtualMachineInstanceList:
-      type: object
-      description: List of VirtualMachineInstance resources.
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/VirtualMachineInstance'
-    VirtualMachineInstanceStatus:
-      type: object
-      description: Observed runtime status of a VirtualMachineInstance.
-      properties:
-        nodeName:
-          type: string
-          description: Node where the VMI is running.
-        guestOSInfo:
-          type: object
-          description: Information about the guest operating system.
-          properties:
-            name:
-              type: string
-              description: OS name reported by the guest agent.
-            version:
-              type: string
-              description: OS version.
-            id:
-              type: string
-              description: OS ID (e.g. 'rhel', 'ubuntu').
-            prettyName:
-              type: string
-              description: Human-readable OS name.
-        interfaces:
-          type: array
-          description: Network interfaces as reported by the guest agent.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              mac:
-                type: string
-              ipAddress:
-                type: string
-              ipAddresses:
-                type: array
-                items:
-                  type: string
-        phase:
-          type: string
-          description: Current lifecycle phase of the VMI.
-          enum:
-          - Pending
-          - Scheduling
-          - Scheduled
-          - Running
-          - Succeeded
-          - Failed
-          - Unknown
-        phaseTransitionTimestamps:
-          type: array
-          description: History of phase transitions with timestamps.
-          items:
-            type: object
-            properties:
-              phase:
-                type: string
-              phaseTransitionTimestamp:
-                type: string
-                format: date-time
-        migrationState:
-          type: object
-          description: Current migration state if the VMI is being migrated.
-          properties:
-            startTimestamp:
-              type: string
-              format: date-time
-            endTimestamp:
-              type: string
-              format: date-time
-            targetNode:
-              type: string
-            sourceNode:
-              type: string
-            completed:
-              type: boolean
-            failed:
-              type: boolean
-        conditions:
-          type: array
-          items:
-            type: object
-    VirtualMachineInstanceSpec:
-      type: object
-      description: Specification of the virtual machine hardware and guest configuration.
-      properties:
-        domain:
-          $ref: '#/components/schemas/DomainSpec'
-        networks:
-          type: array
-          description: Network interfaces to attach to the VM.
-          items:
-            $ref: '#/components/schemas/Network'
-        volumes:
-          type: array
-          description: Volumes to attach to the VM.
-          items:
-            $ref: '#/components/schemas/Volume'
-        affinity:
-          type: object
-          description: Kubernetes affinity rules for pod scheduling.
-        tolerations:
-          type: array
-          description: Kubernetes tolerations for node scheduling.
-          items:
-            type: object
-        nodeSelector:
-          type: object
-          additionalProperties:
-            type: string
-          description: Node selector constraints for VM placement.
-        hostname:
-          type: string
-          description: Hostname to set in the guest OS.
-        subdomain:
-          type: string
-          description: Subdomain for the VM's DNS entry.
-        terminationGracePeriodSeconds:
-          type: integer
-          description: Grace period in seconds before forceful VM termination.
-          minimum: 0
-        evictionStrategy:
-          type: string
-          description: Controls how the VM behaves during node eviction. 'LiveMigrate' migrates instead of stopping.
-          enum:
-          - LiveMigrate
-          - None
     DomainSpec:
       type: object
       description: Virtual hardware configuration for the VM guest.
@@ -518,32 +187,185 @@ components:
             type:
               type: string
               description: Machine type, e.g. 'q35' or 'pc-q35-rhel8.4.0'.
-    Network:
+    Volume:
       type: object
-      description: A network to attach a VM interface to.
+      description: A storage volume to attach to a disk device.
       required:
       - name
       properties:
         name:
           type: string
-          description: Name of the network, referenced by interface name.
-        pod:
+          description: Name of the volume, referenced by disk name.
+        containerDisk:
           type: object
-          description: Default pod network configuration.
+          description: OCI container image used as a disk.
           properties:
-            vmNetworkCIDR:
+            image:
               type: string
-              description: CIDR for the VM network in masquerade mode.
-        multus:
+              description: OCI image reference containing the disk image.
+            imagePullPolicy:
+              type: string
+              enum:
+              - Always
+              - Never
+              - IfNotPresent
+        dataVolume:
           type: object
-          description: Multus CNI network attachment.
+          description: DataVolume (CDI) as a disk source.
           properties:
-            networkName:
+            name:
               type: string
-              description: Name of the NetworkAttachmentDefinition.
-            default:
+              description: Name of the DataVolume resource.
+        persistentVolumeClaim:
+          type: object
+          description: Kubernetes PersistentVolumeClaim as a disk source.
+          properties:
+            claimName:
+              type: string
+              description: Name of the PVC.
+            readOnly:
               type: boolean
-              description: If true, this is the default network.
+        cloudInitNoCloud:
+          type: object
+          description: Cloud-init NoCloud data source for guest initialization.
+          properties:
+            userData:
+              type: string
+              description: Cloud-init user-data as a string.
+            networkData:
+              type: string
+              description: Cloud-init network-config as a string.
+        cloudInitConfigDrive:
+          type: object
+          description: Cloud-init Config Drive data source.
+          properties:
+            userData:
+              type: string
+            networkData:
+              type: string
+        sysprep:
+          type: object
+          description: Windows Sysprep answer file source.
+          properties:
+            configMap:
+              type: object
+              properties:
+                name:
+                  type: string
+        emptyDisk:
+          type: object
+          description: Ephemeral empty disk created for the VM.
+          properties:
+            capacity:
+              type: string
+              description: Disk capacity in Kubernetes resource quantity format.
+        hostDisk:
+          type: object
+          description: Host filesystem path as a disk.
+          properties:
+            path:
+              type: string
+              description: Absolute path on the host.
+            type:
+              type: string
+              enum:
+              - DiskOrCreate
+              - Disk
+    VirtualMachineInstanceStatus:
+      type: object
+      description: Observed runtime status of a VirtualMachineInstance.
+      properties:
+        nodeName:
+          type: string
+          description: Node where the VMI is running.
+        guestOSInfo:
+          type: object
+          description: Information about the guest operating system.
+          properties:
+            name:
+              type: string
+              description: OS name reported by the guest agent.
+            version:
+              type: string
+              description: OS version.
+            id:
+              type: string
+              description: OS ID (e.g. 'rhel', 'ubuntu').
+            prettyName:
+              type: string
+              description: Human-readable OS name.
+        interfaces:
+          type: array
+          description: Network interfaces as reported by the guest agent.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              mac:
+                type: string
+              ipAddress:
+                type: string
+              ipAddresses:
+                type: array
+                items:
+                  type: string
+        phase:
+          type: string
+          description: Current lifecycle phase of the VMI.
+          enum:
+          - Pending
+          - Scheduling
+          - Scheduled
+          - Running
+          - Succeeded
+          - Failed
+          - Unknown
+        phaseTransitionTimestamps:
+          type: array
+          description: History of phase transitions with timestamps.
+          items:
+            type: object
+            properties:
+              phase:
+                type: string
+              phaseTransitionTimestamp:
+                type: string
+                format: date-time
+        migrationState:
+          type: object
+          description: Current migration state if the VMI is being migrated.
+          properties:
+            startTimestamp:
+              type: string
+              format: date-time
+            endTimestamp:
+              type: string
+              format: date-time
+            targetNode:
+              type: string
+            sourceNode:
+              type: string
+            completed:
+              type: boolean
+            failed:
+              type: boolean
+        conditions:
+          type: array
+          items:
+            type: object
+    VirtualMachineInstanceList:
+      type: object
+      description: List of VirtualMachineInstance resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineInstance'
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -573,12 +395,190 @@ components:
         creationTimestamp:
           type: string
           format: date-time
+    Disk:
+      type: object
+      description: A virtual disk device attached to the VM.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the disk, must match a volume name.
+        bootOrder:
+          type: integer
+          description: Boot order for this disk (lower numbers boot first).
+          minimum: 1
+        disk:
+          type: object
+          description: Virtio disk configuration.
+          properties:
+            bus:
+              type: string
+              enum:
+              - virtio
+              - sata
+              - scsi
+              - ide
+        cdrom:
+          type: object
+          description: CD-ROM device configuration.
+          properties:
+            bus:
+              type: string
+              enum:
+              - virtio
+              - sata
+              - scsi
+            readonly:
+              type: boolean
+        lun:
+          type: object
+          description: LUN device configuration.
+          properties:
+            bus:
+              type: string
+    Network:
+      type: object
+      description: A network to attach a VM interface to.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the network, referenced by interface name.
+        pod:
+          type: object
+          description: Default pod network configuration.
+          properties:
+            vmNetworkCIDR:
+              type: string
+              description: CIDR for the VM network in masquerade mode.
+        multus:
+          type: object
+          description: Multus CNI network attachment.
+          properties:
+            networkName:
+              type: string
+              description: Name of the NetworkAttachmentDefinition.
+            default:
+              type: boolean
+              description: If true, this is the default network.
+    Interface:
+      type: object
+      description: A virtual network interface device.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the interface, must match a network name.
+        model:
+          type: string
+          description: Network interface model type. 'virtio' is recommended for best performance.
+          enum:
+          - virtio
+          - e1000
+          - e1000e
+          - rtl8139
+        masquerade:
+          type: object
+          description: NAT masquerade networking mode.
+        bridge:
+          type: object
+          description: Bridge networking mode, connected to a host bridge.
+        sriov:
+          type: object
+          description: SR-IOV passthrough networking mode.
+        macAddress:
+          type: string
+          description: Fixed MAC address for the interface.
+          pattern: ^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$
+        ports:
+          type: array
+          description: Port forwarding rules for masquerade interfaces.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              port:
+                type: integer
+                minimum: 1
+                maximum: 65535
+              protocol:
+                type: string
+                enum:
+                - TCP
+                - UDP
+    VirtualMachineInstance:
+      type: object
+      description: A running VirtualMachineInstance representing the actual state of an active virtual machine process in KubeVirt.
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - kubevirt.io/v1
+        kind:
+          type: string
+          enum:
+          - VirtualMachineInstance
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/VirtualMachineInstanceSpec'
+        status:
+          $ref: '#/components/schemas/VirtualMachineInstanceStatus'
+    VirtualMachineInstanceSpec:
+      type: object
+      description: Specification of the virtual machine hardware and guest configuration.
+      properties:
+        domain:
+          $ref: '#/components/schemas/DomainSpec'
+        networks:
+          type: array
+          description: Network interfaces to attach to the VM.
+          items:
+            $ref: '#/components/schemas/Network'
+        volumes:
+          type: array
+          description: Volumes to attach to the VM.
+          items:
+            $ref: '#/components/schemas/Volume'
+        affinity:
+          type: object
+          description: Kubernetes affinity rules for pod scheduling.
+        tolerations:
+          type: array
+          description: Kubernetes tolerations for node scheduling.
+          items:
+            type: object
+        nodeSelector:
+          type: object
+          additionalProperties:
+            type: string
+          description: Node selector constraints for VM placement.
+        hostname:
+          type: string
+          description: Hostname to set in the guest OS.
+        subdomain:
+          type: string
+          description: Subdomain for the VM's DNS entry.
+        terminationGracePeriodSeconds:
+          type: integer
+          description: Grace period in seconds before forceful VM termination.
+          minimum: 0
+        evictionStrategy:
+          type: string
+          description: Controls how the VM behaves during node eviction. 'LiveMigrate' migrates instead of stopping.
+          enum:
+          - LiveMigrate
+          - None
   parameters:
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Label selector to filter resources.
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
       schema:
         type: string
     name:
@@ -586,6 +586,13 @@ components:
       in: path
       required: true
       description: The name of the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
       schema:
         type: string
     limit:
@@ -601,13 +608,6 @@ components:
       in: query
       required: false
       description: Field selector to filter resources.
-      schema:
-        type: string
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace of the resource.
       schema:
         type: string
 externalDocs:

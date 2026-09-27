@@ -153,6 +153,21 @@ paths:
         '404':
           description: VirtualMachineInstance not found
 components:
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
   schemas:
     RestartOptions:
       type: object
@@ -162,19 +177,6 @@ components:
           type: integer
           format: int64
           description: Grace period in seconds before forced restart.
-          minimum: 0
-        dryRun:
-          type: array
-          items:
-            type: string
-    StopOptions:
-      type: object
-      description: Options for the VM stop operation.
-      properties:
-        gracePeriod:
-          type: integer
-          format: int64
-          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
           minimum: 0
         dryRun:
           type: array
@@ -192,21 +194,19 @@ components:
           description: Dry run options.
           items:
             type: string
-  parameters:
-    name:
-      name: name
-      in: path
-      required: true
-      description: The name of the resource.
-      schema:
-        type: string
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace of the resource.
-      schema:
-        type: string
+    StopOptions:
+      type: object
+      description: Options for the VM stop operation.
+      properties:
+        gracePeriod:
+          type: integer
+          format: int64
+          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
 externalDocs:
   description: KubeVirt User Guide
   url: https://kubevirt.io/user-guide/
