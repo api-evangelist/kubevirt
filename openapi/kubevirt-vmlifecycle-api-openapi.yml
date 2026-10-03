@@ -153,22 +153,20 @@ paths:
         '404':
           description: VirtualMachineInstance not found
 components:
-  parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace of the resource.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: The name of the resource.
-      schema:
-        type: string
   schemas:
+    StopOptions:
+      type: object
+      description: Options for the VM stop operation.
+      properties:
+        gracePeriod:
+          type: integer
+          format: int64
+          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
     RestartOptions:
       type: object
       description: Options for the VM restart operation.
@@ -194,19 +192,21 @@ components:
           description: Dry run options.
           items:
             type: string
-    StopOptions:
-      type: object
-      description: Options for the VM stop operation.
-      properties:
-        gracePeriod:
-          type: integer
-          format: int64
-          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
-          minimum: 0
-        dryRun:
-          type: array
-          items:
-            type: string
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
 externalDocs:
   description: KubeVirt User Guide
   url: https://kubevirt.io/user-guide/

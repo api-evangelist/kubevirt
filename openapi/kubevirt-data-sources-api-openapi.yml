@@ -104,18 +104,19 @@ paths:
           description: DataSource not found
 components:
   parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
     namespace:
       name: namespace
       in: path
       required: true
       description: The Kubernetes namespace.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: The name of the resource.
       schema:
         type: string
     labelSelector:
@@ -125,15 +126,41 @@ components:
       description: Label selector to filter resources.
       schema:
         type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results per page.
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
       schema:
-        type: integer
-        minimum: 1
+        type: string
   schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
     DataSource:
       type: object
       description: A CDI DataSource referencing a DataVolume or VolumeSnapshot as a reusable source for cloning into new DataVolumes.
@@ -188,33 +215,6 @@ components:
             source:
               type: object
               description: Resolved source reference.
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the resource.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-        uid:
-          type: string
-        creationTimestamp:
-          type: string
-          format: date-time
     DataSourceList:
       type: object
       description: List of DataSource resources.

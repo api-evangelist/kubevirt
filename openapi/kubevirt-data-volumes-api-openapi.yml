@@ -223,68 +223,6 @@ components:
         finalCheckpoint:
           type: boolean
           description: Whether this is the final checkpoint in a multi-stage import.
-    DataVolume:
-      type: object
-      description: A CDI DataVolume providing a managed PVC with automated import or clone pipeline. Integrates with KubeVirt to provision VM disk images from various sources.
-      required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
-      properties:
-        apiVersion:
-          type: string
-          enum:
-          - cdi.kubevirt.io/v1beta1
-        kind:
-          type: string
-          enum:
-          - DataVolume
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/DataVolumeSpec'
-        status:
-          $ref: '#/components/schemas/DataVolumeStatus'
-    DataVolumeList:
-      type: object
-      description: List of DataVolume resources.
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataVolume'
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the resource.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-        uid:
-          type: string
-        creationTimestamp:
-          type: string
-          format: date-time
     DataVolumeSource:
       type: object
       description: Source configuration for the DataVolume import. Exactly one source type should be specified.
@@ -406,6 +344,29 @@ components:
               type: string
             initImageURL:
               type: string
+    DataVolume:
+      type: object
+      description: A CDI DataVolume providing a managed PVC with automated import or clone pipeline. Integrates with KubeVirt to provision VM disk images from various sources.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+          - DataVolume
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/DataVolumeSpec'
+        status:
+          $ref: '#/components/schemas/DataVolumeStatus'
     DataVolumeStatus:
       type: object
       description: Observed status of a DataVolume import pipeline.
@@ -445,26 +406,59 @@ components:
           description: Conditions describing the DataVolume state.
           items:
             type: object
+    DataVolumeList:
+      type: object
+      description: List of DataVolume resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataVolume'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
   parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
     namespace:
       name: namespace
       in: path
       required: true
       description: The Kubernetes namespace.
-      schema:
-        type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination continuation token.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: The name of the resource.
       schema:
         type: string
     labelSelector:
@@ -474,19 +468,25 @@ components:
       description: Label selector to filter resources.
       schema:
         type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results per page.
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
       schema:
-        type: integer
-        minimum: 1
+        type: string
     fieldSelector:
       name: fieldSelector
       in: query
       required: false
       description: Field selector to filter resources.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination continuation token.
       schema:
         type: string
 externalDocs:
