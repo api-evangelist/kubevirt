@@ -234,6 +234,9 @@ apis:
   - type: GitHubRepository
     url: https://github.com/kubevirt/containerized-data-importer
 common:
+  - type: CapabilityMap
+    url: capabilities/kubevirt-capability-edges.yml
+    name: KubeVirt Business Capability Map
   - type: IssueTracker
     url: https://github.com/kubevirt/containerized-data-importer/issues
   - type: Releases

@@ -1,0 +1,85 @@
+slug: kubevirt
+provider: KubeVirt
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 7
+edges:
+- tag: Virtual Machines
+  spec_file: kubevirt-virtual-machines-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: 'createNamespacedVirtualMachine  KubeVirt Create a VirtualMachine; schemas: VirtualMachineSpec,
+    Disk, Network, DomainSpec'
+  reason: CRUD over VirtualMachine resources with disk, network and domain specs — provisioning and stewardship
+    of compute infrastructure.
+- tag: VMLifecycle
+  spec_file: kubevirt-vmlifecycle-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: startVirtualMachine  KubeVirt Start a VirtualMachine; migrateVirtualMachine  KubeVirt Migrate
+    a VirtualMachine
+  reason: Start/stop/restart/migrate/pause operations on virtual machines — direct management of compute
+    infrastructure.
+- tag: Data Volumes
+  spec_file: kubevirt-data-volumes-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: 'createNamespacedDataVolume  KubeVirt Create a DataVolume; schemas: DataVolumeSpec, DataVolumeStatus'
+  reason: Lifecycle of VM disk volumes backed by PersistentVolumeClaims — storage infrastructure management
+    for virtualised compute.
+- tag: VirtualMachineInstances
+  spec_file: kubevirt-virtualmachineinstances-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: '"KubeVirt List VirtualMachineInstances"; schemas "VirtualMachineInstanceSpec", "Disk", "Network",
+    "Volume"'
+  reason: The surface lists and reads running virtual machine instances with compute, disk and network
+    specs — direct management of compute/storage/network infrastructure resources. Maps to IT Infrastructure
+    Management; no business-process capability is realised.
+- tag: StorageProfiles
+  spec_file: kubevirt-storageprofiles-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /apis/cdi.kubevirt.io/v1beta1/storageprofiles  listStorageProfiles  KubeVirt List StorageProfiles
+  reason: Manages storage class provisioning profiles for VM disks — compute/storage infrastructure configuration.
+- tag: VirtualMachineInstanceMigrations
+  spec_file: kubevirt-virtualmachineinstancemigrations-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: '"KubeVirt Create a VirtualMachineInstanceMigration" / "KubeVirt Cancel a VirtualMachineInstanceMigration"
+    — subresource REST endpoints for VM lifecycle operations including "migrate"'
+  reason: Operations create/cancel live migrations of virtual machine instances across the Kubernetes
+    compute fleet. This is management of compute infrastructure (IT Infrastructure Management), not a
+    business-domain capability. No SaaS-product capability fits better since this is an infrastructure
+    platform resource API rather than tenant or release tooling.
+- tag: Data Sources
+  spec_file: kubevirt-data-sources-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: createNamespacedDataSource  KubeVirt Create a DataSource; 'automate importing VM disk images
+    from HTTP, S3, OCI registries ... into PersistentVolumeClaims ready for use as KubeVirt VM disks'
+  reason: Kubernetes CRD surface for VM disk-image source resources — compute/storage infrastructure provisioning,
+    not business data management.
