@@ -112,13 +112,6 @@ components:
       schema:
         type: integer
         minimum: 1
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace.
-      schema:
-        type: string
     labelSelector:
       name: labelSelector
       in: query
@@ -133,34 +126,14 @@ components:
       description: The name of the resource.
       schema:
         type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace.
+      schema:
+        type: string
   schemas:
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the resource.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-        uid:
-          type: string
-        creationTimestamp:
-          type: string
-          format: date-time
     DataSource:
       type: object
       description: A CDI DataSource referencing a DataVolume or VolumeSnapshot as a reusable source for cloning into new DataVolumes.
@@ -215,6 +188,33 @@ components:
             source:
               type: object
               description: Resolved source reference.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
     DataSourceList:
       type: object
       description: List of DataSource resources.

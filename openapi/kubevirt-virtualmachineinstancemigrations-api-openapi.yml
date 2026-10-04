@@ -114,11 +114,11 @@ components:
       schema:
         type: integer
         minimum: 1
-    namespace:
-      name: namespace
+    name:
+      name: name
       in: path
       required: true
-      description: The Kubernetes namespace of the resource.
+      description: The name of the resource.
       schema:
         type: string
     labelSelector:
@@ -128,14 +128,26 @@ components:
       description: Label selector to filter resources.
       schema:
         type: string
-    name:
-      name: name
+    namespace:
+      name: namespace
       in: path
       required: true
-      description: The name of the resource.
+      description: The Kubernetes namespace of the resource.
       schema:
         type: string
   schemas:
+    VirtualMachineInstanceMigrationList:
+      type: object
+      description: List of VirtualMachineInstanceMigration resources.
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachineInstanceMigration'
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -165,18 +177,6 @@ components:
         creationTimestamp:
           type: string
           format: date-time
-    VirtualMachineInstanceMigrationList:
-      type: object
-      description: List of VirtualMachineInstanceMigration resources.
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/VirtualMachineInstanceMigration'
     VirtualMachineInstanceMigration:
       type: object
       description: A VirtualMachineInstanceMigration resource tracking the live migration of a VirtualMachineInstance from one node to another.

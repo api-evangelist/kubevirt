@@ -193,18 +193,18 @@ components:
           items:
             type: string
   parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: The Kubernetes namespace of the resource.
-      schema:
-        type: string
     name:
       name: name
       in: path
       required: true
       description: The name of the resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: The Kubernetes namespace of the resource.
       schema:
         type: string
 externalDocs:
