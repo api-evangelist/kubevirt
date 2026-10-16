@@ -2,8 +2,8 @@
   "repo": "kubevirt",
   "feeds": [
     {
-      "source": "https://github.com/kubevirt/kubevirt",
-      "feed_url": "https://github.com/kubevirt/kubevirt",
+      "source": "https://kubevirt.io/blogs/",
+      "feed_url": "https://kubevirt.io/blogs/",
       "title": "",
       "saved": 0,
       "method": "none"
@@ -14,10 +14,17 @@
       "title": "",
       "saved": 0,
       "method": "feed"
+    },
+    {
+      "source": "https://github.com/kubevirt/kubevirt",
+      "feed_url": "https://github.com/kubevirt/kubevirt",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 20,
-  "fetched": "2026-10-03T12:30:02Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
