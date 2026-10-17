@@ -140,6 +140,178 @@ paths:
           description: DataVolume not found
 components:
   schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the resource.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+        creationTimestamp:
+          type: string
+          format: date-time
+    DataVolumeStatus:
+      type: object
+      description: Observed status of a DataVolume import pipeline.
+      properties:
+        phase:
+          type: string
+          description: Current phase of the DataVolume import.
+          enum:
+          - Pending
+          - PVCBound
+          - ImportScheduled
+          - ImportInProgress
+          - CloneScheduled
+          - CloneInProgress
+          - SnapshotForSmartCloneInProgress
+          - SmartClonePVCInProgress
+          - CSICloneInProgress
+          - UploadScheduled
+          - UploadReady
+          - WaitForFirstConsumer
+          - Paused
+          - Succeeded
+          - Failed
+          - Unknown
+        progress:
+          type: string
+          description: Import progress percentage (e.g. '42.00%').
+        restartCount:
+          type: integer
+          format: int32
+          description: Number of times the import pod has been restarted.
+        claimName:
+          type: string
+          description: Name of the managed PersistentVolumeClaim.
+        conditions:
+          type: array
+          description: Conditions describing the DataVolume state.
+          items:
+            type: object
+    DataVolumeSpec:
+      type: object
+      description: Specification of a DataVolume.
+      properties:
+        source:
+          $ref: '#/components/schemas/DataVolumeSource'
+        sourceRef:
+          type: object
+          description: Reference to a DataSource providing the import source.
+          properties:
+            kind:
+              type: string
+              enum:
+              - DataSource
+            namespace:
+              type: string
+            name:
+              type: string
+        pvc:
+          type: object
+          description: PVC spec for the managed PersistentVolumeClaim.
+          properties:
+            accessModes:
+              type: array
+              items:
+                type: string
+                enum:
+                - ReadWriteOnce
+                - ReadWriteMany
+                - ReadOnlyMany
+            resources:
+              type: object
+              properties:
+                requests:
+                  type: object
+                  additionalProperties:
+                    type: string
+            storageClassName:
+              type: string
+            volumeMode:
+              type: string
+              enum:
+              - Block
+              - Filesystem
+        storage:
+          type: object
+          description: Simplified storage spec. CDI automatically selects access modes and volume mode based on the StorageProfile.
+          properties:
+            resources:
+              type: object
+              properties:
+                requests:
+                  type: object
+                  additionalProperties:
+                    type: string
+            storageClassName:
+              type: string
+            accessModes:
+              type: array
+              items:
+                type: string
+            volumeMode:
+              type: string
+        priorityClassName:
+          type: string
+          description: PriorityClass for the import pod.
+        contentType:
+          type: string
+          description: Type of content being imported.
+          enum:
+          - kubevirt
+          - archive
+        preallocation:
+          type: boolean
+          description: If true, preallocates disk space on creation.
+        checkpoints:
+          type: array
+          description: Checkpoints for multi-stage import.
+          items:
+            type: object
+        finalCheckpoint:
+          type: boolean
+          description: Whether this is the final checkpoint in a multi-stage import.
+    DataVolume:
+      type: object
+      description: A CDI DataVolume providing a managed PVC with automated import or clone pipeline. Integrates with KubeVirt to provision VM disk images from various sources.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          enum:
+          - cdi.kubevirt.io/v1beta1
+        kind:
+          type: string
+          enum:
+          - DataVolume
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/DataVolumeSpec'
+        status:
+          $ref: '#/components/schemas/DataVolumeStatus'
     DataVolumeSource:
       type: object
       description: Source configuration for the DataVolume import. Exactly one source type should be specified.
@@ -261,112 +433,6 @@ components:
               type: string
             initImageURL:
               type: string
-    DataVolume:
-      type: object
-      description: A CDI DataVolume providing a managed PVC with automated import or clone pipeline. Integrates with KubeVirt to provision VM disk images from various sources.
-      required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
-      properties:
-        apiVersion:
-          type: string
-          enum:
-          - cdi.kubevirt.io/v1beta1
-        kind:
-          type: string
-          enum:
-          - DataVolume
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/DataVolumeSpec'
-        status:
-          $ref: '#/components/schemas/DataVolumeStatus'
-    DataVolumeSpec:
-      type: object
-      description: Specification of a DataVolume.
-      properties:
-        source:
-          $ref: '#/components/schemas/DataVolumeSource'
-        sourceRef:
-          type: object
-          description: Reference to a DataSource providing the import source.
-          properties:
-            kind:
-              type: string
-              enum:
-              - DataSource
-            namespace:
-              type: string
-            name:
-              type: string
-        pvc:
-          type: object
-          description: PVC spec for the managed PersistentVolumeClaim.
-          properties:
-            accessModes:
-              type: array
-              items:
-                type: string
-                enum:
-                - ReadWriteOnce
-                - ReadWriteMany
-                - ReadOnlyMany
-            resources:
-              type: object
-              properties:
-                requests:
-                  type: object
-                  additionalProperties:
-                    type: string
-            storageClassName:
-              type: string
-            volumeMode:
-              type: string
-              enum:
-              - Block
-              - Filesystem
-        storage:
-          type: object
-          description: Simplified storage spec. CDI automatically selects access modes and volume mode based on the StorageProfile.
-          properties:
-            resources:
-              type: object
-              properties:
-                requests:
-                  type: object
-                  additionalProperties:
-                    type: string
-            storageClassName:
-              type: string
-            accessModes:
-              type: array
-              items:
-                type: string
-            volumeMode:
-              type: string
-        priorityClassName:
-          type: string
-          description: PriorityClass for the import pod.
-        contentType:
-          type: string
-          description: Type of content being imported.
-          enum:
-          - kubevirt
-          - archive
-        preallocation:
-          type: boolean
-          description: If true, preallocates disk space on creation.
-        checkpoints:
-          type: array
-          description: Checkpoints for multi-stage import.
-          items:
-            type: object
-        finalCheckpoint:
-          type: boolean
-          description: Whether this is the final checkpoint in a multi-stage import.
     DataVolumeList:
       type: object
       description: List of DataVolume resources.
@@ -379,102 +445,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataVolume'
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the resource.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-        uid:
-          type: string
-        creationTimestamp:
-          type: string
-          format: date-time
-    DataVolumeStatus:
-      type: object
-      description: Observed status of a DataVolume import pipeline.
-      properties:
-        phase:
-          type: string
-          description: Current phase of the DataVolume import.
-          enum:
-          - Pending
-          - PVCBound
-          - ImportScheduled
-          - ImportInProgress
-          - CloneScheduled
-          - CloneInProgress
-          - SnapshotForSmartCloneInProgress
-          - SmartClonePVCInProgress
-          - CSICloneInProgress
-          - UploadScheduled
-          - UploadReady
-          - WaitForFirstConsumer
-          - Paused
-          - Succeeded
-          - Failed
-          - Unknown
-        progress:
-          type: string
-          description: Import progress percentage (e.g. '42.00%').
-        restartCount:
-          type: integer
-          format: int32
-          description: Number of times the import pod has been restarted.
-        claimName:
-          type: string
-          description: Name of the managed PersistentVolumeClaim.
-        conditions:
-          type: array
-          description: Conditions describing the DataVolume state.
-          items:
-            type: object
   parameters:
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results per page.
-      schema:
-        type: integer
-        minimum: 1
-    fieldSelector:
-      name: fieldSelector
-      in: query
-      required: false
-      description: Field selector to filter resources.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: The name of the resource.
-      schema:
-        type: string
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Label selector to filter resources.
-      schema:
-        type: string
     continueToken:
       name: continue
       in: query
@@ -489,6 +460,35 @@ components:
       description: The Kubernetes namespace.
       schema:
         type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: The name of the resource.
+      schema:
+        type: string
+    fieldSelector:
+      name: fieldSelector
+      in: query
+      required: false
+      description: Field selector to filter resources.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Label selector to filter resources.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results per page.
+      schema:
+        type: integer
+        minimum: 1
 externalDocs:
   description: CDI Documentation
   url: https://kubevirt.io/user-guide/storage/containerized_data_importer/

@@ -153,45 +153,6 @@ paths:
         '404':
           description: VirtualMachineInstance not found
 components:
-  schemas:
-    StopOptions:
-      type: object
-      description: Options for the VM stop operation.
-      properties:
-        gracePeriod:
-          type: integer
-          format: int64
-          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
-          minimum: 0
-        dryRun:
-          type: array
-          items:
-            type: string
-    RestartOptions:
-      type: object
-      description: Options for the VM restart operation.
-      properties:
-        gracePeriodSeconds:
-          type: integer
-          format: int64
-          description: Grace period in seconds before forced restart.
-          minimum: 0
-        dryRun:
-          type: array
-          items:
-            type: string
-    StartOptions:
-      type: object
-      description: Options for the VM start operation.
-      properties:
-        paused:
-          type: boolean
-          description: If true, starts the VM in a paused state.
-        dryRun:
-          type: array
-          description: Dry run options.
-          items:
-            type: string
   parameters:
     name:
       name: name
@@ -207,6 +168,45 @@ components:
       description: The Kubernetes namespace of the resource.
       schema:
         type: string
+  schemas:
+    StartOptions:
+      type: object
+      description: Options for the VM start operation.
+      properties:
+        paused:
+          type: boolean
+          description: If true, starts the VM in a paused state.
+        dryRun:
+          type: array
+          description: Dry run options.
+          items:
+            type: string
+    RestartOptions:
+      type: object
+      description: Options for the VM restart operation.
+      properties:
+        gracePeriodSeconds:
+          type: integer
+          format: int64
+          description: Grace period in seconds before forced restart.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
+    StopOptions:
+      type: object
+      description: Options for the VM stop operation.
+      properties:
+        gracePeriod:
+          type: integer
+          format: int64
+          description: Grace period in seconds for shutdown. A value of 0 forces immediate shutdown.
+          minimum: 0
+        dryRun:
+          type: array
+          items:
+            type: string
 externalDocs:
   description: KubeVirt User Guide
   url: https://kubevirt.io/user-guide/
