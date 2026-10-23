@@ -121,6 +121,40 @@ edges:
   detected: '2026-10-22'
   detected_by: mirror-platform-listings.py
   category: configuration-management content listing (Ansible collection)
+- partner_name: Arch User Repository (AUR)
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official CLI (Arch User Repository (AUR))
+  evidence: https://aur.archlinux.org/packages/virtctl-bin
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Arch User Repository (AUR) (public package index)
+    spec_file: null
+    packages:
+    - name: virtctl-bin
+      kind: aur
+      version: 1.9.1-1
+      released: '2026-10-18'
+      released_field: AUR LastModified
+      out_of_date: false
+      lapsed: false
+      page: https://aur.archlinux.org/packages/virtctl-bin
+      upstream: https://github.com/kubevirt/kubevirt
+      cli: 'AUR description: Kubernetes Virtualization API and runtime in order to define and manage virtual '
+      repo_leg: github-org:kubevirt
+      publisher_leg: artifact-github-org:kubevirt
+      matched_by: github-org
+    current: true
+    signal_note: 'the provider''s own command-line tool packaged for Arch Linux (community-maintained PKGBUILD whose
+      upstream and source artifact are the provider''s): distribution, not an integration; lapsed = flagged out-of-date
+      or not updated in 24 months'
+    detected_by: sweep-aur-vendor-cli-packages.py
+    detected: '2026-10-23'
+  detected_by: sweep-aur-vendor-cli-packages.py
+  first_seen: '2026-10-23'
 generated: '2026-10-15'
 method: searched
 source:
@@ -135,3 +169,6 @@ checked:
 - https://www.bestpractices.dev/en/projects.json
 - https://www.bestpractices.dev/en/projects.json?page=N
 - ansible/integrations/ansible-integration-edges.yml
+- https://aur.archlinux.org/cgit/aur.git/tree/.SRCINFO
+- https://aur.archlinux.org/packages-meta-ext-v1.json.gz
+- https://aur.archlinux.org/rpc/v5/info
