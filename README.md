@@ -1,4 +1,4 @@
-# KubeVirt (kubevirt)
+# KubeVirt
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,84 +66,150 @@
 
 KubeVirt is a CNCF incubating project that extends Kubernetes to run traditional virtual machines alongside containers. It allows users to create, manage, and run VMs using the same Kubernetes APIs and tools used for containers. KubeVirt is ideal for migrating legacy workloads to Kubernetes without requiring application rewriting.
 
-**APIs.json:** [https://kubevirt.io](https://kubevirt.io)
+**Areas:** Cloud-Native · Incubating · Kubernetes · Migration · Virtual Machines · Virtualization
 
-## Scope
+## KubeVirt on APIs.io
 
-- **Type:** Index
+Everything profiled for KubeVirt is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kubevirt/](https://apis.io/providers/kubevirt/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- Cloud Native
-- Incubating
-- Kubernetes
-- Migration
-- Virtual Machines
-- Virtualization
+- [KubeVirt StorageProfiles API](https://apis.io/apis/kubevirt/kubevirt-storageprofiles-api/) — Operations for managing StorageProfile resources. StorageProfiles describe the capabilities of a StorageClass and provide default clone and access mode…
+- [KubeVirt VirtualMachineInstanceMigrations API](https://apis.io/apis/kubevirt/kubevirt-virtualmachineinstancemigrations-api/) — Operations for managing live migration of VirtualMachineInstances from one node to another without downtime.
+- [KubeVirt VirtualMachineInstances API](https://apis.io/apis/kubevirt/kubevirt-virtualmachineinstances-api/) — Operations for managing VirtualMachineInstance (VMI) resources. A VirtualMachineInstance represents a running virtual machine and tracks its actual state.
+- [KubeVirt VMConsole API](https://apis.io/apis/kubevirt/kubevirt-vmconsole-api/) — Subresource endpoints for accessing VM consoles via VNC, serial console, and USB redirection.
+- [KubeVirt VMLifecycle API](https://apis.io/apis/kubevirt/kubevirt-vmlifecycle-api/) — Subresource operations for VM lifecycle management including start, stop, pause, unpause, restart, migrate, and adding/removing volumes.
+- [KubeVirt Data Sources API](https://apis.io/apis/kubevirt/kubevirt-data-sources-api/) — Operations for managing DataSource resources. A DataSource references an existing DataVolume or VolumeSnapshot as a source for cloning into new DataVolumes.
+- [KubeVirt Data Volumes API](https://apis.io/apis/kubevirt/kubevirt-data-volumes-api/) — Operations for managing DataVolume resources. A DataVolume is a managed PersistentVolumeClaim with an integrated import/clone pipeline that automatically…
+- [KubeVirt Virtual Machines API](https://apis.io/apis/kubevirt/kubevirt-virtual-machines-api/) — Operations for managing VirtualMachine (VM) resources. A VirtualMachine defines the desired state and configuration of a virtual machine, providing…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### KubeVirt VM Management API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-KubeVirt extends the Kubernetes API with custom resources for virtual machine management. VirtualMachine resources define VM specifications including CPU, memory, disks, and network interfaces. VirtualMachineInstance tracks running VMs, and VirtualMachineInstanceMigration handles live migrations. The API supports start, stop, pause, migrate, and snapshot operations through standard kubectl commands.
+- [Kubevirt Agentic Access](https://apis.io/agentic-access/kubevirt/kubevirt-agentic-access/)
 
-- **Human URL:** [https://kubevirt.io/user-guide/](https://kubevirt.io/user-guide/)
+#### JSON Schema (1)
 
-#### Tags
+The data models the API reads and writes.
 
-- Kubernetes API
-- Live Migration
-- Virtual Machines
+- [KubeVirt VirtualMachine](https://apis.io/schemas/kubevirt/kubevirt-vm/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://kubevirt.io/user-guide/)
-- [Reference](https://kubevirt.io/api-reference/)
-- [OpenAPI](openapi/kubevirt-vm-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/kubevirt-vm.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kubevirt-vm.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/kubevirt-vm-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Linked-data contexts for the provider's vocabulary.
 
-### KubeVirt Containerized Data Importer API
+- [Kubevirt Context](https://apis.io/jsonld/kubevirt/kubevirt-context/)
 
-REST API for the Containerized Data Importer (CDI), which provides facilities for importing and cloning virtual machine disk images into PersistentVolumeClaims for use as KubeVirt VM disks. The CDI API includes DataVolume, DataSource, and StorageProfile resources for managing data import pipelines.
+#### Collections (10)
 
-- **Human URL:** [https://kubevirt.io/user-guide/storage/containerized_data_importer/](https://kubevirt.io/user-guide/storage/containerized_data_importer/)
+Postman and Open Collection request collections.
 
-#### Tags
+- [KubeVirt Containerized Data Importer API](https://apis.io/collections/kubevirt/open-kubevirt-cdi/)
+- [KubeVirt Containerized Data Importer DataSources API](https://apis.io/collections/kubevirt/open-kubevirt-datasources-api/)
+- [KubeVirt Containerized Data Importer DataSources DataVolumes API](https://apis.io/collections/kubevirt/open-kubevirt-datavolumes-api/)
+- [KubeVirt Containerized Data Importer DataSources StorageProfiles API](https://apis.io/collections/kubevirt/open-kubevirt-storageprofiles-api/)
+- [KubeVirt Containerized Data Importer DataSources VirtualMachineInstanceMigrations API](https://apis.io/collections/kubevirt/open-kubevirt-virtualmachineinstancemigrations-api/)
+- [KubeVirt Containerized Data Importer DataSources VirtualMachineInstances API](https://apis.io/collections/kubevirt/open-kubevirt-virtualmachineinstances-api/)
+- [KubeVirt Containerized Data Importer DataSources VirtualMachines API](https://apis.io/collections/kubevirt/open-kubevirt-virtualmachines-api/)
+- [KubeVirt VM Management API](https://apis.io/collections/kubevirt/open-kubevirt-vm/)
+- [KubeVirt Containerized Data Importer DataSources VMConsole API](https://apis.io/collections/kubevirt/open-kubevirt-vmconsole-api/)
+- [KubeVirt Containerized Data Importer DataSources VMLifecycle API](https://apis.io/collections/kubevirt/open-kubevirt-vmlifecycle-api/)
 
-- Data Import
-- Kubernetes
-- PersistentVolumeClaims
-- Storage
-- Virtual Machines
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://kubevirt.io/user-guide/storage/containerized_data_importer/)
-- [Reference](https://kubevirt.io/cdi-api-reference/)
-- [GitHub Repository](https://github.com/kubevirt/containerized-data-importer)
-- [OpenAPI](openapi/kubevirt-cdi-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/kubevirt-cdi.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kubevirt-cdi.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [KubeVirt — jsonschema rules](https://apis.io/rules/kubevirt/kubevirt-jsonschema-spectral-rules/)
 
-## Common Properties
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kubevirt Domain Security](https://apis.io/security/kubevirt/kubevirt-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Kubevirt Plans Pricing](https://apis.io/plans/kubevirt/kubevirt-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Kubevirt Rate Limits](https://apis.io/rate-limits/kubevirt/kubevirt-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Kubevirt Finops](https://apis.io/finops/kubevirt/kubevirt-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://kubevirt.io/)
-- [JSON-LD](json-ld/kubevirt-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/kubevirt-vm-schema.json) — [JSON Schema](https://json-schema.org/specification)
 - [Documentation](https://kubevirt.io/user-guide/)
-- [GitHub Organization](https://github.com/kubevirt)
-- [GitHub Repository](https://github.com/kubevirt/kubevirt)
 - [Blog](https://kubevirt.io/blogs/)
-- [Community](https://github.com/kubevirt/community)
+- [GitHub](https://github.com/kubevirt)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 41.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 53.5 |
+| Contract governance | 9.8 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 7.9 |
+
+**Agent readiness 21.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 10.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kubevirt/](https://apis.io/providers/kubevirt/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for KubeVirt: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kubevirt/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
